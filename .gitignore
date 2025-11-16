@@ -1,0 +1,60 @@
+# ContainerLab generated files
+clab-*/
+*.bak
+
+# Docker and Container files
+.docker/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Log files
+*.log
+logs/
+
+# Temporary files
+*.tmp
+tmp/
+temp/
+
+# Configuration backups
+*.backup
+config-backup/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Ansible
+*.retry
+.ansible/
+
+# SSH keys (if accidentally added)
+*.pem
+*.key
+id_rsa*
+
+# Certificates
+*.crt
+*.csr
+
+# Archives
+*.tar
+*.tar.gz
+*.zip
+*.rar
+
+# OS specific
+Thumbs.db
