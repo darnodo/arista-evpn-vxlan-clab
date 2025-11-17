@@ -1,147 +1,147 @@
 name: arista-evpn-fabric
 
 mgmt:
-  network: evpn-mgmt
-  ipv4-subnet: 172.16.0.0/24
+    network: evpn-mgmt
+    ipv4-subnet: 172.16.0.0/24
 
 topology:
-  kinds:
-    ceos:
-      image: ceos:4.35.0
-      
-  nodes:
-    # Spine Switches
-    spine1:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.1
-      startup-config: configs/spine1.cfg
-      
-    spine2:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.2
-      startup-config: configs/spine2.cfg
-    
-    # Leaf Switches - VTEP1 (AS 65001)
-    leaf1:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.25
-      startup-config: configs/leaf1.cfg
-      
-    leaf2:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.50
-      startup-config: configs/leaf2.cfg
-    
-    # Leaf Switches - VTEP2 (AS 65002)
-    leaf3:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.27
-      startup-config: configs/leaf3.cfg
-      
-    leaf4:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.28
-      startup-config: configs/leaf4.cfg
-    
-    # Leaf Switches - VTEP3 (AS 65003)
-    leaf5:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.29
-      startup-config: configs/leaf5.cfg
-      
-    leaf6:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.30
-      startup-config: configs/leaf6.cfg
-    
-    # Leaf Switches - VTEP4 (AS 65004)
-    leaf7:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.31
-      startup-config: configs/leaf7.cfg
-      
-    leaf8:
-      kind: ceos
-      mgmt-ipv4: 172.16.0.32
-      startup-config: configs/leaf8.cfg
-    
-    # Host devices for testing
-    host1:
-      kind: linux
-      mgmt-ipv4: 172.16.0.101
-      image: alpine:latest
-      exec:
-        - ip link add bond0 type bond mode 802.3ad
-        - ip link set eth1 master bond0
-        - ip link set eth2 master bond0
-        - ip link set bond0 up
-      
-    host2:
-      kind: linux
-      mgmt-ipv4: 172.16.0.102
-      image: alpine:latest
-      exec:
-        - ip link add bond0 type bond mode 802.3ad
-        - ip link set eth1 master bond0
-        - ip link set eth2 master bond0
-        - ip link set bond0 up
-      
-    host3:
-      kind: linux
-      mgmt-ipv4: 172.16.0.103
-      image: alpine:latest
-      exec:
-        - ip link add bond0 type bond mode 802.3ad
-        - ip link set eth1 master bond0
-        - ip link set eth2 master bond0
-        - ip link set bond0 up
-      
-    host4:
-      kind: linux
-      mgmt-ipv4: 172.16.0.104
-      image: alpine:latest
-      exec:
-        - ip link add bond0 type bond mode 802.3ad
-        - ip link set eth1 master bond0
-        - ip link set eth2 master bond0
-        - ip link set bond0 up
+    kinds:
+        arista_ceos:
+            image: arista_ceos:4.35.0F
 
-  links:
-    # Spine1 to Leaf connections (underlay fabric)
-    - endpoints: ["spine1:eth1", "leaf1:eth11"]
-    - endpoints: ["spine1:eth2", "leaf2:eth11"]
-    - endpoints: ["spine1:eth3", "leaf3:eth11"]
-    - endpoints: ["spine1:eth4", "leaf4:eth11"]
-    - endpoints: ["spine1:eth5", "leaf5:eth11"]
-    - endpoints: ["spine1:eth6", "leaf6:eth11"]
-    - endpoints: ["spine1:eth7", "leaf7:eth11"]
-    - endpoints: ["spine1:eth8", "leaf8:eth11"]
-    
-    # Spine2 to Leaf connections (underlay fabric)
-    - endpoints: ["spine2:eth1", "leaf1:eth12"]
-    - endpoints: ["spine2:eth2", "leaf2:eth12"]
-    - endpoints: ["spine2:eth3", "leaf3:eth12"]
-    - endpoints: ["spine2:eth4", "leaf4:eth12"]
-    - endpoints: ["spine2:eth5", "leaf5:eth12"]
-    - endpoints: ["spine2:eth6", "leaf6:eth12"]
-    - endpoints: ["spine2:eth7", "leaf7:eth12"]
-    - endpoints: ["spine2:eth8", "leaf8:eth12"]
-    
-    # MLAG Peer Links (leaf pairs)
-    - endpoints: ["leaf1:eth10", "leaf2:eth10"]
-    - endpoints: ["leaf3:eth10", "leaf4:eth10"]
-    - endpoints: ["leaf5:eth10", "leaf6:eth10"]
-    - endpoints: ["leaf7:eth10", "leaf8:eth10"]
-    
-    # Host connections (dual-homed to MLAG pairs for testing)
-    - endpoints: ["leaf1:eth1", "host1:eth1"]
-    - endpoints: ["leaf2:eth1", "host1:eth2"]
-    
-    - endpoints: ["leaf3:eth1", "host2:eth1"]
-    - endpoints: ["leaf4:eth1", "host2:eth2"]
-    
-    - endpoints: ["leaf5:eth1", "host3:eth1"]
-    - endpoints: ["leaf6:eth1", "host3:eth2"]
-    
-    - endpoints: ["leaf7:eth1", "host4:eth1"]
-    - endpoints: ["leaf8:eth1", "host4:eth2"]
+    nodes:
+        # Spine Switches
+        spine1:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.1
+            startup-config: configs/spine1.cfg
+
+        spine2:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.2
+            startup-config: configs/spine2.cfg
+
+        # Leaf Switches - VTEP1 (AS 65001)
+        leaf1:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.25
+            startup-config: configs/leaf1.cfg
+
+        leaf2:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.50
+            startup-config: configs/leaf2.cfg
+
+        # Leaf Switches - VTEP2 (AS 65002)
+        leaf3:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.27
+            startup-config: configs/leaf3.cfg
+
+        leaf4:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.28
+            startup-config: configs/leaf4.cfg
+
+        # Leaf Switches - VTEP3 (AS 65003)
+        leaf5:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.29
+            startup-config: configs/leaf5.cfg
+
+        leaf6:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.30
+            startup-config: configs/leaf6.cfg
+
+        # Leaf Switches - VTEP4 (AS 65004)
+        leaf7:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.31
+            startup-config: configs/leaf7.cfg
+
+        leaf8:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.32
+            startup-config: configs/leaf8.cfg
+
+        # Host devices for testing
+        host1:
+            kind: linux
+            mgmt-ipv4: 172.16.0.101
+            image: alpine:latest
+            exec:
+                - ip link add bond0 type bond mode 802.3ad
+                - ip link set eth1 master bond0
+                - ip link set eth2 master bond0
+                - ip link set bond0 up
+
+        host2:
+            kind: linux
+            mgmt-ipv4: 172.16.0.102
+            image: alpine:latest
+            exec:
+                - ip link add bond0 type bond mode 802.3ad
+                - ip link set eth1 master bond0
+                - ip link set eth2 master bond0
+                - ip link set bond0 up
+
+        host3:
+            kind: linux
+            mgmt-ipv4: 172.16.0.103
+            image: alpine:latest
+            exec:
+                - ip link add bond0 type bond mode 802.3ad
+                - ip link set eth1 master bond0
+                - ip link set eth2 master bond0
+                - ip link set bond0 up
+
+        host4:
+            kind: linux
+            mgmt-ipv4: 172.16.0.104
+            image: alpine:latest
+            exec:
+                - ip link add bond0 type bond mode 802.3ad
+                - ip link set eth1 master bond0
+                - ip link set eth2 master bond0
+                - ip link set bond0 up
+
+    links:
+        # Spine1 to Leaf connections (underlay fabric)
+        - endpoints: ["spine1:eth1", "leaf1:eth11"]
+        - endpoints: ["spine1:eth2", "leaf2:eth11"]
+        - endpoints: ["spine1:eth3", "leaf3:eth11"]
+        - endpoints: ["spine1:eth4", "leaf4:eth11"]
+        - endpoints: ["spine1:eth5", "leaf5:eth11"]
+        - endpoints: ["spine1:eth6", "leaf6:eth11"]
+        - endpoints: ["spine1:eth7", "leaf7:eth11"]
+        - endpoints: ["spine1:eth8", "leaf8:eth11"]
+
+        # Spine2 to Leaf connections (underlay fabric)
+        - endpoints: ["spine2:eth1", "leaf1:eth12"]
+        - endpoints: ["spine2:eth2", "leaf2:eth12"]
+        - endpoints: ["spine2:eth3", "leaf3:eth12"]
+        - endpoints: ["spine2:eth4", "leaf4:eth12"]
+        - endpoints: ["spine2:eth5", "leaf5:eth12"]
+        - endpoints: ["spine2:eth6", "leaf6:eth12"]
+        - endpoints: ["spine2:eth7", "leaf7:eth12"]
+        - endpoints: ["spine2:eth8", "leaf8:eth12"]
+
+        # MLAG Peer Links (leaf pairs)
+        - endpoints: ["leaf1:eth10", "leaf2:eth10"]
+        - endpoints: ["leaf3:eth10", "leaf4:eth10"]
+        - endpoints: ["leaf5:eth10", "leaf6:eth10"]
+        - endpoints: ["leaf7:eth10", "leaf8:eth10"]
+
+        # Host connections (dual-homed to MLAG pairs for testing)
+        - endpoints: ["leaf1:eth1", "host1:eth1"]
+        - endpoints: ["leaf2:eth1", "host1:eth2"]
+
+        - endpoints: ["leaf3:eth1", "host2:eth1"]
+        - endpoints: ["leaf4:eth1", "host2:eth2"]
+
+        - endpoints: ["leaf5:eth1", "host3:eth1"]
+        - endpoints: ["leaf6:eth1", "host3:eth2"]
+
+        - endpoints: ["leaf7:eth1", "host4:eth1"]
+        - endpoints: ["leaf8:eth1", "host4:eth2"]
