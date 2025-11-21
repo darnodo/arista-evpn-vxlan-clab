@@ -3,11 +3,12 @@ name: arista-evpn-fabric
 mgmt:
     network: evpn-mgmt
     ipv4-subnet: 172.16.0.0/24
+    ipv4-gw: 172.16.0.254
 
 topology:
     kinds:
         arista_ceos:
-            image: arista_ceos:4.35.0F
+            image: ceos:4.35.0F
 
     nodes:
         # Spine Switches
