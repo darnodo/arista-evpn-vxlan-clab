@@ -96,6 +96,20 @@ docker exec -it clab-arista-evpn-fabric-leaf1 Cli
 - Spine2 to Leafs: `10.0.2.0/31`, `10.0.2.2/31`, ... `10.0.2.14/31`
 - MLAG iBGP peering: `10.0.3.0/31`, `10.0.3.2/31`, `10.0.3.4/31`, `10.0.3.6/31`
 
+#### Host Network Addressing
+
+| Host | VLAN | VRF | IP Address | Gateway | Type |
+|------|------|-----|------------|---------|------|
+| host1 | 40 | default | 10.40.40.101/24 | - | L2 VXLAN |
+| host2 | 34 | gold | 10.34.34.102/24 | 10.34.34.1 | L3 VXLAN |
+| host3 | 40 | default | 10.40.40.103/24 | - | L2 VXLAN |
+| host4 | 78 | gold | 10.78.78.104/24 | 10.78.78.1 | L3 VXLAN |
+
+**Notes:**
+- Host1 and Host3 are in VLAN 40 (L2 VXLAN only) and can communicate at Layer 2
+- Host2 and Host4 are in VRF "gold" with different subnets, communicating via EVPN Type-5 routes (L3 VXLAN)
+- All hosts use LACP bonding (802.3ad) with dual-homing to MLAG leaf pairs
+
 ### Features Implemented
 
 ✅ **Underlay**
@@ -152,13 +166,51 @@ show mlag interfaces
 
 ### Test Connectivity
 
-```bash
-# From host1 to host3 (L2 VXLAN - VLAN 40)
-docker exec -it clab-arista-evpn-fabric-host1 ping 10.40.40.3
+#### L2 VXLAN Testing (VLAN 40)
+Test Layer 2 connectivity between host1 and host3 across the EVPN fabric:
 
-# Check BGP EVPN routes
+```bash
+# From host1 to host3 (same VLAN 40, different VTEPs)
+docker exec -it clab-arista-evpn-fabric-host1 ping -c 4 10.40.40.103
+
+# Check host1 interface
+docker exec -it clab-arista-evpn-fabric-host1 ip addr show bond0
+
+# From host3 to host1
+docker exec -it clab-arista-evpn-fabric-host3 ping -c 4 10.40.40.101
+```
+
+#### L3 VXLAN Testing (VRF gold)
+Test Layer 3 connectivity between host2 and host4 in VRF "gold":
+
+```bash
+# From host2 to host4 (different subnets via EVPN Type-5)
+docker exec -it clab-arista-evpn-fabric-host2 ping -c 4 10.78.78.104
+
+# From host4 to host2
+docker exec -it clab-arista-evpn-fabric-host4 ping -c 4 10.34.34.102
+
+# Check routing table on hosts
+docker exec -it clab-arista-evpn-fabric-host2 ip route
+docker exec -it clab-arista-evpn-fabric-host4 ip route
+```
+
+#### Verify EVPN Routes on Switches
+
+```bash
+# Check EVPN Type-2 routes (MAC/IP) - for VLAN 40
+ssh admin@clab-arista-evpn-fabric-leaf1
 show bgp evpn route-type mac-ip
+
+# Check EVPN Type-5 routes (IP Prefix) - for VRF gold
+ssh admin@clab-arista-evpn-fabric-leaf3
 show bgp evpn route-type ip-prefix ipv4
+
+# Verify VXLAN learned MACs
+show vxlan address-table
+
+# Check MAC addresses learned via EVPN
+show mac address-table
 ```
 
 ## 📁 Repository Structure
@@ -205,16 +257,3 @@ sudo containerlab destroy --cleanup
 - [ContainerLab Documentation](https://containerlab.dev/)
 - [RFC 7432 - BGP MPLS-Based Ethernet VPN](https://tools.ietf.org/html/rfc7432)
 - [RFC 8365 - A Network Virtualization Overlay Solution Using EVPN](https://tools.ietf.org/html/rfc8365)
-
-## 📝 License
-
-This project is provided as-is for educational and testing purposes.
-
-## 👤 Author
-
-**Damien Arnodo**
-- Email: damien@arnodo.fr
-
----
-
-⭐ If you find this lab useful, please star the repository!
