@@ -66,40 +66,28 @@ topology:
             mgmt-ipv4: 172.16.0.32
             startup-config: configs/leaf8.cfg
 
-        # Host devices for testing
+        # Host devices for testing - simplified without bonding
         host1:
             kind: linux
             mgmt-ipv4: 172.16.0.101
             image: alpine:latest
             exec:
-                # Create bonded interface with VLAN 40 tagging for L2 VXLAN test
-                - ip link add bond0 type bond mode balance-rr
+                # Simple VLAN interface on eth1 for L2 VXLAN test
+                - ip link add link eth1 name eth1.40 type vlan id 40
                 - ip link set eth1 up
-                - ip link set eth2 up
-                - ip link set eth1 master bond0
-                - ip link set eth2 master bond0
-                - ip link set bond0 up
-                # Add VLAN 40 interface on top of bond0
-                - ip link add link bond0 name bond0.40 type vlan id 40
-                - ip link set bond0.40 up
-                - ip addr add 10.40.40.101/24 dev bond0.40
+                - ip link set eth1.40 up
+                - ip addr add 10.40.40.101/24 dev eth1.40
 
         host2:
             kind: linux
             mgmt-ipv4: 172.16.0.102
             image: alpine:latest
             exec:
-                # Create bonded interface with VLAN 34 tagging for L3 VXLAN test (VRF gold)
-                - ip link add bond0 type bond mode balance-rr
+                # Simple VLAN interface on eth1 for L3 VXLAN test (VRF gold)
+                - ip link add link eth1 name eth1.34 type vlan id 34
                 - ip link set eth1 up
-                - ip link set eth2 up
-                - ip link set eth1 master bond0
-                - ip link set eth2 master bond0
-                - ip link set bond0 up
-                # Add VLAN 34 interface on top of bond0
-                - ip link add link bond0 name bond0.34 type vlan id 34
-                - ip link set bond0.34 up
-                - ip addr add 10.34.34.102/24 dev bond0.34
+                - ip link set eth1.34 up
+                - ip addr add 10.34.34.102/24 dev eth1.34
                 - ip route add default via 10.34.34.1
 
         host3:
@@ -107,34 +95,22 @@ topology:
             mgmt-ipv4: 172.16.0.103
             image: alpine:latest
             exec:
-                # Create bonded interface with VLAN 40 tagging for L2 VXLAN test
-                - ip link add bond0 type bond mode balance-rr
+                # Simple VLAN interface on eth1 for L2 VXLAN test
+                - ip link add link eth1 name eth1.40 type vlan id 40
                 - ip link set eth1 up
-                - ip link set eth2 up
-                - ip link set eth1 master bond0
-                - ip link set eth2 master bond0
-                - ip link set bond0 up
-                # Add VLAN 40 interface on top of bond0
-                - ip link add link bond0 name bond0.40 type vlan id 40
-                - ip link set bond0.40 up
-                - ip addr add 10.40.40.103/24 dev bond0.40
+                - ip link set eth1.40 up
+                - ip addr add 10.40.40.103/24 dev eth1.40
 
         host4:
             kind: linux
             mgmt-ipv4: 172.16.0.104
             image: alpine:latest
             exec:
-                # Create bonded interface with VLAN 78 tagging for L3 VXLAN test (VRF gold)
-                - ip link add bond0 type bond mode balance-rr
+                # Simple VLAN interface on eth1 for L3 VXLAN test (VRF gold)
+                - ip link add link eth1 name eth1.78 type vlan id 78
                 - ip link set eth1 up
-                - ip link set eth2 up
-                - ip link set eth1 master bond0
-                - ip link set eth2 master bond0
-                - ip link set bond0 up
-                # Add VLAN 78 interface on top of bond0
-                - ip link add link bond0 name bond0.78 type vlan id 78
-                - ip link set bond0.78 up
-                - ip addr add 10.78.78.104/24 dev bond0.78
+                - ip link set eth1.78 up
+                - ip addr add 10.78.78.104/24 dev eth1.78
                 - ip route add default via 10.78.78.1
 
     links:
@@ -164,15 +140,8 @@ topology:
         - endpoints: ["leaf5:eth10", "leaf6:eth10"]
         - endpoints: ["leaf7:eth10", "leaf8:eth10"]
 
-        # Host connections (dual-homed to MLAG pairs for testing)
+        # Host connections - single-homed to leaf1,3,5,7 (no MLAG for simplicity)
         - endpoints: ["leaf1:eth1", "host1:eth1"]
-        - endpoints: ["leaf2:eth1", "host1:eth2"]
-
         - endpoints: ["leaf3:eth1", "host2:eth1"]
-        - endpoints: ["leaf4:eth1", "host2:eth2"]
-
         - endpoints: ["leaf5:eth1", "host3:eth1"]
-        - endpoints: ["leaf6:eth1", "host3:eth2"]
-
         - endpoints: ["leaf7:eth1", "host4:eth1"]
-        - endpoints: ["leaf8:eth1", "host4:eth2"]
