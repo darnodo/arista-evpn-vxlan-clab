@@ -93,7 +93,9 @@ topology:
             binds:
                 - hosts/host2_interfaces:/etc/network/interfaces
             exec:
-                - apk add --no-cache ifupdown bonding vlan
+                - apk add --no-cache ifupdown
+                - apk add --no-cache vlan
+                - apk add --no-cache bonding
                 - modprobe bonding
                 - modprobe 8021q
                 - ifup -a
@@ -162,15 +164,15 @@ topology:
         # host1 dual-homed to leaf1 + leaf2
         - endpoints: ["leaf1:eth1", "host1:eth1"]
         - endpoints: ["leaf2:eth1", "host1:eth2"]
-        
+
         # host2 dual-homed to leaf3 + leaf4
         - endpoints: ["leaf3:eth1", "host2:eth1"]
         - endpoints: ["leaf4:eth1", "host2:eth2"]
-        
+
         # host3 dual-homed to leaf5 + leaf6
         - endpoints: ["leaf5:eth1", "host3:eth1"]
         - endpoints: ["leaf6:eth1", "host3:eth2"]
-        
+
         # host4 dual-homed to leaf7 + leaf8
         - endpoints: ["leaf7:eth1", "host4:eth1"]
         - endpoints: ["leaf8:eth1", "host4:eth2"]

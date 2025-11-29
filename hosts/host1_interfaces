@@ -2,10 +2,17 @@ auto lo
 iface lo inet loopback
 
 auto bond0
-iface bond0
+    iface bond0 inet manual
     use bond
     bond-slaves eth1 eth2
     bond-mode 802.3ad
     bond-miimon 100
     bond-lacp-rate fast
+    up ip link set $IFACE up
+
+auto bond0.40
+    iface bond0.40 inet static
+    address 10.34.34.102
+    netmask 255.255.255.0
+    vlan-raw-device bond0
     up ip link set $IFACE up

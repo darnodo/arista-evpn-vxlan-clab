@@ -2,9 +2,10 @@ auto lo
 iface lo inet loopback
 
 auto bond0
-iface bond0
+    iface bond0 inet manual
     use bond
     bond-slaves eth1 eth2
     bond-mode 802.3ad
     bond-miimon 100
     bond-lacp-rate fast
+    up ip link set $IFACE up
