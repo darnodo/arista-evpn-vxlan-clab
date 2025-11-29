@@ -4,14 +4,13 @@ iface lo inet loopback
 # Bond interface with LACP (802.3ad)
 auto bond0
 iface bond0 inet manual
-    bond-mode 4
+    bond-members eth1 eth2
+    bond-mode 802.3ad
     bond-miimon 100
-    bond-lacp-rate 1
-    bond-slaves eth1 eth2
+    bond-lacp-rate fast
 
 # VLAN 34 on bond0
 auto bond0.34
 iface bond0.34 inet static
     address 10.34.34.102
     netmask 255.255.255.0
-    vlan-raw-device bond0
