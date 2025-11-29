@@ -105,12 +105,12 @@ dual-primary detection  : Configured
 
 **Troubleshooting:**
 
-| Issue                     | Cause                               | Fix                                       |
-| ------------------------- | ----------------------------------- | ----------------------------------------- |
-| state: `Inactive`         | Peer-link down                      | Check Po999 and Ethernet10                |
-| negotiation: `Connecting` | VLAN4090 issue                      | Verify IP addressing, peer-address config |
-| peer-link: `Down`         | Port-Channel999 down                | Check `show port-channel 999`             |
-| dual-primary: `Detected`  | Peer-link failed + heartbeat failed | Check mgmt network connectivity           |
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| state: `Inactive` | Peer-link down | Check Po999 and Ethernet10 |
+| negotiation: `Connecting` | VLAN4090 issue | Verify IP addressing, peer-address config |
+| peer-link: `Down` | Port-Channel999 down | Check `show port-channel 999` |
+| dual-primary: `Detected` | Peer-link failed + heartbeat failed | Check mgmt network connectivity |
 
 ---
 
@@ -123,8 +123,8 @@ show port-channel 999
 # Detailed view
 show port-channel 999 detailed
 
-# LACP status
-show lacp interface Port-Channel999
+# LACP status (if using LACP mode)
+show lacp interface Ethernet10
 ```
 
 **Expected Output:**
@@ -150,10 +150,13 @@ Active Ports: Ethernet10
 # Port-Channel status
 show port-channel 1
 
-# MLAG status for Po1
-show mlag interfaces Port-Channel1
+# Port-Channel detailed view
+show port-channel 1 detailed
 
-# LACP neighbor
+# MLAG interfaces status
+show mlag interfaces
+
+# LACP neighbor (if LACP established)
 show lacp neighbor
 ```
 
@@ -175,12 +178,13 @@ Active Ports: Ethernet1
 
 **Troubleshooting:**
 
-| Issue                 | Cause                        | Fix                              |
-| --------------------- | ---------------------------- | -------------------------------- |
-| `inactive`            | MLAG peering down            | Fix MLAG first (section 2.1)     |
-| `active-partial`      | Remote Po1 down on peer leaf | Check peer leaf's Po1            |
-| `configured-inactive` | Missing `mlag 1` config      | Add `mlag 1` to Po1              |
-| No LACP neighbor      | Host bonding issue           | Check host: `ip link show bond0` |
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| `inactive` | MLAG peering down | Fix MLAG first (section 2.1) |
+| `active-partial` | Remote Po1 down on peer leaf | Check peer leaf's Po1 |
+| `configured-inactive` | Missing `mlag 1` config | Add `mlag 1` to Po1 |
+| No LACP neighbor | Host bonding issue | Check host: `ip link show bond0` |
+| Ports in fallback mode | LACP not negotiating | Normal - will transition after LACP establishes |
 
 ---
 
@@ -758,13 +762,13 @@ show vxlan address-table vlan 40
 
 **Common Causes:**
 
-| Issue                | Fix                                               |
-| -------------------- | ------------------------------------------------- |
-| Port-Channel down    | Check LACP, add fallback config                   |
-| MLAG not synced      | Fix MLAG peering (VLAN 4090)                      |
-| VNI not configured   | Add `vxlan vlan 40 vni 110040`                    |
+| Issue | Fix |
+|-------|-----|
+| Port-Channel down | Check LACP, add fallback config |
+| MLAG not synced | Fix MLAG peering (VLAN 4090) |
+| VNI not configured | Add `vxlan vlan 40 vni 110040` |
 | EVPN not advertising | Add `redistribute learned` under `vlan 40` in BGP |
-| Wrong route-target   | Verify RT matches on all VTEPs                    |
+| Wrong route-target | Verify RT matches on all VTEPs |
 
 ---
 
@@ -798,11 +802,11 @@ show ip virtual-router
 
 **Common Causes:**
 
-| Issue                  | Fix                                           |
-| ---------------------- | --------------------------------------------- |
-| SVI not in VRF         | Add `vrf gold` under `interface Vlan34`       |
-| VRF not mapped to VNI  | Add `vxlan vrf gold vni 100001`               |
-| Route-target mismatch  | Verify `route-target both evpn 1:100001`      |
+| Issue | Fix |
+|-------|-----|
+| SVI not in VRF | Add `vrf gold` under `interface Vlan34` |
+| VRF not mapped to VNI | Add `vxlan vrf gold vni 100001` |
+| Route-target mismatch | Verify `route-target both evpn 1:100001` |
 | BGP not redistributing | Add `redistribute connected` under `vrf gold` |
 
 ---
@@ -939,7 +943,7 @@ show interfaces Vxlan1 | include "is up|Source interface"
 show vxlan vtep
 
 echo "=== Port-Channels ==="
-show port-channel summary
+show port-channel 1
 
 echo "=== MAC Addresses ==="
 show mac address-table count
