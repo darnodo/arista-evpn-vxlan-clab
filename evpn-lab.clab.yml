@@ -67,88 +67,58 @@ topology:
             startup-config: configs/leaf8.cfg
 
         # Host devices - DUAL-HOMED with LACP bonding to MLAG pairs
+        # Using binds to mount interface configuration files
         host1:
             kind: linux
             mgmt-ipv4: 172.16.0.101
             image: alpine:latest
+            binds:
+                - hosts/host1_interfaces:/etc/network/interfaces
             exec:
-                # Dual-homed LACP bond to leaf1 + leaf2 for L2 VXLAN test (VLAN 40)
-                # Using mode 4 (802.3ad) explicitly for Alpine Linux compatibility
-                - ip link add bond0 type bond mode 4
-                - ip link set address 00:c1:ab:00:00:11 dev bond0
-                - ip link set eth1 down
-                - ip link set eth2 down
-                - ip link set eth1 master bond0
-                - ip link set eth2 master bond0
-                - ip link set eth1 up
-                - ip link set eth2 up
-                - ip link set bond0 up
-                # VLAN interface on bond
-                - ip link add link bond0 name bond0.40 type vlan id 40
-                - ip link set bond0.40 up
-                - ip addr add 10.40.40.101/24 dev bond0.40
+                # Install required packages for bonding and VLAN support
+                - apk add --no-cache ifupdown bonding vlan
+                # Load bonding kernel module
+                - modprobe bonding
+                # Load 8021q module for VLAN support
+                - modprobe 8021q
+                # Bring up interfaces using the mounted configuration
+                - ifup -a
 
         host2:
             kind: linux
             mgmt-ipv4: 172.16.0.102
             image: alpine:latest
+            binds:
+                - hosts/host2_interfaces:/etc/network/interfaces
             exec:
-                # Dual-homed LACP bond to leaf3 + leaf4 for L3 VXLAN test (VLAN 34, VRF gold)
-                - ip link add bond0 type bond mode 4
-                - ip link set address 00:c1:ab:00:00:22 dev bond0
-                - ip link set eth1 down
-                - ip link set eth2 down
-                - ip link set eth1 master bond0
-                - ip link set eth2 master bond0
-                - ip link set eth1 up
-                - ip link set eth2 up
-                - ip link set bond0 up
-                # VLAN interface on bond
-                - ip link add link bond0 name bond0.34 type vlan id 34
-                - ip link set bond0.34 up
-                - ip addr add 10.34.34.102/24 dev bond0.34
-                - ip route add default via 10.34.34.1
+                - apk add --no-cache ifupdown bonding vlan
+                - modprobe bonding
+                - modprobe 8021q
+                - ifup -a
 
         host3:
             kind: linux
             mgmt-ipv4: 172.16.0.103
             image: alpine:latest
+            binds:
+                - hosts/host3_interfaces:/etc/network/interfaces
             exec:
-                # Dual-homed LACP bond to leaf5 + leaf6 for L2 VXLAN test (VLAN 40)
-                - ip link add bond0 type bond mode 4
-                - ip link set address 00:c1:ab:00:00:33 dev bond0
-                - ip link set eth1 down
-                - ip link set eth2 down
-                - ip link set eth1 master bond0
-                - ip link set eth2 master bond0
-                - ip link set eth1 up
-                - ip link set eth2 up
-                - ip link set bond0 up
-                # VLAN interface on bond
-                - ip link add link bond0 name bond0.40 type vlan id 40
-                - ip link set bond0.40 up
-                - ip addr add 10.40.40.103/24 dev bond0.40
+                - apk add --no-cache ifupdown bonding vlan
+                - modprobe bonding
+                - modprobe 8021q
+                - ifup -a
 
         host4:
             kind: linux
             mgmt-ipv4: 172.16.0.104
             image: alpine:latest
+            binds:
+                - hosts/host4_interfaces:/etc/network/interfaces
             exec:
-                # Dual-homed LACP bond to leaf7 + leaf8 for L3 VXLAN test (VLAN 78, VRF gold)
-                - ip link add bond0 type bond mode 4
-                - ip link set address 00:c1:ab:00:00:44 dev bond0
-                - ip link set eth1 down
-                - ip link set eth2 down
-                - ip link set eth1 master bond0
-                - ip link set eth2 master bond0
-                - ip link set eth1 up
-                - ip link set eth2 up
-                - ip link set bond0 up
-                # VLAN interface on bond
-                - ip link add link bond0 name bond0.78 type vlan id 78
-                - ip link set bond0.78 up
-                - ip addr add 10.78.78.104/24 dev bond0.78
-                - ip route add default via 10.78.78.1
+                - apk add --no-cache ifupdown bonding vlan
+                - modprobe bonding
+                - modprobe 8021q
+                - ifup -a
 
     links:
         # Spine1 to Leaf connections (underlay fabric)
