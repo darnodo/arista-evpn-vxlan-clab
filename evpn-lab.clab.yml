@@ -67,7 +67,6 @@ topology:
             startup-config: configs/leaf8.cfg
 
         # Host devices - DUAL-HOMED with LACP bonding to MLAG pairs
-        # Using binds to mount interface configuration files
         host1:
             kind: linux
             mgmt-ipv4: 172.16.0.101
@@ -75,14 +74,17 @@ topology:
             binds:
                 - hosts/host1_interfaces:/etc/network/interfaces
             exec:
-                # Install required packages for bonding and VLAN support
+                # Install required packages
                 - apk add --no-cache ifupdown bonding vlan
-                # Load bonding kernel module
+                # Load kernel modules
                 - modprobe bonding
-                # Load 8021q module for VLAN support
                 - modprobe 8021q
-                # Bring up interfaces using the mounted configuration
+                # Bring up bond0 via ifupdown
                 - ifup -a
+                # Create VLAN interface manually (ifupdown-ng limitation)
+                - ip link add link bond0 name bond0.40 type vlan id 40
+                - ip link set bond0.40 up
+                - ip addr add 10.40.40.101/24 dev bond0.40
 
         host2:
             kind: linux
@@ -95,6 +97,9 @@ topology:
                 - modprobe bonding
                 - modprobe 8021q
                 - ifup -a
+                - ip link add link bond0 name bond0.34 type vlan id 34
+                - ip link set bond0.34 up
+                - ip addr add 10.34.34.102/24 dev bond0.34
 
         host3:
             kind: linux
@@ -107,6 +112,9 @@ topology:
                 - modprobe bonding
                 - modprobe 8021q
                 - ifup -a
+                - ip link add link bond0 name bond0.40 type vlan id 40
+                - ip link set bond0.40 up
+                - ip addr add 10.40.40.103/24 dev bond0.40
 
         host4:
             kind: linux
@@ -119,6 +127,9 @@ topology:
                 - modprobe bonding
                 - modprobe 8021q
                 - ifup -a
+                - ip link add link bond0 name bond0.78 type vlan id 78
+                - ip link set bond0.78 up
+                - ip addr add 10.78.78.104/24 dev bond0.78
 
     links:
         # Spine1 to Leaf connections (underlay fabric)
