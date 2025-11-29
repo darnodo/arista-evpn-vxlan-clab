@@ -8,3 +8,4 @@ iface bond0
     bond-mode 802.3ad
     bond-miimon 100
     bond-lacp-rate fast
+    up ip link set $IFACE up
