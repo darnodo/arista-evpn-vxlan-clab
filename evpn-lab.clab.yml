@@ -73,7 +73,8 @@ topology:
             image: alpine:latest
             exec:
                 # Dual-homed LACP bond to leaf1 + leaf2 for L2 VXLAN test (VLAN 40)
-                - ip link add bond0 type bond mode 802.3ad
+                # Using mode 4 (802.3ad) explicitly for Alpine Linux compatibility
+                - ip link add bond0 type bond mode 4
                 - ip link set address 00:c1:ab:00:00:11 dev bond0
                 - ip link set eth1 down
                 - ip link set eth2 down
@@ -93,7 +94,7 @@ topology:
             image: alpine:latest
             exec:
                 # Dual-homed LACP bond to leaf3 + leaf4 for L3 VXLAN test (VLAN 34, VRF gold)
-                - ip link add bond0 type bond mode 802.3ad
+                - ip link add bond0 type bond mode 4
                 - ip link set address 00:c1:ab:00:00:22 dev bond0
                 - ip link set eth1 down
                 - ip link set eth2 down
@@ -114,7 +115,7 @@ topology:
             image: alpine:latest
             exec:
                 # Dual-homed LACP bond to leaf5 + leaf6 for L2 VXLAN test (VLAN 40)
-                - ip link add bond0 type bond mode 802.3ad
+                - ip link add bond0 type bond mode 4
                 - ip link set address 00:c1:ab:00:00:33 dev bond0
                 - ip link set eth1 down
                 - ip link set eth2 down
@@ -134,7 +135,7 @@ topology:
             image: alpine:latest
             exec:
                 # Dual-homed LACP bond to leaf7 + leaf8 for L3 VXLAN test (VLAN 78, VRF gold)
-                - ip link add bond0 type bond mode 802.3ad
+                - ip link add bond0 type bond mode 4
                 - ip link set address 00:c1:ab:00:00:44 dev bond0
                 - ip link set eth1 down
                 - ip link set eth2 down
