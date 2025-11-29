@@ -1,17 +1,10 @@
 auto lo
 iface lo inet loopback
 
-# Bond interface with LACP (802.3ad)
 auto bond0
-iface bond0 inet manual
+iface bond0
     use bond
     bond-slaves eth1 eth2
     bond-mode 802.3ad
     bond-miimon 100
     bond-lacp-rate fast
-
-# VLAN 40 on bond0
-auto bond0.40
-iface bond0.40 inet static
-    address 10.40.40.103
-    netmask 255.255.255.0
