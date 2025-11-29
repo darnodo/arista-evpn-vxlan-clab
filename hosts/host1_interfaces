@@ -4,7 +4,8 @@ iface lo inet loopback
 # Bond interface with LACP (802.3ad)
 auto bond0
 iface bond0 inet manual
-    bond-members eth1 eth2
+    use bond
+    bond-slaves eth1 eth2
     bond-mode 802.3ad
     bond-miimon 100
     bond-lacp-rate fast
