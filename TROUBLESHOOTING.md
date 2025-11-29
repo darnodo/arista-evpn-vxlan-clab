@@ -20,11 +20,13 @@ This guide provides systematic troubleshooting steps for Arista EVPN-VXLAN fabri
 ## 🔍 Troubleshooting Methodology
 
 **Always troubleshoot bottom-up:**
+
 ```
 Physical Links → MLAG → Underlay BGP → Overlay EVPN → VXLAN → Traffic Flow
 ```
 
 **For each layer:**
+
 1. ✅ Verify expected state
 2. ❌ Identify issues
 3. 🔧 Apply fixes
@@ -50,6 +52,7 @@ show interfaces Ethernet11 | include error|drop|discard
 ```
 
 **Expected Output:**
+
 ```
 Ethernet11 is up, line protocol is up (connected)
   Hardware is Ethernet, address is 001c.7300.000b
@@ -58,6 +61,7 @@ Ethernet11 is up, line protocol is up (connected)
 ```
 
 **Troubleshooting:**
+
 - `down/down` → Physical issue (cable, peer interface)
 - `up/down` → Layer 2 issue (switchport config, STP)
 - Check MTU: Should be **9214** on underlay P2P links
@@ -82,6 +86,7 @@ show mlag interfaces
 ```
 
 **Expected Output (show mlag):**
+
 ```
 MLAG Configuration:
 domain-id               : leafs
@@ -100,12 +105,12 @@ dual-primary detection  : Configured
 
 **Troubleshooting:**
 
-| Issue | Cause | Fix |
-|-------|-------|-----|
-| state: `Inactive` | Peer-link down | Check Po999 and Ethernet10 |
-| negotiation: `Connecting` | VLAN4090 issue | Verify IP addressing, peer-address config |
-| peer-link: `Down` | Port-Channel999 down | Check `show port-channel 999` |
-| dual-primary: `Detected` | Peer-link failed + heartbeat failed | Check mgmt network connectivity |
+| Issue                     | Cause                               | Fix                                       |
+| ------------------------- | ----------------------------------- | ----------------------------------------- |
+| state: `Inactive`         | Peer-link down                      | Check Po999 and Ethernet10                |
+| negotiation: `Connecting` | VLAN4090 issue                      | Verify IP addressing, peer-address config |
+| peer-link: `Down`         | Port-Channel999 down                | Check `show port-channel 999`             |
+| dual-primary: `Detected`  | Peer-link failed + heartbeat failed | Check mgmt network connectivity           |
 
 ---
 
@@ -123,12 +128,14 @@ show lacp interface Port-Channel999
 ```
 
 **Expected Output:**
+
 ```
 Port Channel Port-Channel999 (Fallback State: Unconfigured):
 Active Ports: Ethernet10
 ```
 
 **Troubleshooting:**
+
 - No active ports → Check `show interfaces Ethernet10`
 - Wrong mode → Should be `switchport mode trunk`
 - Missing VLANs → Check `switchport trunk group mlag-peer`
@@ -151,12 +158,14 @@ show lacp neighbor
 ```
 
 **Expected Output (show port-channel 1):**
+
 ```
 Port Channel Port-Channel1 (Fallback State: individual):
 Active Ports: Ethernet1
 ```
 
 **Expected Output (show mlag interfaces):**
+
 ```
                                             local/remote
  mlag        desc             state       local       remote          status
@@ -166,12 +175,12 @@ Active Ports: Ethernet1
 
 **Troubleshooting:**
 
-| Issue | Cause | Fix |
-|-------|-------|-----|
-| `inactive` | MLAG peering down | Fix MLAG first (section 2.1) |
-| `active-partial` | Remote Po1 down on peer leaf | Check peer leaf's Po1 |
-| `configured-inactive` | Missing `mlag 1` config | Add `mlag 1` to Po1 |
-| No LACP neighbor | Host bonding issue | Check host: `ip link show bond0` |
+| Issue                 | Cause                        | Fix                              |
+| --------------------- | ---------------------------- | -------------------------------- |
+| `inactive`            | MLAG peering down            | Fix MLAG first (section 2.1)     |
+| `active-partial`      | Remote Po1 down on peer leaf | Check peer leaf's Po1            |
+| `configured-inactive` | Missing `mlag 1` config      | Add `mlag 1` to Po1              |
+| No LACP neighbor      | Host bonding issue           | Check host: `ip link show bond0` |
 
 ---
 
@@ -186,6 +195,7 @@ ping vrf default 10.0.3.1 source 10.0.3.0
 ```
 
 **Expected:**
+
 - Interface: `up/up`
 - Ping: Successful
 
@@ -206,6 +216,7 @@ show ip bgp neighbor 10.0.1.1
 ```
 
 **Expected Output:**
+
 ```
 Neighbor         V  AS      MsgRcvd   MsgSent  InQ OutQ  Up/Down State  PfxRcd PfxAcc
 10.0.1.1         4  65001       245       243    0    0 02:01:23 Estab  2      2
@@ -224,6 +235,7 @@ show bgp peer-group underlay
 ```
 
 **Expected neighbors:**
+
 - eBGP to both spines (state: `Estab`)
 - iBGP to MLAG peer (state: `Estab`)
 
@@ -250,10 +262,12 @@ ping 10.0.255.14 source 10.0.255.11
 ```
 
 **Expected:**
+
 - All pings successful
 - RTT < 10ms (virtual environment)
 
 **Troubleshooting:**
+
 ```bash
 # Check routing table
 show ip route
@@ -266,6 +280,7 @@ show ip bgp neighbors 10.0.1.0 advertised-routes
 ```
 
 **Common issues:**
+
 - Missing `network 10.0.250.X/32` in BGP config
 - Missing `network 10.0.255.X/32` (VTEP loopback!)
 - BGP neighbor not activated in IPv4 address-family
@@ -283,6 +298,7 @@ show ip route 10.0.250.13 detail
 ```
 
 **Expected Output:**
+
 ```
  B E    10.0.250.13/32 [20/0] via 10.0.1.0, Ethernet11
                                via 10.0.2.0, Ethernet12
@@ -307,6 +323,7 @@ show bgp evpn neighbor 10.0.250.11
 ```
 
 **Expected:**
+
 - All 8 leafs in `Estab` state
 - PfxRcd > 0 (receiving EVPN routes)
 
@@ -318,6 +335,7 @@ show bgp evpn summary
 ```
 
 **Expected:**
+
 - Both spines in `Estab` state
 - PfxRcd > 0
 
@@ -345,6 +363,7 @@ show bgp evpn route-type mac-ip
 ```
 
 Output should show:
+
 - Local MACs (learned on Port-Channel1)
 - Remote MACs (from other VTEPs via EVPN)
 
@@ -355,6 +374,7 @@ show bgp evpn route-type ip-prefix ipv4
 ```
 
 Output should show:
+
 - Local subnets (e.g., 10.34.34.0/24 on VTEP2)
 - Remote subnets (e.g., 10.78.78.0/24 from VTEP4)
 
@@ -363,6 +383,7 @@ Output should show:
 ### 4.3 Troubleshoot EVPN Issues
 
 **No EVPN neighbors:**
+
 ```bash
 # Check if EVPN is activated
 show running-config | section evpn
@@ -373,6 +394,7 @@ show running-config | section evpn
 ```
 
 **No EVPN routes received:**
+
 ```bash
 # Check route-target configuration
 show running-config | section vlan 40
@@ -385,6 +407,7 @@ show running-config | section vlan 40
 ```
 
 **EVPN routes received but not installed:**
+
 ```bash
 # Check VXLAN interface
 show interfaces Vxlan1
@@ -414,6 +437,7 @@ show vxlan address-table
 ```
 
 **Expected Output (show interfaces Vxlan1):**
+
 ```
 Vxlan1 is up, line protocol is up (connected)
   Hardware is Vxlan
@@ -428,6 +452,7 @@ Vxlan1 is up, line protocol is up (connected)
 ```
 
 **Expected Output (show vxlan vtep):**
+
 ```
 Remote VTEPS for Vxlan1:
 
@@ -458,6 +483,7 @@ show mac address-table vlan 40
 ```
 
 **Expected Output:**
+
 ```
           Mac Address Table
 ------------------------------------------------------------------
@@ -483,6 +509,7 @@ show vxlan address-table vlan 40
 ```
 
 **Expected Output:**
+
 ```
           Vxlan Mac Address Table
 ----------------------------------------------------------------------
@@ -506,6 +533,7 @@ Both hosts in VLAN 40 (10.40.40.0/24)
 #### Step 1: Host Sends Packet
 
 **On host1:**
+
 ```bash
 docker exec -it clab-arista-evpn-fabric-host1 sh
 
@@ -520,6 +548,7 @@ ping 10.40.40.103
 ```
 
 **Expected:**
+
 - bond0: `state UP`
 - bond0.40: `state UP`
 
@@ -540,6 +569,7 @@ show mac address-table dynamic vlan 40
 ```
 
 **Traffic flow:**
+
 ```
 host1:bond0.40 → [802.1Q VLAN 40] → leaf1:Eth1 → Po1
 ```
@@ -567,6 +597,7 @@ show vxlan address-table address 00c1.ab00.0033
 ```
 
 **Encapsulation:**
+
 ```
 Original: [Eth: host1→host3][IP: 10.40.40.101→103][ICMP]
 
@@ -594,6 +625,7 @@ show ip route 10.0.255.13
 ECMP: Packet can go via spine1 OR spine2!
 
 **Spine forwards based on outer IP:**
+
 ```bash
 # On spine1
 show ip route 10.0.255.13
@@ -616,12 +648,14 @@ show interfaces Vxlan1 | include packets
 ```
 
 **Decapsulation:**
+
 ```
 VXLAN packet → Strip outer IP/UDP/VXLAN headers
 → Original frame: [Eth: host1→host3][IP: 10.40.40.101→103][ICMP]
 ```
 
 **Leaf5 checks MAC table:**
+
 ```bash
 show mac address-table address 00c1.ab00.0033
 
@@ -638,6 +672,7 @@ leaf5:Vxlan1 → VLAN 40 → Po1 → Eth1 → host3:bond0.40
 ```
 
 **On host3:**
+
 ```bash
 docker exec -it clab-arista-evpn-fabric-host3 sh
 
@@ -685,6 +720,7 @@ leaf1:Eth11 ──────► spine1 ──────► leaf5:Eth11 ─�
 ### Issue 1: Ping Fails Between Hosts in Same VLAN
 
 **Symptoms:**
+
 - Host1 cannot ping Host3 (both VLAN 40)
 - MACs not learning
 
@@ -722,19 +758,20 @@ show vxlan address-table vlan 40
 
 **Common Causes:**
 
-| Issue | Fix |
-|-------|-----|
-| Port-Channel down | Check LACP, add fallback config |
-| MLAG not synced | Fix MLAG peering (VLAN 4090) |
-| VNI not configured | Add `vxlan vlan 40 vni 110040` |
+| Issue                | Fix                                               |
+| -------------------- | ------------------------------------------------- |
+| Port-Channel down    | Check LACP, add fallback config                   |
+| MLAG not synced      | Fix MLAG peering (VLAN 4090)                      |
+| VNI not configured   | Add `vxlan vlan 40 vni 110040`                    |
 | EVPN not advertising | Add `redistribute learned` under `vlan 40` in BGP |
-| Wrong route-target | Verify RT matches on all VTEPs |
+| Wrong route-target   | Verify RT matches on all VTEPs                    |
 
 ---
 
 ### Issue 2: Ping Fails Between VRFs (L3 VXLAN)
 
 **Symptoms:**
+
 - host2 (10.34.34.102) cannot ping host4 (10.78.78.104)
 - Both in VRF gold
 
@@ -761,11 +798,11 @@ show ip virtual-router
 
 **Common Causes:**
 
-| Issue | Fix |
-|-------|-----|
-| SVI not in VRF | Add `vrf gold` under `interface Vlan34` |
-| VRF not mapped to VNI | Add `vxlan vrf gold vni 100001` |
-| Route-target mismatch | Verify `route-target both evpn 1:100001` |
+| Issue                  | Fix                                           |
+| ---------------------- | --------------------------------------------- |
+| SVI not in VRF         | Add `vrf gold` under `interface Vlan34`       |
+| VRF not mapped to VNI  | Add `vxlan vrf gold vni 100001`               |
+| Route-target mismatch  | Verify `route-target both evpn 1:100001`      |
 | BGP not redistributing | Add `redistribute connected` under `vrf gold` |
 
 ---
@@ -773,6 +810,7 @@ show ip virtual-router
 ### Issue 3: MLAG Port-Channel Inactive
 
 **Symptoms:**
+
 ```
 show mlag interfaces
 # mlag 1: configured-inactive
@@ -797,6 +835,7 @@ show running-config interfaces Port-Channel1
 ```
 
 **Fix:**
+
 - Ensure BOTH leafs have `mlag 1` configured
 - Ensure MLAG peering is up first
 - Check peer leaf's Port-Channel status
@@ -806,6 +845,7 @@ show running-config interfaces Port-Channel1
 ### Issue 4: LACP Not Establishing
 
 **Symptoms:**
+
 ```
 show port-channel 1
 # No Active Ports
@@ -814,6 +854,7 @@ show port-channel 1
 ```
 
 **Fix:**
+
 ```bash
 # Add LACP fallback
 configure
@@ -823,6 +864,7 @@ interface Port-Channel1
 ```
 
 **Verify:**
+
 ```bash
 show port-channel 1
 # → Should show Ethernet1 in "Active Ports" (fallback mode)
@@ -837,6 +879,7 @@ show lacp neighbor
 ### Issue 5: BGP EVPN Neighbors Not Establishing
 
 **Symptoms:**
+
 ```
 show bgp evpn summary
 # Neighbors stuck in "Connect" or "Active" state
@@ -861,6 +904,7 @@ show log | include BGP|EVPN
 ```
 
 **Common Fixes:**
+
 - Add `neighbor evpn activate` in `address-family evpn`
 - Check `update-source Loopback0` is configured
 - Verify `ebgp-multihop 3` for leaf-spine peering
