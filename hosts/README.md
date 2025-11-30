@@ -31,7 +31,7 @@ iface lo inet loopback
 
 auto bond0
 iface bond0 inet manual
-    bond-mode 4                  # LACP (802.3ad)
+    bond-mode 4                 # LACP (802.3ad)
     bond-miimon 100
     bond-lacp-rate 1
     bond-slaves eth1 eth2
@@ -71,5 +71,6 @@ No need to manually configure hosts after deployment - these files ensure clean,
 
 ## See Also
 
-- [HOST_INTERFACE_CONFIGURATION.md](../docs/HOST_INTERFACE_CONFIGURATION.md) - Detailed documentation
-- [DEPLOYMENT_GUIDE.md](../DEPLOYMENT_GUIDE.md) - Lab deployment instructions
+- [Main README](../README.md) - Project overview and quick start
+- [TROUBLESHOOTING.md](../TROUBLESHOOTING.md) - Troubleshooting guide
+- [END_TO_END_TESTING.md](../END_TO_END_TESTING.md) - Testing procedures
