@@ -14,7 +14,7 @@ This lab demonstrates a complete EVPN-VXLAN data center fabric with:
 ## 📐 Topology
 
 ```
-                    ┌─────────┐  ┌─────────┐
+                    ┌──────────┐  ┌──────────┐
                     │ Spine1  │  │ Spine2  │
                     │ AS65000 │  │ AS65000 │
                     └────┬────┘  └────┬────┘
@@ -218,7 +218,9 @@ show mac address-table
 ```
 arista-evpn-vxlan-clab/
 ├── README.md                    # This file
-├── evpn-lab.clab.yml           # ContainerLab topology
+├── TROUBLESHOOTING.md           # Troubleshooting guide
+├── END_TO_END_TESTING.md        # Testing procedures
+├── evpn-lab.clab.yml            # ContainerLab topology
 ├── configs/                     # Device configurations
 │   ├── spine1.cfg
 │   ├── spine2.cfg
@@ -230,24 +232,22 @@ arista-evpn-vxlan-clab/
 │   ├── leaf6.cfg
 │   ├── leaf7.cfg
 │   └── leaf8.cfg
-├── docs/                        # Documentation
-│   ├── configuration-guide.md
-│   ├── validation-commands.md
-│   └── topology-diagram.png
-└── scripts/                     # Helper scripts
-    ├── deploy.sh
-    ├── test-connectivity.sh
-    └── cleanup.sh
+└── hosts/                       # Host interface configurations
+    ├── README.md
+    ├── host1_interfaces
+    ├── host2_interfaces
+    ├── host3_interfaces
+    └── host4_interfaces
 ```
 
-## 🔧 Cleanup
+## 🗑️ Cleanup
 
 ```bash
 # Destroy the lab
 sudo containerlab destroy -t evpn-lab.clab.yml
 
 # Remove all related containers and networks
-sudo containerlab destroy --cleanup
+sudo containerlab destroy -t evpn-lab.clab.yml --cleanup
 ```
 
 ## 📚 References
