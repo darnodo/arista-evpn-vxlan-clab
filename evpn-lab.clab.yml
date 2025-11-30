@@ -74,17 +74,10 @@ topology:
             binds:
                 - hosts/host1_interfaces:/etc/network/interfaces
             exec:
-                # Install required packages
                 - apk add --no-cache ifupdown bonding vlan
-                # Load kernel modules
                 - modprobe bonding
                 - modprobe 8021q
-                # Bring up bond0 via ifupdown
                 - ifup -a
-                # Create VLAN interface manually (ifupdown-ng limitation)
-                - ip link add link bond0 name bond0.40 type vlan id 40
-                - ip link set bond0.40 up
-                - ip addr add 10.40.40.101/24 dev bond0.40
 
         host2:
             kind: linux
@@ -93,15 +86,10 @@ topology:
             binds:
                 - hosts/host2_interfaces:/etc/network/interfaces
             exec:
-                - apk add --no-cache ifupdown
-                - apk add --no-cache vlan
-                - apk add --no-cache bonding
+                - apk add --no-cache ifupdown bonding vlan
                 - modprobe bonding
                 - modprobe 8021q
                 - ifup -a
-                - ip link add link bond0 name bond0.34 type vlan id 34
-                - ip link set bond0.34 up
-                - ip addr add 10.34.34.102/24 dev bond0.34
 
         host3:
             kind: linux
@@ -114,9 +102,6 @@ topology:
                 - modprobe bonding
                 - modprobe 8021q
                 - ifup -a
-                - ip link add link bond0 name bond0.40 type vlan id 40
-                - ip link set bond0.40 up
-                - ip addr add 10.40.40.103/24 dev bond0.40
 
         host4:
             kind: linux
@@ -129,9 +114,6 @@ topology:
                 - modprobe bonding
                 - modprobe 8021q
                 - ifup -a
-                - ip link add link bond0 name bond0.78 type vlan id 78
-                - ip link set bond0.78 up
-                - ip addr add 10.78.78.104/24 dev bond0.78
 
     links:
         # Spine1 to Leaf connections (underlay fabric)
