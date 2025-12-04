@@ -14,22 +14,7 @@ This lab demonstrates a complete EVPN-VXLAN data center fabric with:
 
 ## 📐 Topology
 
-```
-                    ┌──────────┐  ┌──────────┐
-                    │ Spine1  │  │ Spine2  │
-                    │ AS65000 │  │ AS65000 │
-                    └────┬────┘  └────┬────┘
-                         │            │
-         ┌───────────────┼────────────┼───────────────┐
-         │               │            │               │
-    ┌────┴────┐     ┌────┴────┐ ┌────┴────┐     ┌────┴────┐
-    │ Leaf1/2 │     │ Leaf3/4 │ │ Leaf5/6 │     │ Leaf7/8 │
-    │ AS65001 │     │ AS65002 │ │ AS65003 │     │ AS65004 │
-    │  VTEP1  │     │  VTEP2  │ │  VTEP3  │     │  VTEP4  │
-    └────┬────┘     └────┬────┘ └────┬────┘     └────┬────┘
-         │               │            │               │
-      Host1           Host2        Host3           Host4
-```
+![Topology](assets/topology.svg)
 
 ## 🚀 Quick Start
 
