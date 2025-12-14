@@ -3,7 +3,176 @@
   "freeShapeAnnotations": [],
   "groupStyleAnnotations": [],
   "cloudNodeAnnotations": [],
-  "nodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "spine1",
+      "icon": "router",
+      "position": {
+        "x": 91,
+        "y": 105
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "spine2",
+      "icon": "router",
+      "position": {
+        "x": 217,
+        "y": 105
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "leaf1",
+      "icon": "router",
+      "position": {
+        "x": -63,
+        "y": 203
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "leaf2",
+      "icon": "router",
+      "position": {
+        "x": -7,
+        "y": 203
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "leaf3",
+      "icon": "router",
+      "position": {
+        "x": 63,
+        "y": 203
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "leaf4",
+      "icon": "router",
+      "position": {
+        "x": 119,
+        "y": 203
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "leaf5",
+      "icon": "router",
+      "position": {
+        "x": 189,
+        "y": 203
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "leaf6",
+      "icon": "router",
+      "position": {
+        "x": 245,
+        "y": 203
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "leaf7",
+      "icon": "router",
+      "position": {
+        "x": 315,
+        "y": 203
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "leaf8",
+      "icon": "router",
+      "position": {
+        "x": 371,
+        "y": 203
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "host1",
+      "icon": "router",
+      "position": {
+        "x": -35,
+        "y": 259
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "host2",
+      "icon": "router",
+      "position": {
+        "x": 91,
+        "y": 259
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "host3",
+      "icon": "router",
+      "position": {
+        "x": 217,
+        "y": 259
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    },
+    {
+      "id": "host4",
+      "icon": "router",
+      "position": {
+        "x": 343,
+        "y": 259
+      },
+      "geoCoordinates": {
+        "lat": 48.684826888402256,
+        "lng": 9.007895390625677
+      }
+    }
+  ],
   "aliasEndpointAnnotations": [],
   "viewerSettings": {
     "gridLineWidth": 0.5
