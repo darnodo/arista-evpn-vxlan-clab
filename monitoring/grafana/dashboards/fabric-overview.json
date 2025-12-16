@@ -1,0 +1,61 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "graphTooltip": 1,
+  "panels": [
+    {
+      "gridPos": {"h": 3, "w": 24, "x": 0, "y": 0},
+      "id": 1,
+      "options": {"content": "# EVPN-VXLAN Fabric Overview\nReal-time monitoring via gNMI streaming telemetry", "mode": "markdown"},
+      "title": "",
+      "type": "text"
+    },
+    {
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "fieldConfig": {"defaults": {"mappings": [], "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}]}, "unit": "short"}},
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 3},
+      "id": 2,
+      "options": {"colorMode": "background", "graphMode": "none", "justifyMode": "center", "orientation": "auto", "reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "textMode": "auto"},
+      "targets": [{"expr": "count(up{job=\"gnmic\"} == 1)", "legendFormat": "Devices", "refId": "A"}],
+      "title": "Devices Online",
+      "type": "stat"
+    },
+    {
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "custom": {"axisLabel": "bps", "drawStyle": "line", "fillOpacity": 20, "lineWidth": 2, "showPoints": "never"}, "unit": "bps"}},
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 7},
+      "id": 3,
+      "options": {"legend": {"displayMode": "table", "placement": "right", "showLegend": true}, "tooltip": {"mode": "multi"}},
+      "targets": [{"expr": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=~\"spine.*\"}[1m]) * 8", "legendFormat": "{{target}} {{interface_name}}", "refId": "A"}],
+      "title": "Spine Interface Traffic (Ingress)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "custom": {"axisLabel": "bps", "drawStyle": "line", "fillOpacity": 20, "lineWidth": 2, "showPoints": "never"}, "unit": "bps"}},
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 7},
+      "id": 4,
+      "options": {"legend": {"displayMode": "table", "placement": "right", "showLegend": true}, "tooltip": {"mode": "multi"}},
+      "targets": [{"expr": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=~\"spine.*\"}[1m]) * 8", "legendFormat": "{{target}} {{interface_name}}", "refId": "A"}],
+      "title": "Spine Interface Traffic (Egress)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "fieldConfig": {"defaults": {"color": {"mode": "palette-classic"}, "custom": {"axisLabel": "bps", "drawStyle": "line", "fillOpacity": 20, "lineWidth": 2, "showPoints": "never"}, "unit": "bps"}},
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 15},
+      "id": 5,
+      "options": {"legend": {"displayMode": "table", "placement": "right", "showLegend": true}, "tooltip": {"mode": "multi"}},
+      "targets": [{"expr": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=~\"leaf.*\", interface_name=~\"Ethernet1[12]\"}[1m]) * 8", "legendFormat": "{{target}} {{interface_name}} IN", "refId": "A"}],
+      "title": "Leaf Uplinks to Spines",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 38,
+  "tags": ["evpn", "vxlan", "fabric", "overview"],
+  "templating": {"list": []},
+  "time": {"from": "now-1h", "to": "now"},
+  "title": "EVPN Fabric Overview",
+  "uid": "evpn-fabric-overview"
+}
