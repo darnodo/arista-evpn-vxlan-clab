@@ -1,5 +1,5 @@
 # Docker Compose for EVPN-VXLAN Fabric Monitoring Stack
-# gnmic (gNMI collector) -> Prometheus -> Grafana
+# gnmic (gNMI collector) -> Prometheus -> Grafana (with Flow Plugin)
 #
 # Usage:
 #   docker-compose up -d
@@ -60,7 +60,7 @@ services:
       timeout: 10s
       retries: 3
 
-  # Grafana - visualization and dashboards
+  # Grafana - visualization and dashboards with Flow Plugin
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -71,7 +71,15 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_INSTALL_PLUGINS=knightss27-weathermap-panel
+      # Install Flow Plugin instead of archived weathermap plugin
+      - GF_INSTALL_PLUGINS=agenty-flowcharting-panel,yesoreyeram-infinity-datasource
+      # Enable anonymous access for easier demo
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      # Performance settings
+      - GF_RENDERING_SERVER_URL=http://renderer:8081/render
+      - GF_RENDERING_CALLBACK_URL=http://grafana:3000/
+      - GF_LOG_FILTERS=rendering:debug
     volumes:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
