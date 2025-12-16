@@ -1,16 +1,16 @@
 # gNMIc configuration for Arista EVPN-VXLAN fabric
-# Enhanced for Flow Plugin visualization with comprehensive telemetry
-# Paths verified for Arista cEOS compatibility
+# Enhanced with VXLAN-specific telemetry via Vxlan1 interface
+# Paths verified for Arista cEOS 4.35 compatibility
 #
 # Usage:
 #   gnmic subscribe --config /path/to/gnmic.yaml
 #
-# Test connectivity first:
+# Test connectivity:
 #   gnmic -a 172.16.0.1:6030 -u admin -p admin --insecure capabilities
 #
 # Debug subscriptions:
-#   gnmic -a 172.16.0.1:6030 -u admin -p admin --insecure \
-#     subscribe --path /interfaces/interface/state --stream-mode sample --sample-interval 10s
+#   gnmic -a 172.16.0.25:6030 -u admin -p admin --insecure \
+#     get --path /interfaces/interface[name=Vxlan1]
 
 # ============================================================================
 # Global settings
@@ -29,7 +29,7 @@ retry: 10s
 # ============================================================================
 targets:
   # --------------------------------------------------------------------------
-  # Spine switches (AS 65000)
+  # Spine switches (AS 65000) - No VXLAN subscription needed
   # --------------------------------------------------------------------------
   spine1:
     address: 172.16.0.1:6030
@@ -56,7 +56,7 @@ targets:
       asn: "65000"
 
   # --------------------------------------------------------------------------
-  # Leaf switches - VTEP1 (AS 65001)
+  # Leaf switches - VTEP1 (AS 65001) - Include VXLAN subscription
   # --------------------------------------------------------------------------
   leaf1:
     address: 172.16.0.25:6030
@@ -65,6 +65,7 @@ targets:
       - system
       - bgp
       - lacp
+      - vxlan
     labels:
       role: leaf
       fabric_tier: leaf
@@ -80,6 +81,7 @@ targets:
       - system
       - bgp
       - lacp
+      - vxlan
     labels:
       role: leaf
       fabric_tier: leaf
@@ -98,6 +100,7 @@ targets:
       - system
       - bgp
       - lacp
+      - vxlan
     labels:
       role: leaf
       fabric_tier: leaf
@@ -113,6 +116,7 @@ targets:
       - system
       - bgp
       - lacp
+      - vxlan
     labels:
       role: leaf
       fabric_tier: leaf
@@ -131,6 +135,7 @@ targets:
       - system
       - bgp
       - lacp
+      - vxlan
     labels:
       role: leaf
       fabric_tier: leaf
@@ -146,6 +151,7 @@ targets:
       - system
       - bgp
       - lacp
+      - vxlan
     labels:
       role: leaf
       fabric_tier: leaf
@@ -164,6 +170,7 @@ targets:
       - system
       - bgp
       - lacp
+      - vxlan
     labels:
       role: leaf
       fabric_tier: leaf
@@ -179,6 +186,7 @@ targets:
       - system
       - bgp
       - lacp
+      - vxlan
     labels:
       role: leaf
       fabric_tier: leaf
@@ -189,12 +197,12 @@ targets:
 
 # ============================================================================
 # Subscriptions - define what telemetry to collect
-# Paths verified for Arista cEOS OpenConfig implementation
+# Paths verified for Arista cEOS OpenConfig + native augmentations
 # ============================================================================
 subscriptions:
   # --------------------------------------------------------------------------
   # Interface statistics - for Flow Plugin bandwidth visualization
-  # High-frequency sampling for real-time traffic visualization
+  # Includes all interfaces (Ethernet + Vxlan1)
   # --------------------------------------------------------------------------
   interfaces:
     paths:
@@ -209,6 +217,19 @@ subscriptions:
     mode: stream
     stream-mode: sample
     sample-interval: 10s
+    encoding: json_ietf
+
+  # --------------------------------------------------------------------------
+  # VXLAN-specific telemetry - Arista augmented interface data
+  # Captures VNI-to-VLAN mappings, source interface, UDP port
+  # VERIFIED WORKING - Returns arista-exp-eos-vxlan augmentation!
+  # --------------------------------------------------------------------------
+  vxlan:
+    paths:
+      # Vxlan1 interface with Arista VXLAN augmentations
+      - /interfaces/interface[name=Vxlan1]
+    mode: stream
+    stream-mode: on_change  # VNI mappings don't change frequently
     encoding: json_ietf
 
   # --------------------------------------------------------------------------
@@ -229,7 +250,6 @@ subscriptions:
 
   # --------------------------------------------------------------------------
   # BGP telemetry - for fabric health and EVPN overlay monitoring
-  # Arista uses /network-instances/network-instance[name=*]/protocols/protocol[identifier=BGP][name=BGP]
   # --------------------------------------------------------------------------
   bgp:
     paths:
