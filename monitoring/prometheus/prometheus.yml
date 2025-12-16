@@ -1,10 +1,12 @@
 # Prometheus configuration for EVPN-VXLAN fabric monitoring
+# Enhanced for Flow Plugin visualization
 
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
   external_labels:
     monitor: 'evpn-fabric-monitor'
+    cluster: 'evpn-vxlan-lab'
 
 # Alertmanager configuration (optional)
 # alerting:
@@ -16,12 +18,15 @@ global:
 # Load rules once and periodically evaluate them
 # rule_files:
 #   - "alerts/*.yml"
+#   - "recording_rules/*.yml"
 
 scrape_configs:
   # Scrape Prometheus itself
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
+        labels:
+          component: 'prometheus'
 
   # Scrape gnmic for network telemetry
   - job_name: 'gnmic'
@@ -29,8 +34,49 @@ scrape_configs:
     scrape_timeout: 10s
     static_configs:
       - targets: ['gnmic:9804']
+        labels:
+          component: 'gnmic-collector'
+          fabric: 'evpn-vxlan'
+    
+    # Enhanced metric relabeling for Flow Plugin
     metric_relabel_configs:
-      # Keep only relevant metrics to reduce storage
+      # Keep interface metrics - critical for flow visualization
       - source_labels: [__name__]
-        regex: 'gnmic_(interfaces|bgp|mlag|vxlan|system).*'
+        regex: 'gnmic_interfaces_.*'
         action: keep
+      
+      # Keep BGP metrics for overlay health
+      - source_labels: [__name__]
+        regex: 'gnmic_.*bgp.*'
+        action: keep
+      
+      # Keep MLAG metrics for redundancy visibility
+      - source_labels: [__name__]
+        regex: 'gnmic_.*lacp.*'
+        action: keep
+      
+      # Keep system metrics
+      - source_labels: [__name__]
+        regex: 'gnmic_system.*'
+        action: keep
+      
+      # Keep VXLAN metrics
+      - source_labels: [__name__]
+        regex: 'gnmic_.*vxlan.*|gnmic_.*vlan.*'
+        action: keep
+      
+      # Drop everything else to reduce storage
+      - source_labels: [__name__]
+        regex: 'gnmic_.*'
+        action: drop
+
+      # Add fabric topology labels from device names
+      - source_labels: [source]
+        regex: '(spine|leaf)(\d+)'
+        target_label: device_type
+        replacement: '$1'
+      
+      - source_labels: [source]
+        regex: '(spine|leaf)(\d+)'
+        target_label: device_number
+        replacement: '$2'
