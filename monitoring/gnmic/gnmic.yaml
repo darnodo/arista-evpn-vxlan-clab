@@ -12,9 +12,9 @@
 #   gnmic -a 172.16.0.25:6030 -u admin -p admin --insecure \
 #     get --path /interfaces/interface[name=Vxlan1]
 
-# ============================================================================
+# ===========================================================================
 # Global settings
-# ============================================================================
+# ===========================================================================
 username: admin
 password: admin
 insecure: true
@@ -24,9 +24,9 @@ debug: false
 timeout: 30s
 retry: 10s
 
-# ============================================================================
+# ===========================================================================
 # Target devices - All switches in the fabric
-# ============================================================================
+# ===========================================================================
 targets:
   # --------------------------------------------------------------------------
   # Spine switches (AS 65000) - No VXLAN subscription needed
@@ -195,10 +195,10 @@ targets:
       device: leaf8
       asn: "65004"
 
-# ============================================================================
+# ===========================================================================
 # Subscriptions - define what telemetry to collect
 # Paths verified for Arista cEOS OpenConfig + native augmentations
-# ============================================================================
+# ===========================================================================
 subscriptions:
   # --------------------------------------------------------------------------
   # Interface statistics - for Flow Plugin bandwidth visualization
@@ -229,7 +229,8 @@ subscriptions:
       # Vxlan1 interface with Arista VXLAN augmentations
       - /interfaces/interface[name=Vxlan1]
     mode: stream
-    stream-mode: on_change  # VNI mappings don't change frequently
+    stream-mode: sample
+    sample-interval: 30s
     encoding: json_ietf
 
   # --------------------------------------------------------------------------
@@ -278,9 +279,9 @@ subscriptions:
     sample-interval: 15s
     encoding: json_ietf
 
-# ============================================================================
+# ===========================================================================
 # Prometheus output configuration
-# ============================================================================
+# ===========================================================================
 outputs:
   prometheus:
     type: prometheus
@@ -293,31 +294,8 @@ outputs:
     debug: false
     # Expiration time for metrics (prevents stale data)
     expiration: 120s
-    # Event processors to clean up metric names
-    event-processors:
-      - trim-prefixes
-      - add-subscription-name
-
-# ============================================================================
-# Event processors - clean up and transform metrics
-# ============================================================================
-processors:
-  # Remove long path prefixes from metric names
-  trim-prefixes:
-    event-strings:
-      value-names:
-        - ".*"
-      transforms:
-        - path-base:
-            apply-on: "name"
-
-  # Keep subscription name for better organization
-  add-subscription-name:
-    event-strings:
-      value-names:
-        - ".*"
-      transforms:
-        - replace:
-            apply-on: "name"
-            old: ""
-            new: ""
+    # No event processors - preserve full OpenConfig path names
+    # This produces metrics like:
+    #   gnmic_interfaces_interface_state_counters_out_octets
+    #   gnmic_bgp_neighbors_neighbor_state_session_state
+    #   gnmic_vxlan_interfaces_interface_arista_vxlan_state_udp_port
