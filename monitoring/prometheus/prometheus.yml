@@ -1,0 +1,36 @@
+# Prometheus configuration for EVPN-VXLAN fabric monitoring
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'evpn-fabric-monitor'
+
+# Alertmanager configuration (optional)
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets:
+#           - alertmanager:9093
+
+# Load rules once and periodically evaluate them
+# rule_files:
+#   - "alerts/*.yml"
+
+scrape_configs:
+  # Scrape Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Scrape gnmic for network telemetry
+  - job_name: 'gnmic'
+    scrape_interval: 10s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: ['gnmic:9804']
+    metric_relabel_configs:
+      # Keep only relevant metrics to reduce storage
+      - source_labels: [__name__]
+        regex: 'gnmic_(interfaces|bgp|mlag|vxlan|system).*'
+        action: keep
