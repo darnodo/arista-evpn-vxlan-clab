@@ -17,7 +17,6 @@
 username: admin
 password: admin
 insecure: true
-skip-verify: true
 encoding: json_ietf
 log: true
 debug: true
