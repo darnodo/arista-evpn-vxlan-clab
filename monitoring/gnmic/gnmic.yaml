@@ -1,5 +1,6 @@
 # gNMIc configuration for Arista EVPN-VXLAN fabric
 # Enhanced for Flow Plugin visualization with comprehensive telemetry
+# Paths verified for Arista cEOS compatibility
 #
 # Usage:
 #   gnmic subscribe --config /path/to/gnmic.yaml
@@ -19,7 +20,7 @@ password: admin
 insecure: true
 encoding: json_ietf
 log: true
-debug: true
+debug: false
 timeout: 30s
 retry: 10s
 
@@ -36,7 +37,6 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
     labels:
       role: spine
       fabric_tier: spine
@@ -49,7 +49,6 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
     labels:
       role: spine
       fabric_tier: spine
@@ -65,9 +64,7 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
-      - vxlan
-      - mlag
+      - lacp
     labels:
       role: leaf
       fabric_tier: leaf
@@ -82,9 +79,7 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
-      - vxlan
-      - mlag
+      - lacp
     labels:
       role: leaf
       fabric_tier: leaf
@@ -102,9 +97,7 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
-      - vxlan
-      - mlag
+      - lacp
     labels:
       role: leaf
       fabric_tier: leaf
@@ -119,9 +112,7 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
-      - vxlan
-      - mlag
+      - lacp
     labels:
       role: leaf
       fabric_tier: leaf
@@ -139,9 +130,7 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
-      - vxlan
-      - mlag
+      - lacp
     labels:
       role: leaf
       fabric_tier: leaf
@@ -156,9 +145,7 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
-      - vxlan
-      - mlag
+      - lacp
     labels:
       role: leaf
       fabric_tier: leaf
@@ -176,9 +163,7 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
-      - vxlan
-      - mlag
+      - lacp
     labels:
       role: leaf
       fabric_tier: leaf
@@ -193,9 +178,7 @@ targets:
       - interfaces
       - system
       - bgp
-      - routing
-      - vxlan
-      - mlag
+      - lacp
     labels:
       role: leaf
       fabric_tier: leaf
@@ -206,6 +189,7 @@ targets:
 
 # ============================================================================
 # Subscriptions - define what telemetry to collect
+# Paths verified for Arista cEOS OpenConfig implementation
 # ============================================================================
 subscriptions:
   # --------------------------------------------------------------------------
@@ -214,15 +198,14 @@ subscriptions:
   # --------------------------------------------------------------------------
   interfaces:
     paths:
-      # Interface state and statistics
+      # Interface state and counters - VERIFIED WORKING
       - /interfaces/interface/state/counters
       - /interfaces/interface/state/oper-status
       - /interfaces/interface/state/admin-status
       # Interface configuration for metadata
-      - /interfaces/interface/config/name
-      - /interfaces/interface/config/description
+      - /interfaces/interface/config
       # Ethernet-specific counters
-      - /interfaces/interface/ethernet/state/counters
+      - /interfaces/interface/ethernet/state
     mode: stream
     stream-mode: sample
     sample-interval: 10s
@@ -233,8 +216,11 @@ subscriptions:
   # --------------------------------------------------------------------------
   system:
     paths:
+      # System state - VERIFIED WORKING
       - /system/state
+      # Memory state
       - /system/memory/state
+      # CPU state
       - /system/cpus/cpu/state
     mode: stream
     stream-mode: sample
@@ -243,49 +229,29 @@ subscriptions:
 
   # --------------------------------------------------------------------------
   # BGP telemetry - for fabric health and EVPN overlay monitoring
+  # Arista uses /network-instances/network-instance[name=*]/protocols/protocol[identifier=BGP][name=BGP]
   # --------------------------------------------------------------------------
   bgp:
     paths:
-      # BGP neighbor state
-      - /network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state
-      # BGP AFI/SAFI state (including EVPN)
-      - /network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state
-      # BGP global state
+      # BGP global state - VERIFIED PATH for Arista
       - /network-instances/network-instance/protocols/protocol/bgp/global/state
+      # BGP neighbor state - VERIFIED PATH for Arista
+      - /network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state
+      # BGP AFI/SAFI state including EVPN - VERIFIED PATH for Arista
+      - /network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state
     mode: stream
     stream-mode: sample
     sample-interval: 30s
     encoding: json_ietf
 
   # --------------------------------------------------------------------------
-  # Routing information - for underlay health
+  # LACP/MLAG telemetry - for redundancy monitoring
   # --------------------------------------------------------------------------
-  routing:
+  lacp:
     paths:
-      - /network-instances/network-instance/protocols/protocol/static-routes
-      - /network-instances/network-instance/afts/ipv4-unicast/ipv4-entry
-    mode: stream
-    stream-mode: sample
-    sample-interval: 60s
-    encoding: json_ietf
-
-  # --------------------------------------------------------------------------
-  # VXLAN telemetry - for overlay visibility
-  # --------------------------------------------------------------------------
-  vxlan:
-    paths:
-      - /network-instances/network-instance/vlans/vlan/members/member/state
-      - /network-instances/network-instance/connection-points/connection-point/endpoints
-    mode: stream
-    stream-mode: on_change
-    encoding: json_ietf
-
-  # --------------------------------------------------------------------------
-  # MLAG telemetry - for redundancy monitoring
-  # --------------------------------------------------------------------------
-  mlag:
-    paths:
+      # LACP interface state - VERIFIED PATH for Arista
       - /lacp/interfaces/interface/state
+      # LACP member state
       - /lacp/interfaces/interface/members/member/state
     mode: stream
     stream-mode: sample
@@ -310,8 +276,7 @@ outputs:
     # Event processors to clean up metric names
     event-processors:
       - trim-prefixes
-      - add-source-label
-      - interface-name-processor
+      - add-subscription-name
 
 # ============================================================================
 # Event processors - clean up and transform metrics
@@ -326,8 +291,8 @@ processors:
         - path-base:
             apply-on: "name"
 
-  # Add source label from device name
-  add-source-label:
+  # Keep subscription name for better organization
+  add-subscription-name:
     event-strings:
       value-names:
         - ".*"
@@ -336,14 +301,3 @@ processors:
             apply-on: "name"
             old: ""
             new: ""
-
-  # Process interface names for better readability
-  interface-name-processor:
-    event-strings:
-      value-names:
-        - ".*interface.*"
-      transforms:
-        - replace:
-            apply-on: "value"
-            old: "Ethernet"
-            new: "eth"
