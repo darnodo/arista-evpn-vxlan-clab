@@ -1,0 +1,223 @@
+# gnmic configuration for Arista EVPN-VXLAN fabric
+# Collects gNMI telemetry and exposes Prometheus metrics
+
+# Global settings
+username: admin
+password: admin
+insecure: true
+encoding: json_ietf
+log: true
+
+# Target devices - All switches in the fabric
+targets:
+  # Spine switches
+  spine1:
+    address: 172.16.0.1:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - system
+    labels:
+      role: spine
+      fabric_tier: spine
+      
+  spine2:
+    address: 172.16.0.2:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - system
+    labels:
+      role: spine
+      fabric_tier: spine
+
+  # Leaf switches - VTEP1 (AS 65001)
+  leaf1:
+    address: 172.16.0.25:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - vxlan
+      - mlag
+      - system
+    labels:
+      role: leaf
+      fabric_tier: leaf
+      vtep: vtep1
+      mlag_pair: "1"
+      
+  leaf2:
+    address: 172.16.0.50:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - vxlan
+      - mlag
+      - system
+    labels:
+      role: leaf
+      fabric_tier: leaf
+      vtep: vtep1
+      mlag_pair: "1"
+
+  # Leaf switches - VTEP2 (AS 65002)
+  leaf3:
+    address: 172.16.0.27:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - vxlan
+      - mlag
+      - system
+    labels:
+      role: leaf
+      fabric_tier: leaf
+      vtep: vtep2
+      mlag_pair: "2"
+      
+  leaf4:
+    address: 172.16.0.28:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - vxlan
+      - mlag
+      - system
+    labels:
+      role: leaf
+      fabric_tier: leaf
+      vtep: vtep2
+      mlag_pair: "2"
+
+  # Leaf switches - VTEP3 (AS 65003)
+  leaf5:
+    address: 172.16.0.29:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - vxlan
+      - mlag
+      - system
+    labels:
+      role: leaf
+      fabric_tier: leaf
+      vtep: vtep3
+      mlag_pair: "3"
+      
+  leaf6:
+    address: 172.16.0.30:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - vxlan
+      - mlag
+      - system
+    labels:
+      role: leaf
+      fabric_tier: leaf
+      vtep: vtep3
+      mlag_pair: "3"
+
+  # Leaf switches - VTEP4 (AS 65004)
+  leaf7:
+    address: 172.16.0.31:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - vxlan
+      - mlag
+      - system
+    labels:
+      role: leaf
+      fabric_tier: leaf
+      vtep: vtep4
+      mlag_pair: "4"
+      
+  leaf8:
+    address: 172.16.0.32:6030
+    subscriptions:
+      - interfaces
+      - bgp
+      - vxlan
+      - mlag
+      - system
+    labels:
+      role: leaf
+      fabric_tier: leaf
+      vtep: vtep4
+      mlag_pair: "4"
+
+# Subscriptions - define what to collect
+subscriptions:
+  # Interface statistics - for weathermap bandwidth visualization
+  interfaces:
+    paths:
+      - /interfaces/interface/state/counters
+      - /interfaces/interface/state/oper-status
+      - /interfaces/interface/state/admin-status
+      - /interfaces/interface/state/name
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+
+  # BGP session state
+  bgp:
+    paths:
+      - /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor/state
+      - /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/global/state
+    mode: stream
+    stream-mode: sample
+    sample-interval: 30s
+
+  # VXLAN/EVPN state (Arista-specific paths)
+  vxlan:
+    paths:
+      - /interfaces/interface[name=Vxlan1]/state
+    mode: stream
+    stream-mode: sample
+    sample-interval: 30s
+
+  # MLAG state (Arista-specific)
+  mlag:
+    paths:
+      - /mlag/state
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+
+  # System information
+  system:
+    paths:
+      - /system/state
+      - /system/memory/state
+      - /system/cpus/cpu/state
+    mode: stream
+    stream-mode: sample
+    sample-interval: 60s
+
+# Prometheus output configuration
+outputs:
+  prometheus:
+    type: prometheus
+    listen: :9804
+    path: /metrics
+    metric-prefix: gnmic
+    append-subscription-name: true
+    export-timestamps: true
+    strings-as-labels: true
+    debug: false
+    # Add target name as a label
+    add-target: target
+    # Event processors to clean up metric names
+    event-processors:
+      - trim-prefixes
+
+# Event processors - clean up and transform metrics
+processors:
+  trim-prefixes:
+    event-strings:
+      value-names:
+        - ".*"
+      transforms:
+        - path-base:
+            apply-on: "name"
