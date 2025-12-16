@@ -1,0 +1,103 @@
+# Docker Compose for EVPN-VXLAN Fabric Monitoring Stack
+# gnmic (gNMI collector) -> Prometheus -> Grafana
+#
+# Usage:
+#   docker-compose up -d
+#
+# Access:
+#   - Grafana:    http://localhost:3000 (admin/admin)
+#   - Prometheus: http://localhost:9090
+#   - gnmic:      http://localhost:9804/metrics
+
+version: '3.8'
+
+services:
+  # gNMI Collector - streams telemetry from Arista switches
+  gnmic:
+    image: ghcr.io/openconfig/gnmic:latest
+    container_name: gnmic
+    restart: unless-stopped
+    ports:
+      - "9804:9804"
+    volumes:
+      - ./gnmic/gnmic.yaml:/app/gnmic.yaml:ro
+    command: subscribe --config /app/gnmic.yaml
+    networks:
+      - monitoring
+      - evpn-mgmt
+    # Health check to ensure gnmic is running
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9804/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Prometheus - time series database for metrics
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    networks:
+      - monitoring
+    depends_on:
+      gnmic:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Grafana - visualization and dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=knightss27-weathermap-panel
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    networks:
+      - monitoring
+    depends_on:
+      prometheus:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  monitoring:
+    driver: bridge
+  # Connect to ContainerLab management network
+  evpn-mgmt:
+    external: true
+    name: evpn-mgmt
+
+volumes:
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
