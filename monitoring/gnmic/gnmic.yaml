@@ -1,166 +1,194 @@
-# gnmic configuration for Arista EVPN-VXLAN fabric
+# gNMIc configuration for Arista EVPN-VXLAN fabric
 # Collects gNMI telemetry and exposes Prometheus metrics
+#
+# Usage:
+#   gnmic subscribe --config /path/to/gnmic.yaml
+#
+# Test connectivity first:
+#   gnmic -a 172.16.0.1:6030 -u admin -p admin --insecure capabilities
+#
+# Debug subscriptions:
+#   gnmic -a 172.16.0.1:6030 -u admin -p admin --insecure \
+#     subscribe --path /interfaces/interface/state --stream-mode sample --sample-interval 10s
 
+# ==============================================================================
 # Global settings
+# ==============================================================================
 username: admin
 password: admin
 insecure: true
+skip-verify: true
 encoding: json_ietf
 log: true
+debug: true
+timeout: 30s
+retry: 10s
 
+# ==============================================================================
 # Target devices - All switches in the fabric
+# ==============================================================================
 targets:
-  # Spine switches
+  # ---------------------------------------------------------------------------
+  # Spine switches (AS 65000)
+  # ---------------------------------------------------------------------------
   spine1:
     address: 172.16.0.1:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: spine
       fabric_tier: spine
-      
+      device: spine1
+
   spine2:
     address: 172.16.0.2:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: spine
       fabric_tier: spine
+      device: spine2
 
+  # ---------------------------------------------------------------------------
   # Leaf switches - VTEP1 (AS 65001)
+  # ---------------------------------------------------------------------------
   leaf1:
     address: 172.16.0.25:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: leaf
       fabric_tier: leaf
       vtep: vtep1
       mlag_pair: "1"
-      
+      device: leaf1
+
   leaf2:
     address: 172.16.0.50:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: leaf
       fabric_tier: leaf
       vtep: vtep1
       mlag_pair: "1"
+      device: leaf2
 
+  # ---------------------------------------------------------------------------
   # Leaf switches - VTEP2 (AS 65002)
+  # ---------------------------------------------------------------------------
   leaf3:
     address: 172.16.0.27:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: leaf
       fabric_tier: leaf
       vtep: vtep2
       mlag_pair: "2"
-      
+      device: leaf3
+
   leaf4:
     address: 172.16.0.28:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: leaf
       fabric_tier: leaf
       vtep: vtep2
       mlag_pair: "2"
+      device: leaf4
 
+  # ---------------------------------------------------------------------------
   # Leaf switches - VTEP3 (AS 65003)
+  # ---------------------------------------------------------------------------
   leaf5:
     address: 172.16.0.29:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: leaf
       fabric_tier: leaf
       vtep: vtep3
       mlag_pair: "3"
-      
+      device: leaf5
+
   leaf6:
     address: 172.16.0.30:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: leaf
       fabric_tier: leaf
       vtep: vtep3
       mlag_pair: "3"
+      device: leaf6
 
+  # ---------------------------------------------------------------------------
   # Leaf switches - VTEP4 (AS 65004)
+  # ---------------------------------------------------------------------------
   leaf7:
     address: 172.16.0.31:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: leaf
       fabric_tier: leaf
       vtep: vtep4
       mlag_pair: "4"
-      
+      device: leaf7
+
   leaf8:
     address: 172.16.0.32:6030
     subscriptions:
       - interfaces
-      - bgp
       - system
     labels:
       role: leaf
       fabric_tier: leaf
       vtep: vtep4
       mlag_pair: "4"
+      device: leaf8
 
-# Subscriptions - define what to collect
+# ==============================================================================
+# Subscriptions - define what telemetry to collect
+# ==============================================================================
 subscriptions:
+  # ---------------------------------------------------------------------------
   # Interface statistics - for weathermap bandwidth visualization
+  # Simplified path that works with Arista cEOS OpenConfig implementation
+  # ---------------------------------------------------------------------------
   interfaces:
     paths:
-      - /interfaces/interface/state/counters
-      - /interfaces/interface/state/oper-status
-      - /interfaces/interface/state/admin-status
+      - /interfaces/interface/state
     mode: stream
     stream-mode: sample
-    sample-interval: 10s
+    sample-interval: 15s
+    encoding: json_ietf
 
-  # BGP session state
-  bgp:
-    paths:
-      - /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor/state
-    mode: stream
-    stream-mode: sample
-    sample-interval: 30s
-
-  # System information
+  # ---------------------------------------------------------------------------
+  # System information - hostname, uptime, memory
+  # ---------------------------------------------------------------------------
   system:
     paths:
       - /system/state
-      - /system/memory/state
     mode: stream
     stream-mode: sample
-    sample-interval: 60s
+    sample-interval: 30s
+    encoding: json_ietf
 
+# ==============================================================================
 # Prometheus output configuration
+# ==============================================================================
 outputs:
   prometheus:
     type: prometheus
@@ -170,12 +198,16 @@ outputs:
     append-subscription-name: true
     export-timestamps: true
     strings-as-labels: true
-    debug: false
-    add-target: target
+    debug: true
+    # Expiration time for metrics (prevents stale data)
+    expiration: 120s
+    # Event processors to clean up metric names
     event-processors:
       - trim-prefixes
 
+# ==============================================================================
 # Event processors - clean up and transform metrics
+# ==============================================================================
 processors:
   trim-prefixes:
     event-strings:
