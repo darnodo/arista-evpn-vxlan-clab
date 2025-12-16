@@ -37,8 +37,6 @@ targets:
     subscriptions:
       - interfaces
       - bgp
-      - vxlan
-      - mlag
       - system
     labels:
       role: leaf
@@ -51,8 +49,6 @@ targets:
     subscriptions:
       - interfaces
       - bgp
-      - vxlan
-      - mlag
       - system
     labels:
       role: leaf
@@ -66,8 +62,6 @@ targets:
     subscriptions:
       - interfaces
       - bgp
-      - vxlan
-      - mlag
       - system
     labels:
       role: leaf
@@ -80,8 +74,6 @@ targets:
     subscriptions:
       - interfaces
       - bgp
-      - vxlan
-      - mlag
       - system
     labels:
       role: leaf
@@ -95,8 +87,6 @@ targets:
     subscriptions:
       - interfaces
       - bgp
-      - vxlan
-      - mlag
       - system
     labels:
       role: leaf
@@ -109,8 +99,6 @@ targets:
     subscriptions:
       - interfaces
       - bgp
-      - vxlan
-      - mlag
       - system
     labels:
       role: leaf
@@ -124,8 +112,6 @@ targets:
     subscriptions:
       - interfaces
       - bgp
-      - vxlan
-      - mlag
       - system
     labels:
       role: leaf
@@ -138,8 +124,6 @@ targets:
     subscriptions:
       - interfaces
       - bgp
-      - vxlan
-      - mlag
       - system
     labels:
       role: leaf
@@ -155,7 +139,6 @@ subscriptions:
       - /interfaces/interface/state/counters
       - /interfaces/interface/state/oper-status
       - /interfaces/interface/state/admin-status
-      - /interfaces/interface/state/name
     mode: stream
     stream-mode: sample
     sample-interval: 10s
@@ -164,33 +147,15 @@ subscriptions:
   bgp:
     paths:
       - /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor/state
-      - /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/global/state
     mode: stream
     stream-mode: sample
     sample-interval: 30s
-
-  # VXLAN/EVPN state (Arista-specific paths)
-  vxlan:
-    paths:
-      - /interfaces/interface[name=Vxlan1]/state
-    mode: stream
-    stream-mode: sample
-    sample-interval: 30s
-
-  # MLAG state (Arista-specific)
-  mlag:
-    paths:
-      - /mlag/state
-    mode: stream
-    stream-mode: sample
-    sample-interval: 10s
 
   # System information
   system:
     paths:
       - /system/state
       - /system/memory/state
-      - /system/cpus/cpu/state
     mode: stream
     stream-mode: sample
     sample-interval: 60s
@@ -206,9 +171,7 @@ outputs:
     export-timestamps: true
     strings-as-labels: true
     debug: false
-    # Add target name as a label
     add-target: target
-    # Event processors to clean up metric names
     event-processors:
       - trim-prefixes
 
