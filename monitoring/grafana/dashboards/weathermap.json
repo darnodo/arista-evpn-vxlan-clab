@@ -1,0 +1,214 @@
+{
+  "annotations": {"list": []},
+  "editable": true,
+  "graphTooltip": 1,
+  "panels": [
+    {
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "gridPos": {"h": 20, "w": 24, "x": 0, "y": 0},
+      "id": 1,
+      "options": {
+        "weathermap": {
+          "nodes": [
+            {"id": "spine1", "label": "spine1", "x": 300, "y": 50, "width": 80, "height": 40},
+            {"id": "spine2", "label": "spine2", "x": 500, "y": 50, "width": 80, "height": 40},
+            {"id": "leaf1", "label": "leaf1", "x": 100, "y": 200, "width": 70, "height": 35},
+            {"id": "leaf2", "label": "leaf2", "x": 100, "y": 280, "width": 70, "height": 35},
+            {"id": "leaf3", "label": "leaf3", "x": 250, "y": 200, "width": 70, "height": 35},
+            {"id": "leaf4", "label": "leaf4", "x": 250, "y": 280, "width": 70, "height": 35},
+            {"id": "leaf5", "label": "leaf5", "x": 400, "y": 200, "width": 70, "height": 35},
+            {"id": "leaf6", "label": "leaf6", "x": 400, "y": 280, "width": 70, "height": 35},
+            {"id": "leaf7", "label": "leaf7", "x": 550, "y": 200, "width": 70, "height": 35},
+            {"id": "leaf8", "label": "leaf8", "x": 550, "y": 280, "width": 70, "height": 35},
+            {"id": "vtep1", "label": "VTEP1", "x": 100, "y": 350, "width": 70, "height": 25, "style": "rect"},
+            {"id": "vtep2", "label": "VTEP2", "x": 250, "y": 350, "width": 70, "height": 25, "style": "rect"},
+            {"id": "vtep3", "label": "VTEP3", "x": 400, "y": 350, "width": 70, "height": 25, "style": "rect"},
+            {"id": "vtep4", "label": "VTEP4", "x": 550, "y": 350, "width": 70, "height": 25, "style": "rect"}
+          ],
+          "links": [
+            {
+              "id": "spine1-leaf1",
+              "source": "spine1",
+              "target": "leaf1",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine1\",interface_name=\"Ethernet1\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine1\",interface_name=\"Ethernet1\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine1-leaf2",
+              "source": "spine1",
+              "target": "leaf2",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine1\",interface_name=\"Ethernet2\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine1\",interface_name=\"Ethernet2\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine1-leaf3",
+              "source": "spine1",
+              "target": "leaf3",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine1\",interface_name=\"Ethernet3\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine1\",interface_name=\"Ethernet3\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine1-leaf4",
+              "source": "spine1",
+              "target": "leaf4",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine1\",interface_name=\"Ethernet4\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine1\",interface_name=\"Ethernet4\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine1-leaf5",
+              "source": "spine1",
+              "target": "leaf5",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine1\",interface_name=\"Ethernet5\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine1\",interface_name=\"Ethernet5\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine1-leaf6",
+              "source": "spine1",
+              "target": "leaf6",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine1\",interface_name=\"Ethernet6\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine1\",interface_name=\"Ethernet6\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine1-leaf7",
+              "source": "spine1",
+              "target": "leaf7",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine1\",interface_name=\"Ethernet7\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine1\",interface_name=\"Ethernet7\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine1-leaf8",
+              "source": "spine1",
+              "target": "leaf8",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine1\",interface_name=\"Ethernet8\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine1\",interface_name=\"Ethernet8\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine2-leaf1",
+              "source": "spine2",
+              "target": "leaf1",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine2\",interface_name=\"Ethernet1\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine2\",interface_name=\"Ethernet1\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine2-leaf2",
+              "source": "spine2",
+              "target": "leaf2",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine2\",interface_name=\"Ethernet2\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine2\",interface_name=\"Ethernet2\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine2-leaf3",
+              "source": "spine2",
+              "target": "leaf3",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine2\",interface_name=\"Ethernet3\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine2\",interface_name=\"Ethernet3\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine2-leaf4",
+              "source": "spine2",
+              "target": "leaf4",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine2\",interface_name=\"Ethernet4\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine2\",interface_name=\"Ethernet4\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine2-leaf5",
+              "source": "spine2",
+              "target": "leaf5",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine2\",interface_name=\"Ethernet5\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine2\",interface_name=\"Ethernet5\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine2-leaf6",
+              "source": "spine2",
+              "target": "leaf6",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine2\",interface_name=\"Ethernet6\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine2\",interface_name=\"Ethernet6\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine2-leaf7",
+              "source": "spine2",
+              "target": "leaf7",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine2\",interface_name=\"Ethernet7\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine2\",interface_name=\"Ethernet7\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "spine2-leaf8",
+              "source": "spine2",
+              "target": "leaf8",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"spine2\",interface_name=\"Ethernet8\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"spine2\",interface_name=\"Ethernet8\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "mlag-vtep1",
+              "source": "leaf1",
+              "target": "leaf2",
+              "label": "MLAG",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"leaf1\",interface_name=\"Ethernet10\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"leaf1\",interface_name=\"Ethernet10\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "mlag-vtep2",
+              "source": "leaf3",
+              "target": "leaf4",
+              "label": "MLAG",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"leaf3\",interface_name=\"Ethernet10\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"leaf3\",interface_name=\"Ethernet10\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "mlag-vtep3",
+              "source": "leaf5",
+              "target": "leaf6",
+              "label": "MLAG",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"leaf5\",interface_name=\"Ethernet10\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"leaf5\",interface_name=\"Ethernet10\"}[1m])*8",
+              "bandwidth": 1000000000
+            },
+            {
+              "id": "mlag-vtep4",
+              "source": "leaf7",
+              "target": "leaf8",
+              "label": "MLAG",
+              "queryA": "rate(gnmic_interfaces_interface_state_counters_out_octets{target=\"leaf7\",interface_name=\"Ethernet10\"}[1m])*8",
+              "queryB": "rate(gnmic_interfaces_interface_state_counters_in_octets{target=\"leaf7\",interface_name=\"Ethernet10\"}[1m])*8",
+              "bandwidth": 1000000000
+            }
+          ],
+          "scale": [
+            {"value": 0, "color": "#00FF00"},
+            {"value": 25, "color": "#FFFF00"},
+            {"value": 50, "color": "#FFA500"},
+            {"value": 75, "color": "#FF0000"}
+          ]
+        }
+      },
+      "title": "EVPN-VXLAN Fabric Topology",
+      "description": "Spine-Leaf topology with live bandwidth utilization",
+      "type": "knightss27-weathermap-panel"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 38,
+  "tags": ["evpn", "vxlan", "weathermap", "topology"],
+  "templating": {"list": []},
+  "time": {"from": "now-1h", "to": "now"},
+  "title": "Fabric Weathermap",
+  "uid": "evpn-fabric-weathermap"
+}
