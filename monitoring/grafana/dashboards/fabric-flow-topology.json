@@ -1,0 +1,299 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 25
+              },
+              {
+                "color": "orange",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 75
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 20,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "flowchart": {
+          "diagramType": "flowchart",
+          "content": "graph TB\n    spine1[\"Spine 1<br/>AS 65000\"]\n    spine2[\"Spine 2<br/>AS 65000\"]\n    \n    leaf1[\"Leaf 1<br/>VTEP1\"]\n    leaf2[\"Leaf 2<br/>VTEP1\"]\n    leaf3[\"Leaf 3<br/>VTEP2\"]\n    leaf4[\"Leaf 4<br/>VTEP2\"]\n    leaf5[\"Leaf 5<br/>VTEP3\"]\n    leaf6[\"Leaf 6<br/>VTEP3\"]\n    leaf7[\"Leaf 7<br/>VTEP4\"]\n    leaf8[\"Leaf 8<br/>VTEP4\"]\n    \n    %% Spine to Leaf connections\n    spine1 ---|Eth1| leaf1\n    spine1 ---|Eth2| leaf2\n    spine1 ---|Eth3| leaf3\n    spine1 ---|Eth4| leaf4\n    spine1 ---|Eth5| leaf5\n    spine1 ---|Eth6| leaf6\n    spine1 ---|Eth7| leaf7\n    spine1 ---|Eth8| leaf8\n    \n    spine2 ---|Eth1| leaf1\n    spine2 ---|Eth2| leaf2\n    spine2 ---|Eth3| leaf3\n    spine2 ---|Eth4| leaf4\n    spine2 ---|Eth5| leaf5\n    spine2 ---|Eth6| leaf6\n    spine2 ---|Eth7| leaf7\n    spine2 ---|Eth8| leaf8\n    \n    %% MLAG peer links\n    leaf1 -.MLAG.- leaf2\n    leaf3 -.MLAG.- leaf4\n    leaf5 -.MLAG.- leaf6\n    leaf7 -.MLAG.- leaf8\n    \n    %% Styling\n    classDef spine fill:#1f77b4,stroke:#333,stroke-width:2px,color:#fff\n    classDef leaf fill:#2ca02c,stroke:#333,stroke-width:2px,color:#fff\n    \n    class spine1,spine2 spine\n    class leaf1,leaf2,leaf3,leaf4,leaf5,leaf6,leaf7,leaf8 leaf",
+          "animate": true,
+          "animateValue": false,
+          "handDrawnSeed": 0
+        },
+        "mappings": [
+          {
+            "pattern": "spine1.*Eth(\\d+)",
+            "link": "spine1-leaf$1",
+            "textPattern": "",
+            "valuePattern": "rate(gnmic_interfaces_interface_state_counters_out_octets{source=\"spine1\",interface_name=\"Ethernet$1\"}[1m]) * 8"
+          },
+          {
+            "pattern": "spine2.*Eth(\\d+)",
+            "link": "spine2-leaf$1",
+            "textPattern": "",
+            "valuePattern": "rate(gnmic_interfaces_interface_state_counters_out_octets{source=\"spine2\",interface_name=\"Ethernet$1\"}[1m]) * 8"
+          },
+          {
+            "pattern": "leaf(\\d+).*MLAG",
+            "link": "mlag-leaf$1",
+            "textPattern": "",
+            "valuePattern": "rate(gnmic_interfaces_interface_state_counters_out_octets{source=\"leaf$1\",interface_name=\"Ethernet10\"}[1m]) * 8"
+          }
+        ]
+      },
+      "title": "EVPN-VXLAN Fabric Topology",
+      "type": "agenty-flowcharting-panel"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "max"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "rate(gnmic_interfaces_interface_state_counters_out_octets{role=\"spine\"}[1m]) * 8",
+          "legendFormat": "{{source}} - {{interface_name}} TX",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "rate(gnmic_interfaces_interface_state_counters_in_octets{role=\"spine\"}[1m]) * 8",
+          "legendFormat": "{{source}} - {{interface_name}} RX",
+          "refId": "B"
+        }
+      ],
+      "title": "Spine Interface Bandwidth",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "tooltip": false,
+              "viz": false,
+              "legend": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "max"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "10.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "rate(gnmic_interfaces_interface_state_counters_out_octets{role=\"leaf\"}[1m]) * 8",
+          "legendFormat": "{{source}} - {{interface_name}} TX",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "rate(gnmic_interfaces_interface_state_counters_in_octets{role=\"leaf\"}[1m]) * 8",
+          "legendFormat": "{{source}} - {{interface_name}} RX",
+          "refId": "B"
+        }
+      ],
+      "title": "Leaf Interface Bandwidth",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["evpn", "vxlan", "topology", "flow"],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "EVPN-VXLAN Fabric Flow Topology",
+  "uid": "evpn-fabric-flow",
+  "version": 1,
+  "weekStart": ""
+}
