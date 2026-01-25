@@ -2,10 +2,10 @@
   "freeTextAnnotations": [
     {
       "id": "freeText_1764841883236_2",
-      "text": "AS 60001",
+      "text": "AS60001",
       "position": {
-        "x": -35,
-        "y": 218
+        "x": -26,
+        "y": 237
       },
       "fontSize": 8,
       "fontColor": "#ffffff",
@@ -22,8 +22,8 @@
       "id": "freeText_1764842048180_3",
       "text": "AS60002",
       "position": {
-        "x": 91,
-        "y": 218
+        "x": 101,
+        "y": 237
       },
       "fontSize": 8,
       "fontColor": "#ffffff",
@@ -40,8 +40,8 @@
       "id": "freeText_1764842063537_4",
       "text": "AS60003",
       "position": {
-        "x": 217,
-        "y": 219
+        "x": 227,
+        "y": 237
       },
       "fontSize": 8,
       "fontColor": "#ffffff",
@@ -58,8 +58,8 @@
       "id": "freeText_1764842074248_5",
       "text": "AS60004",
       "position": {
-        "x": 344,
-        "y": 218
+        "x": 353,
+        "y": 236
       },
       "fontSize": 8,
       "fontColor": "#ffffff",
