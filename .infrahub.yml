@@ -1,18 +1,18 @@
 ---
 schemas:
-  - schemas
+  - infrahub/schemas
 menus:
-  - menus
+  - infrahub/menus
 objects:
-  - objects/01-foundation.yml
-  - objects/02-fabric.yml
-  - objects/03-devices.yml
-  - objects/04-interfaces.yml
-  - objects/05-ipam.yml
-  - objects/06-vlans-vxlan.yml
-  - objects/07-interface-vlans.yml
-  - objects/08-ipam-vlans.yml
-  - objects/09-bgp.yml
-  - objects/10-bgp-sessions.yml
-  - objects/11-vrfs.yml
-  - objects/12-mlag.yml
+  - infrahub/objects/01-foundation.yml
+  - infrahub/objects/02-fabric.yml
+  - infrahub/objects/03-devices.yml
+  - infrahub/objects/04-interfaces.yml
+  - infrahub/objects/05-ipam.yml
+  - infrahub/objects/06-vlans-vxlan.yml
+  - infrahub/objects/07-interface-vlans.yml
+  - infrahub/objects/08-ipam-vlans.yml
+  - infrahub/objects/09-bgp.yml
+  - infrahub/objects/10-bgp-sessions.yml
+  - infrahub/objects/11-vrfs.yml
+  - infrahub/objects/12-mlag.yml

@@ -2,7 +2,7 @@
 # Custom menu for EVPN-VXLAN Fabric Orchestrator
 # Organizes schema nodes into logical topology-aligned categories
 ---
-apiversion: infrahub.app/v1
+apiVersion: infrahub.app/v1
 kind: Menu
 spec:
   data:
