@@ -1,0 +1,141 @@
+# MLAG Schema for EVPN-VXLAN Fabric
+# Defines MLAG domain and peer configuration
+---
+version: "1.0"
+nodes:
+  # ================================================================
+  # MLAG Domain
+  # ================================================================
+  - name: MlagDomain
+    namespace: Infra
+    description: MLAG domain configuration for leaf pair
+    label: MLAG Domain
+    icon: mdi--link-variant
+    include_in_menu: false
+    human_friendly_id:
+      - domain_id__value
+    display_label: "{{ domain_id__value }}"
+    attributes:
+      - name: domain_id
+        kind: Text
+        description: MLAG domain identifier (e.g., leafs)
+      - name: description
+        kind: Text
+        optional: true
+      - name: virtual_mac
+        kind: Text
+        description: "Shared virtual MAC (format: xxxx.xxxx.xxxx)"
+      - name: heartbeat_vrf
+        kind: Text
+        default_value: mgmt
+        description: VRF for heartbeat (typically mgmt)
+      - name: dual_primary_detection
+        kind: Boolean
+        default_value: true
+      - name: dual_primary_delay
+        kind: Number
+        default_value: 10
+        description: Delay in seconds before dual-primary action
+      - name: dual_primary_action
+        kind: Dropdown
+        default_value: errdisable
+        choices:
+          - name: errdisable
+            label: Error Disable Interfaces
+          - name: none
+            label: No Action
+    relationships:
+      - name: devices
+        peer: InfraDevice
+        cardinality: many
+        min_count: 2
+        max_count: 2
+        description: MLAG peer devices
+      - name: peer_vlan
+        peer: InfraVLAN
+        identifier: mlag_domain_peer_vlan
+        cardinality: one
+        direction: outbound
+        description: VLAN for MLAG peer-link control traffic
+      - name: ibgp_vlan
+        peer: InfraVLAN
+        identifier: mlag_domain_ibgp_vlan
+        cardinality: one
+        direction: outbound
+        optional: true
+        description: VLAN for iBGP peering between MLAG peers
+
+  # ================================================================
+  # MLAG Peer Configuration (per device)
+  # ================================================================
+  - name: MlagPeerConfig
+    namespace: Infra
+    description: MLAG configuration on a specific device
+    label: MLAG Peer Config
+    icon: mdi--server-network
+    include_in_menu: false
+    human_friendly_id:
+      - device__name__value
+    display_label: "{{ local_interface_ip__value }}"
+    attributes:
+      - name: local_interface_ip
+        kind: IPNetwork
+        description: IP on MLAG peer VLAN SVI
+      - name: peer_address
+        kind: IPHost
+        description: Peer's MLAG SVI IP address
+      - name: heartbeat_peer_ip
+        kind: IPHost
+        description: Peer's management IP for heartbeat
+    relationships:
+      - name: device
+        peer: InfraDevice
+        cardinality: one
+        kind: Parent
+        optional: false
+      - name: mlag_domain
+        peer: InfraMlagDomain
+        cardinality: one
+      - name: local_interface
+        peer: InfraInterfaceVlan
+        cardinality: one
+        description: Local MLAG SVI
+      - name: peer_link
+        peer: InfraInterfaceLag
+        cardinality: one
+        description: Peer-link port-channel
+
+  # ================================================================
+  # MLAG Interface (MLAG-enabled LAG)
+  # ================================================================
+  - name: MlagInterface
+    namespace: Infra
+    description: MLAG interface configuration
+    label: MLAG Interface
+    icon: mdi--ethernet-cable
+    include_in_menu: false
+    display_label: "{{ mlag_id__value }}"
+    attributes:
+      - name: mlag_id
+        kind: Number
+        description: MLAG interface ID
+      - name: description
+        kind: Text
+        optional: true
+      - name: lacp_fallback_timeout
+        kind: Number
+        default_value: 5
+        description: LACP fallback timeout in seconds
+      - name: lacp_fallback_individual
+        kind: Boolean
+        default_value: true
+    relationships:
+      - name: mlag_domain
+        peer: InfraMlagDomain
+        cardinality: one
+      - name: lag_interfaces
+        peer: InfraInterfaceLag
+        cardinality: many
+        min_count: 1
+        max_count: 2
+        description: LAG interfaces on each MLAG peer

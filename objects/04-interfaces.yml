@@ -1,0 +1,492 @@
+# Interfaces: Loopback, Ethernet, LAG (Port-Channel), VLAN SVIs
+# Depends on: 02-devices
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraInterfaceLoopback
+  data:
+    # Spine loopbacks (Lo0 only)
+    - device: ["spine1"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    - device: ["spine2"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    # Leaf loopbacks (Lo0 + Lo1)
+    - device: ["leaf1"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    - device: ["leaf1"]
+      name: Loopback1
+      description: VTEP
+      enabled: true
+    - device: ["leaf2"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    - device: ["leaf2"]
+      name: Loopback1
+      description: VTEP
+      enabled: true
+    - device: ["leaf3"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    - device: ["leaf3"]
+      name: Loopback1
+      description: VTEP
+      enabled: true
+    - device: ["leaf4"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    - device: ["leaf4"]
+      name: Loopback1
+      description: VTEP
+      enabled: true
+    - device: ["leaf5"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    - device: ["leaf5"]
+      name: Loopback1
+      description: VTEP
+      enabled: true
+    - device: ["leaf6"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    - device: ["leaf6"]
+      name: Loopback1
+      description: VTEP
+      enabled: true
+    - device: ["leaf7"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    - device: ["leaf7"]
+      name: Loopback1
+      description: VTEP
+      enabled: true
+    - device: ["leaf8"]
+      name: Loopback0
+      description: Router-ID
+      enabled: true
+    - device: ["leaf8"]
+      name: Loopback1
+      description: VTEP
+      enabled: true
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraInterfaceLag
+  data:
+    # Port-Channel999 — MLAG peer-link (all leafs)
+    - device: ["leaf1"]
+      name: Port-Channel999
+      description: MLAG Peer
+      enabled: true
+      lacp_mode: active
+    - device: ["leaf2"]
+      name: Port-Channel999
+      description: MLAG Peer
+      enabled: true
+      lacp_mode: active
+    - device: ["leaf3"]
+      name: Port-Channel999
+      description: MLAG Peer
+      enabled: true
+      lacp_mode: active
+    - device: ["leaf4"]
+      name: Port-Channel999
+      description: MLAG Peer
+      enabled: true
+      lacp_mode: active
+    - device: ["leaf5"]
+      name: Port-Channel999
+      description: MLAG Peer
+      enabled: true
+      lacp_mode: active
+    - device: ["leaf6"]
+      name: Port-Channel999
+      description: MLAG Peer
+      enabled: true
+      lacp_mode: active
+    - device: ["leaf7"]
+      name: Port-Channel999
+      description: MLAG Peer
+      enabled: true
+      lacp_mode: active
+    - device: ["leaf8"]
+      name: Port-Channel999
+      description: MLAG Peer
+      enabled: true
+      lacp_mode: active
+    # Port-Channel1 — Host-facing MLAG LAG (all leafs)
+    - device: ["leaf1"]
+      name: Port-Channel1
+      description: host1
+      enabled: true
+      lacp_mode: active
+      mlag_id: 1
+    - device: ["leaf2"]
+      name: Port-Channel1
+      description: host1
+      enabled: true
+      lacp_mode: active
+      mlag_id: 1
+    - device: ["leaf3"]
+      name: Port-Channel1
+      description: host2
+      enabled: true
+      lacp_mode: active
+      mlag_id: 1
+    - device: ["leaf4"]
+      name: Port-Channel1
+      description: host2
+      enabled: true
+      lacp_mode: active
+      mlag_id: 1
+    - device: ["leaf5"]
+      name: Port-Channel1
+      description: host3
+      enabled: true
+      lacp_mode: active
+      mlag_id: 1
+    - device: ["leaf6"]
+      name: Port-Channel1
+      description: host3
+      enabled: true
+      lacp_mode: active
+      mlag_id: 1
+    - device: ["leaf7"]
+      name: Port-Channel1
+      description: host4
+      enabled: true
+      lacp_mode: active
+      mlag_id: 1
+    - device: ["leaf8"]
+      name: Port-Channel1
+      description: host4
+      enabled: true
+      lacp_mode: active
+      mlag_id: 1
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraInterfaceEthernet
+  data:
+    # ============================================================
+    # Spine1 Ethernet interfaces (underlay to leafs)
+    # ============================================================
+    - device: ["spine1"]
+      name: Ethernet1
+      description: leaf1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine1"]
+      name: Ethernet2
+      description: leaf2
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine1"]
+      name: Ethernet3
+      description: leaf3
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine1"]
+      name: Ethernet4
+      description: leaf4
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine1"]
+      name: Ethernet5
+      description: leaf5
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine1"]
+      name: Ethernet6
+      description: leaf6
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine1"]
+      name: Ethernet7
+      description: leaf7
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine1"]
+      name: Ethernet8
+      description: leaf8
+      enabled: true
+      mtu: 9214
+      mode: routed
+    # ============================================================
+    # Spine2 Ethernet interfaces (underlay to leafs)
+    # ============================================================
+    - device: ["spine2"]
+      name: Ethernet1
+      description: leaf1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine2"]
+      name: Ethernet2
+      description: leaf2
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine2"]
+      name: Ethernet3
+      description: leaf3
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine2"]
+      name: Ethernet4
+      description: leaf4
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine2"]
+      name: Ethernet5
+      description: leaf5
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine2"]
+      name: Ethernet6
+      description: leaf6
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine2"]
+      name: Ethernet7
+      description: leaf7
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["spine2"]
+      name: Ethernet8
+      description: leaf8
+      enabled: true
+      mtu: 9214
+      mode: routed
+    # ============================================================
+    # Leaf Ethernet interfaces
+    # Each leaf has: Ethernet1 (host), Ethernet10 (mlag peer-link),
+    #                Ethernet11 (spine1), Ethernet12 (spine2)
+    # ============================================================
+    # Leaf1
+    - device: ["leaf1"]
+      name: Ethernet1
+      description: host1
+      enabled: true
+      mode: trunk
+      lag: ["leaf1", "Port-Channel1"]
+    - device: ["leaf1"]
+      name: Ethernet10
+      description: mlag peer link
+      enabled: true
+      mode: trunk
+      lag: ["leaf1", "Port-Channel999"]
+    - device: ["leaf1"]
+      name: Ethernet11
+      description: spine1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["leaf1"]
+      name: Ethernet12
+      description: spine2
+      enabled: true
+      mtu: 9214
+      mode: routed
+    # Leaf2
+    - device: ["leaf2"]
+      name: Ethernet1
+      description: host1
+      enabled: true
+      mode: trunk
+      lag: ["leaf2", "Port-Channel1"]
+    - device: ["leaf2"]
+      name: Ethernet10
+      description: mlag peer link
+      enabled: true
+      mode: trunk
+      lag: ["leaf2", "Port-Channel999"]
+    - device: ["leaf2"]
+      name: Ethernet11
+      description: spine1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["leaf2"]
+      name: Ethernet12
+      description: spine2
+      enabled: true
+      mtu: 9214
+      mode: routed
+    # Leaf3
+    - device: ["leaf3"]
+      name: Ethernet1
+      description: host2
+      enabled: true
+      mode: trunk
+      lag: ["leaf3", "Port-Channel1"]
+    - device: ["leaf3"]
+      name: Ethernet10
+      description: mlag peer link
+      enabled: true
+      mode: trunk
+      lag: ["leaf3", "Port-Channel999"]
+    - device: ["leaf3"]
+      name: Ethernet11
+      description: spine1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["leaf3"]
+      name: Ethernet12
+      description: spine2
+      enabled: true
+      mtu: 9214
+      mode: routed
+    # Leaf4
+    - device: ["leaf4"]
+      name: Ethernet1
+      description: host2
+      enabled: true
+      mode: trunk
+      lag: ["leaf4", "Port-Channel1"]
+    - device: ["leaf4"]
+      name: Ethernet10
+      description: mlag peer link
+      enabled: true
+      mode: trunk
+      lag: ["leaf4", "Port-Channel999"]
+    - device: ["leaf4"]
+      name: Ethernet11
+      description: spine1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["leaf4"]
+      name: Ethernet12
+      description: spine2
+      enabled: true
+      mtu: 9214
+      mode: routed
+    # Leaf5
+    - device: ["leaf5"]
+      name: Ethernet1
+      description: host3
+      enabled: true
+      mode: trunk
+      lag: ["leaf5", "Port-Channel1"]
+    - device: ["leaf5"]
+      name: Ethernet10
+      description: mlag peer link
+      enabled: true
+      mode: trunk
+      lag: ["leaf5", "Port-Channel999"]
+    - device: ["leaf5"]
+      name: Ethernet11
+      description: spine1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["leaf5"]
+      name: Ethernet12
+      description: spine2
+      enabled: true
+      mtu: 9214
+      mode: routed
+    # Leaf6
+    - device: ["leaf6"]
+      name: Ethernet1
+      description: host3
+      enabled: true
+      mode: trunk
+      lag: ["leaf6", "Port-Channel1"]
+    - device: ["leaf6"]
+      name: Ethernet10
+      description: mlag peer link
+      enabled: true
+      mode: trunk
+      lag: ["leaf6", "Port-Channel999"]
+    - device: ["leaf6"]
+      name: Ethernet11
+      description: spine1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["leaf6"]
+      name: Ethernet12
+      description: spine2
+      enabled: true
+      mtu: 9214
+      mode: routed
+    # Leaf7
+    - device: ["leaf7"]
+      name: Ethernet1
+      description: host4
+      enabled: true
+      mode: trunk
+      lag: ["leaf7", "Port-Channel1"]
+    - device: ["leaf7"]
+      name: Ethernet10
+      description: mlag peer link
+      enabled: true
+      mode: trunk
+      lag: ["leaf7", "Port-Channel999"]
+    - device: ["leaf7"]
+      name: Ethernet11
+      description: spine1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["leaf7"]
+      name: Ethernet12
+      description: spine2
+      enabled: true
+      mtu: 9214
+      mode: routed
+    # Leaf8
+    - device: ["leaf8"]
+      name: Ethernet1
+      description: host4
+      enabled: true
+      mode: trunk
+      lag: ["leaf8", "Port-Channel1"]
+    - device: ["leaf8"]
+      name: Ethernet10
+      description: mlag peer link
+      enabled: true
+      mode: trunk
+      lag: ["leaf8", "Port-Channel999"]
+    - device: ["leaf8"]
+      name: Ethernet11
+      description: spine1
+      enabled: true
+      mtu: 9214
+      mode: routed
+    - device: ["leaf8"]
+      name: Ethernet12
+      description: spine2
+      enabled: true
+      mtu: 9214
+      mode: routed
+

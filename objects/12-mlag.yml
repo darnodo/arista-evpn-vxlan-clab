@@ -1,0 +1,134 @@
+# MLAG: Domains and Peer Configs
+# Depends on: 02-devices, 03-interfaces (Vlan4090, Port-Channel999), 05-vlans-vxlan (VLAN 4090/4091)
+#
+# All 4 MLAG pairs share domain-id "leafs" and virtual-mac c001.cafe.babe
+# but each is a separate MlagDomain object linking two devices.
+# MLAG peer VLAN: 4090, MLAG iBGP VLAN: 4091
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraMlagDomain
+  data:
+    # MLAG pair 1: leaf1 + leaf2
+    - domain_id: leafs-1-2
+      description: MLAG domain for leaf1/leaf2 pair
+      virtual_mac: "c001.cafe.babe"
+      heartbeat_vrf: mgmt
+      dual_primary_detection: true
+      dual_primary_delay: 10
+      dual_primary_action: errdisable
+      devices:
+        - ["leaf1"]
+        - ["leaf2"]
+      peer_vlan: ["4090"]
+      ibgp_vlan: ["4091"]
+    # MLAG pair 2: leaf3 + leaf4
+    - domain_id: leafs-3-4
+      description: MLAG domain for leaf3/leaf4 pair
+      virtual_mac: "c001.cafe.babe"
+      heartbeat_vrf: mgmt
+      dual_primary_detection: true
+      dual_primary_delay: 10
+      dual_primary_action: errdisable
+      devices:
+        - ["leaf3"]
+        - ["leaf4"]
+      peer_vlan: ["4090"]
+      ibgp_vlan: ["4091"]
+    # MLAG pair 3: leaf5 + leaf6
+    - domain_id: leafs-5-6
+      description: MLAG domain for leaf5/leaf6 pair
+      virtual_mac: "c001.cafe.babe"
+      heartbeat_vrf: mgmt
+      dual_primary_detection: true
+      dual_primary_delay: 10
+      dual_primary_action: errdisable
+      devices:
+        - ["leaf5"]
+        - ["leaf6"]
+      peer_vlan: ["4090"]
+      ibgp_vlan: ["4091"]
+    # MLAG pair 4: leaf7 + leaf8
+    - domain_id: leafs-7-8
+      description: MLAG domain for leaf7/leaf8 pair
+      virtual_mac: "c001.cafe.babe"
+      heartbeat_vrf: mgmt
+      dual_primary_detection: true
+      dual_primary_delay: 10
+      dual_primary_action: errdisable
+      devices:
+        - ["leaf7"]
+        - ["leaf8"]
+      peer_vlan: ["4090"]
+      ibgp_vlan: ["4091"]
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraMlagPeerConfig
+  data:
+    # Leaf1 MLAG peer config
+    - device: ["leaf1"]
+      mlag_domain: ["leafs-1-2"]
+      local_interface_ip: "10.0.199.254/31"
+      peer_address: "10.0.199.255"
+      heartbeat_peer_ip: "172.16.0.50"
+      local_interface: ["leaf1", "Vlan4090"]
+      peer_link: ["leaf1", "Port-Channel999"]
+    # Leaf2 MLAG peer config
+    - device: ["leaf2"]
+      mlag_domain: ["leafs-1-2"]
+      local_interface_ip: "10.0.199.255/31"
+      peer_address: "10.0.199.254"
+      heartbeat_peer_ip: "172.16.0.25"
+      local_interface: ["leaf2", "Vlan4090"]
+      peer_link: ["leaf2", "Port-Channel999"]
+    # Leaf3 MLAG peer config
+    - device: ["leaf3"]
+      mlag_domain: ["leafs-3-4"]
+      local_interface_ip: "10.0.199.252/31"
+      peer_address: "10.0.199.253"
+      heartbeat_peer_ip: "172.16.0.28"
+      local_interface: ["leaf3", "Vlan4090"]
+      peer_link: ["leaf3", "Port-Channel999"]
+    # Leaf4 MLAG peer config
+    - device: ["leaf4"]
+      mlag_domain: ["leafs-3-4"]
+      local_interface_ip: "10.0.199.253/31"
+      peer_address: "10.0.199.252"
+      heartbeat_peer_ip: "172.16.0.27"
+      local_interface: ["leaf4", "Vlan4090"]
+      peer_link: ["leaf4", "Port-Channel999"]
+    # Leaf5 MLAG peer config
+    - device: ["leaf5"]
+      mlag_domain: ["leafs-5-6"]
+      local_interface_ip: "10.0.199.250/31"
+      peer_address: "10.0.199.251"
+      heartbeat_peer_ip: "172.16.0.30"
+      local_interface: ["leaf5", "Vlan4090"]
+      peer_link: ["leaf5", "Port-Channel999"]
+    # Leaf6 MLAG peer config
+    - device: ["leaf6"]
+      mlag_domain: ["leafs-5-6"]
+      local_interface_ip: "10.0.199.251/31"
+      peer_address: "10.0.199.250"
+      heartbeat_peer_ip: "172.16.0.29"
+      local_interface: ["leaf6", "Vlan4090"]
+      peer_link: ["leaf6", "Port-Channel999"]
+    # Leaf7 MLAG peer config
+    - device: ["leaf7"]
+      mlag_domain: ["leafs-7-8"]
+      local_interface_ip: "10.0.199.248/31"
+      peer_address: "10.0.199.249"
+      heartbeat_peer_ip: "172.16.0.32"
+      local_interface: ["leaf7", "Vlan4090"]
+      peer_link: ["leaf7", "Port-Channel999"]
+    # Leaf8 MLAG peer config
+    - device: ["leaf8"]
+      mlag_domain: ["leafs-7-8"]
+      local_interface_ip: "10.0.199.249/31"
+      peer_address: "10.0.199.248"
+      heartbeat_peer_ip: "172.16.0.31"
+      local_interface: ["leaf8", "Vlan4090"]
+      peer_link: ["leaf8", "Port-Channel999"]

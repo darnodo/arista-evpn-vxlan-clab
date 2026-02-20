@@ -1,0 +1,344 @@
+# Base Infrastructure Schema for EVPN-VXLAN Fabric
+# This schema defines core infrastructure objects required for fabric orchestration
+---
+version: "1.0"
+generics:
+  - name: Interface
+    namespace: Infra
+    description: Generic interface - parent for all interface types
+    label: Interface
+    include_in_menu: false
+    hierarchical: false
+    display_label: "{{ name__value }}"
+    attributes:
+      - name: name
+        kind: Text
+        description: Interface name (e.g., Ethernet1, Loopback0)
+      - name: description
+        kind: Text
+        optional: true
+      - name: enabled
+        kind: Boolean
+        default_value: true
+      - name: mtu
+        kind: Number
+        optional: true
+        description: Maximum Transmission Unit
+    relationships:
+      - name: device
+        peer: InfraDevice
+        cardinality: one
+        kind: Parent
+        optional: false
+      - name: ip_addresses
+        peer: InfraIPAddress
+        identifier: interface__ip_addresses
+        cardinality: many
+        kind: Generic
+
+nodes:
+  # ================================================================
+  # Location
+  # ================================================================
+  - name: Site
+    namespace: Location
+    description: Physical site or data center
+    label: Site
+    icon: mingcute--building-4-line
+    include_in_menu: false
+    human_friendly_id:
+      - name__value
+    order_by:
+      - name__value
+    display_label: "{{ name__value }}"
+    attributes:
+      - name: name
+        kind: Text
+        unique: true
+      - name: description
+        kind: Text
+        optional: true
+      - name: facility
+        kind: Text
+        optional: true
+        description: Facility identifier or code
+
+  # ================================================================
+  # Platform
+  # ================================================================
+  - name: Platform
+    namespace: Infra
+    description: Device platform/OS (e.g., Arista EOS, Cisco NX-OS)
+    label: Platform
+    icon: mdi--chip
+    include_in_menu: false
+    human_friendly_id:
+      - name__value
+    order_by:
+      - name__value
+    display_label: "{{ name__value }}"
+    attributes:
+      - name: name
+        kind: Text
+        unique: true
+        description: Platform name (e.g., arista_eos, cisco_nxos)
+      - name: description
+        kind: Text
+        optional: true
+      - name: napalm_driver
+        kind: Text
+        optional: true
+        description: NAPALM driver name
+      - name: netmiko_device_type
+        kind: Text
+        optional: true
+        description: Netmiko device type
+
+  # ================================================================
+  # Device
+  # ================================================================
+  - name: Device
+    namespace: Infra
+    description: Network device (spine, leaf, etc.)
+    label: Device
+    icon: mdi--server-network
+    include_in_menu: false
+    human_friendly_id:
+      - name__value
+    order_by:
+      - name__value
+    display_label: "{{ name__value }}"
+    attributes:
+      - name: name
+        kind: Text
+        unique: true
+        description: Device hostname
+      - name: description
+        kind: Text
+        optional: true
+      - name: role
+        kind: Dropdown
+        choices:
+          - name: spine
+            label: Spine
+            color: "#3b82f6"
+          - name: leaf
+            label: Leaf
+            color: "#22c55e"
+        description: Fabric role
+      - name: status
+        kind: Dropdown
+        default_value: active
+        choices:
+          - name: active
+            label: Active
+            color: "#22c55e"
+          - name: planned
+            label: Planned
+            color: "#3b82f6"
+          - name: maintenance
+            label: Maintenance
+            color: "#f59e0b"
+          - name: decommissioned
+            label: Decommissioned
+            color: "#ef4444"
+    relationships:
+      - name: site
+        peer: LocationSite
+        cardinality: one
+        optional: true
+      - name: platform
+        peer: InfraPlatform
+        cardinality: one
+        optional: true
+      - name: asn
+        peer: InfraAutonomousSystem
+        cardinality: one
+        optional: true
+        description: BGP Autonomous System
+      - name: interfaces
+        peer: InfraInterface
+        cardinality: many
+        kind: Component
+      - name: mlag_domain
+        peer: InfraMlagDomain
+        cardinality: one
+        optional: true
+
+  # ================================================================
+  # Interface Types (inherit from InfraInterface generic)
+  # ================================================================
+  - name: InterfaceEthernet
+    namespace: Infra
+    description: Physical Ethernet interface
+    label: Ethernet Interface
+    icon: mdi--ethernet
+    include_in_menu: false
+    inherit_from:
+      - InfraInterface
+    uniqueness_constraints:
+      - ["device", "name__value"]
+    human_friendly_id:
+      - device__name__value
+      - name__value
+    display_label: "{{ name__value }}"
+    attributes:
+      - name: speed
+        kind: Dropdown
+        optional: true
+        choices:
+          - name: "1000"
+            label: 1 Gbps
+          - name: "10000"
+            label: 10 Gbps
+          - name: "25000"
+            label: 25 Gbps
+          - name: "40000"
+            label: 40 Gbps
+          - name: "100000"
+            label: 100 Gbps
+      - name: mode
+        kind: Dropdown
+        optional: true
+        choices:
+          - name: access
+            label: Access
+          - name: trunk
+            label: Trunk
+          - name: routed
+            label: Routed (L3)
+        description: Switchport mode
+    relationships:
+      - name: lag
+        peer: InfraInterfaceLag
+        cardinality: one
+        optional: true
+        description: Parent LAG interface
+      - name: connected_interface
+        peer: InfraInterfaceEthernet
+        identifier: ethernet_connected_to
+        direction: outbound
+        cardinality: one
+        optional: true
+        description: Connected peer interface
+
+  - name: InterfaceLoopback
+    namespace: Infra
+    description: Loopback interface
+    label: Loopback Interface
+    icon: mdi--reload
+    include_in_menu: false
+    inherit_from:
+      - InfraInterface
+    uniqueness_constraints:
+      - ["device", "name__value"]
+    human_friendly_id:
+      - device__name__value
+      - name__value
+    display_label: "{{ name__value }}"
+
+  - name: InterfaceVlan
+    namespace: Infra
+    description: VLAN SVI interface
+    label: VLAN Interface
+    icon: mdi--lan
+    include_in_menu: false
+    inherit_from:
+      - InfraInterface
+    uniqueness_constraints:
+      - ["device", "name__value"]
+    human_friendly_id:
+      - device__name__value
+      - name__value
+    display_label: "{{ name__value }}"
+    attributes:
+      - name: virtual_router_address
+        kind: IPHost
+        optional: true
+        description: Anycast gateway IP (ip virtual-router address)
+      - name: autostate
+        kind: Boolean
+        default_value: true
+        description: "Enable autostate (set false for MLAG peer SVIs)"
+    relationships:
+      - name: vlan
+        peer: InfraVLAN
+        cardinality: one
+        optional: true
+
+  - name: InterfaceLag
+    namespace: Infra
+    description: Link Aggregation (Port-Channel) interface
+    label: LAG Interface
+    icon: mdi--link-variant
+    include_in_menu: false
+    inherit_from:
+      - InfraInterface
+    uniqueness_constraints:
+      - ["device", "name__value"]
+    human_friendly_id:
+      - device__name__value
+      - name__value
+    display_label: "{{ name__value }}"
+    attributes:
+      - name: lacp_mode
+        kind: Dropdown
+        optional: true
+        choices:
+          - name: active
+            label: Active
+          - name: passive
+            label: Passive
+          - name: static
+            label: Static (No LACP)
+      - name: mlag_id
+        kind: Number
+        optional: true
+        description: MLAG interface ID
+    relationships:
+      - name: members
+        peer: InfraInterfaceEthernet
+        cardinality: many
+        kind: Component
+
+  # ================================================================
+  # IP Address
+  # ================================================================
+  - name: IPAddress
+    namespace: Infra
+    description: IP Address assignment
+    label: IP Address
+    icon: mdi--ip-network
+    include_in_menu: false
+    human_friendly_id:
+      - address__value
+    order_by:
+      - address__value
+    display_label: "{{ address__value }}"
+    attributes:
+      - name: address
+        kind: IPHost
+        description: IP address with prefix (e.g., 10.0.1.1/31)
+      - name: description
+        kind: Text
+        optional: true
+      - name: status
+        kind: Dropdown
+        default_value: active
+        choices:
+          - name: active
+            label: Active
+            color: "#22c55e"
+          - name: reserved
+            label: Reserved
+            color: "#3b82f6"
+          - name: deprecated
+            label: Deprecated
+            color: "#ef4444"
+    relationships:
+      - name: interface
+        peer: InfraInterface
+        identifier: interface__ip_addresses
+        cardinality: one
+        optional: true
+        kind: Attribute

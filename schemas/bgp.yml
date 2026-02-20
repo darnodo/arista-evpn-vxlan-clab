@@ -1,0 +1,291 @@
+# BGP Schema for EVPN-VXLAN Fabric
+# Defines Autonomous System, Peer Groups, and BGP Sessions
+---
+version: "1.0"
+nodes:
+  # ================================================================
+  # Autonomous System
+  # ================================================================
+  - name: AutonomousSystem
+    namespace: Infra
+    description: BGP Autonomous System
+    label: Autonomous System
+    icon: mdi--cloud-outline
+    include_in_menu: false
+    human_friendly_id:
+      - asn__value
+    order_by:
+      - asn__value
+    display_label: "{{ asn__value }}"
+    attributes:
+      - name: asn
+        kind: Number
+        unique: true
+        description: AS Number (e.g., 65000)
+      - name: description
+        kind: Text
+        optional: true
+      - name: as_type
+        kind: Dropdown
+        default_value: private
+        choices:
+          - name: private
+            label: Private
+          - name: public
+            label: Public
+
+  # ================================================================
+  # BGP Router Configuration (per device)
+  # ================================================================
+  - name: BGPRouterConfig
+    namespace: Infra
+    description: BGP router configuration on a device
+    label: BGP Router Config
+    icon: mdi--router-wireless
+    include_in_menu: false
+    human_friendly_id:
+      - device__name__value
+    display_label: "{{ router_id__value }}"
+    attributes:
+      - name: router_id
+        kind: IPHost
+        unique: true
+        description: BGP Router ID
+      - name: default_ipv4_unicast
+        kind: Boolean
+        default_value: false
+        description: Enable default IPv4 unicast
+      - name: log_neighbor_changes
+        kind: Boolean
+        default_value: true
+      - name: ecmp_max_paths
+        kind: Number
+        default_value: 4
+        description: Maximum ECMP paths
+      - name: ecmp_max_ecmp
+        kind: Number
+        default_value: 64
+        description: Maximum ECMP routes
+      - name: ebgp_distance
+        kind: Number
+        default_value: 20
+        description: eBGP administrative distance
+      - name: ibgp_distance
+        kind: Number
+        default_value: 200
+        description: iBGP administrative distance
+      - name: local_distance
+        kind: Number
+        default_value: 200
+        description: Local route administrative distance
+    relationships:
+      - name: device
+        peer: InfraDevice
+        cardinality: one
+        kind: Parent
+        optional: false
+      - name: local_asn
+        peer: InfraAutonomousSystem
+        cardinality: one
+      - name: peer_groups
+        peer: InfraBGPPeerGroup
+        cardinality: many
+        kind: Component
+      - name: sessions
+        peer: InfraBGPSession
+        cardinality: many
+        kind: Component
+
+  # ================================================================
+  # BGP Peer Group
+  # ================================================================
+  - name: BGPPeerGroup
+    namespace: Infra
+    description: BGP peer group template
+    label: BGP Peer Group
+    icon: mdi--account-group
+    include_in_menu: false
+    uniqueness_constraints:
+      - ["local_identifier__value"]
+    human_friendly_id:
+      - local_identifier__value
+    display_label: "{{ name__value }}"
+    attributes:
+      - name: local_identifier
+        kind: Text
+        description: "Unique identifier combining device name and peer group name (e.g. spine1__evpn)"
+      - name: name
+        kind: Text
+        description: Peer group name (e.g., underlay, evpn)
+      - name: description
+        kind: Text
+        optional: true
+      - name: update_source
+        kind: Text
+        optional: true
+        description: Update source interface (e.g., Loopback0)
+      - name: ebgp_multihop
+        kind: Number
+        optional: true
+        description: eBGP multihop TTL
+      - name: send_community
+        kind: Dropdown
+        default_value: none
+        choices:
+          - name: none
+            label: None
+          - name: standard
+            label: Standard
+          - name: extended
+            label: Extended
+          - name: both
+            label: Both
+      - name: next_hop_self
+        kind: Boolean
+        default_value: false
+      - name: next_hop_unchanged
+        kind: Boolean
+        default_value: false
+        description: Keep next-hop unchanged (for route reflector)
+      - name: maximum_routes
+        kind: Number
+        optional: true
+      - name: maximum_routes_warning_only
+        kind: Boolean
+        default_value: true
+      - name: peer_group_type
+        kind: Dropdown
+        default_value: underlay
+        choices:
+          - name: underlay
+            label: Underlay IPv4
+          - name: underlay_ibgp
+            label: Underlay iBGP
+          - name: evpn
+            label: EVPN Overlay
+    relationships:
+      - name: bgp_config
+        peer: InfraBGPRouterConfig
+        cardinality: one
+        kind: Parent
+        optional: false
+      - name: remote_asn
+        peer: InfraAutonomousSystem
+        cardinality: one
+        optional: true
+
+  # ================================================================
+  # BGP Session (Neighbor)
+  # ================================================================
+  - name: BGPSession
+    namespace: Infra
+    description: BGP neighbor session
+    label: BGP Session
+    icon: mdi--connection
+    include_in_menu: false
+    uniqueness_constraints:
+      - ["local_identifier__value"]
+    human_friendly_id:
+      - local_identifier__value
+    display_label: "{{ peer_address__value }}"
+    attributes:
+      - name: local_identifier
+        kind: Text
+        description: "Unique identifier combining device name and peer address (e.g. spine1__10.0.250.11)"
+      - name: peer_address
+        kind: IPHost
+        description: Neighbor IP address
+      - name: description
+        kind: Text
+        optional: true
+      - name: enabled
+        kind: Boolean
+        default_value: true
+    relationships:
+      - name: bgp_config
+        peer: InfraBGPRouterConfig
+        cardinality: one
+        kind: Parent
+        optional: false
+      - name: peer_group
+        peer: InfraBGPPeerGroup
+        cardinality: one
+        optional: true
+      - name: remote_asn
+        peer: InfraAutonomousSystem
+        cardinality: one
+        optional: true
+        description: Override peer group remote-as
+      - name: peer_device
+        peer: InfraDevice
+        cardinality: one
+        optional: true
+        description: Remote peer device (for documentation)
+      - name: vrf
+        peer: InfraVRF
+        cardinality: one
+        kind: Attribute
+        optional: true
+        description: VRF context for this session (null = global BGP process)
+
+  # ================================================================
+  # BGP Address Family Configuration
+  # ================================================================
+  - name: BGPAddressFamily
+    namespace: Infra
+    description: BGP address family configuration
+    label: BGP Address Family
+    icon: mdi--format-list-bulleted
+    include_in_menu: false
+    human_friendly_id:
+      - local_identifier__value
+    display_label: "{{ afi__value }}"
+    attributes:
+      - name: local_identifier
+        kind: Text
+        description: "Unique identifier combining device name and AFI/SAFI (e.g. spine1__ipv4_unicast)"
+      - name: afi
+        kind: Dropdown
+        choices:
+          - name: ipv4
+            label: IPv4
+          - name: ipv6
+            label: IPv6
+          - name: evpn
+            label: EVPN
+        description: Address Family Identifier
+      - name: safi
+        kind: Dropdown
+        default_value: unicast
+        choices:
+          - name: unicast
+            label: Unicast
+          - name: multicast
+            label: Multicast
+        description: Sub Address Family Identifier
+    relationships:
+      - name: bgp_config
+        peer: InfraBGPRouterConfig
+        cardinality: one
+        kind: Parent
+        optional: false
+      - name: active_peer_groups
+        peer: InfraBGPPeerGroup
+        cardinality: many
+        description: Peer groups activated in this AF
+      - name: active_sessions
+        peer: InfraBGPSession
+        cardinality: many
+        optional: true
+        description: Individual sessions activated in this AF (e.g. spine direct neighbors)
+      - name: vrf
+        peer: InfraVRF
+        cardinality: one
+        kind: Attribute
+        optional: true
+        description: VRF context for this AF (null = global BGP process)
+      - name: networks
+        peer: InfraIPAddress
+        cardinality: many
+        optional: true
+        description: Networks to advertise

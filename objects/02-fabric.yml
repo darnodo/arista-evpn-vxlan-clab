@@ -1,0 +1,15 @@
+# Fabric definition — depends on LocationSite and InfraAutonomousSystem from 01-foundation
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraFabric
+  data:
+    - name: evpn-lab
+      description: Arista EVPN-VXLAN reference fabric
+      underlay_protocol: ebgp
+      overlay_protocol: evpn
+      anycast_gateway_mac: "c001.cafe.babe"
+      spine_asn: ["65000"]
+      sites:
+        - ["dc1"]

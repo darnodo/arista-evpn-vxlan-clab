@@ -1,0 +1,18 @@
+---
+schemas:
+  - schemas
+menus:
+  - menus
+objects:
+  - objects/01-foundation.yml
+  - objects/02-fabric.yml
+  - objects/03-devices.yml
+  - objects/04-interfaces.yml
+  - objects/05-ipam.yml
+  - objects/06-vlans-vxlan.yml
+  - objects/07-interface-vlans.yml
+  - objects/08-ipam-vlans.yml
+  - objects/09-bgp.yml
+  - objects/10-bgp-sessions.yml
+  - objects/11-vrfs.yml
+  - objects/12-mlag.yml

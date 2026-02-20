@@ -1,0 +1,247 @@
+# yaml-language-server: $schema=https://schema.infrahub.app/infrahub/menu/latest.json
+# Custom menu for EVPN-VXLAN Fabric Orchestrator
+# Organizes schema nodes into logical topology-aligned categories
+---
+apiversion: infrahub.app/v1
+kind: Menu
+spec:
+  data:
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # Fabric Topology
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - namespace: Topology
+      name: Mainmenu
+      label: Fabric Topology
+      icon: "mdi:lan"
+      children:
+        data:
+          - namespace: Topology
+            name: Fabric
+            label: Fabrics
+            kind: InfraFabric
+            icon: "mdi:vector-polygon"
+
+          - namespace: Topology
+            name: Site
+            label: Sites
+            kind: LocationSite
+            icon: "mingcute:building-4-line"
+
+          - namespace: Topology
+            name: Device
+            label: Devices
+            kind: InfraDevice
+            icon: "mdi:server-network"
+
+          - namespace: Topology
+            name: Platform
+            label: Platforms
+            kind: InfraPlatform
+            icon: "mdi:chip"
+
+          - namespace: Topology
+            name: UnderlayLink
+            label: Underlay Links
+            kind: InfraUnderlayLink
+            icon: "mdi:cable-data"
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # Interfaces
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - namespace: Interfaces
+      name: Mainmenu
+      label: Interfaces
+      icon: "mdi:ethernet"
+      children:
+        data:
+          - namespace: Interfaces
+            name: Ethernet
+            label: Ethernet
+            kind: InfraInterfaceEthernet
+            icon: "mdi:ethernet"
+
+          - namespace: Interfaces
+            name: Loopback
+            label: Loopback
+            kind: InfraInterfaceLoopback
+            icon: "mdi:reload"
+
+          - namespace: Interfaces
+            name: VlanSvi
+            label: VLAN SVI
+            kind: InfraInterfaceVlan
+            icon: "mdi:lan"
+
+          - namespace: Interfaces
+            name: Lag
+            label: LAG / Port-Channel
+            kind: InfraInterfaceLag
+            icon: "mdi:link-variant"
+
+          - namespace: Interfaces
+            name: Vxlan
+            label: VXLAN Tunnel
+            kind: InfraInterfaceVxlan
+            icon: "mdi:tunnel"
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # IP Addressing
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - namespace: Addressing
+      name: Mainmenu
+      label: IP Addressing
+      icon: "mdi:ip-network"
+      children:
+        data:
+          - namespace: Addressing
+            name: IPAddress
+            label: IP Addresses
+            kind: InfraIPAddress
+            icon: "mdi:ip-network"
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # Layer 2 / VXLAN
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - namespace: Layer2
+      name: Mainmenu
+      label: Layer 2 / VXLAN
+      icon: "mdi:switch"
+      children:
+        data:
+          - namespace: Layer2
+            name: Vlan
+            label: VLANs
+            kind: InfraVLAN
+            icon: "mdi:lan-connect"
+
+          - namespace: Layer2
+            name: Vni
+            label: VNIs
+            kind: InfraVNI
+            icon: "mdi:tunnel-outline"
+
+          - namespace: Layer2
+            name: Vtep
+            label: VTEPs
+            kind: InfraVTEP
+            icon: "mdi:server-network-outline"
+
+          - namespace: Layer2
+            name: VlanVniMapping
+            label: VLAN-VNI Mappings
+            kind: InfraVlanVniMapping
+            icon: "mdi:swap-horizontal"
+
+          - namespace: Layer2
+            name: EvpnInstance
+            label: EVPN Instances
+            kind: InfraEVPNInstance
+            icon: "mdi:cloud-sync"
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # Routing / BGP
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - namespace: Routing
+      name: Mainmenu
+      label: Routing / BGP
+      icon: "mdi:routes"
+      children:
+        data:
+          - namespace: Routing
+            name: AutonomousSystem
+            label: Autonomous Systems
+            kind: InfraAutonomousSystem
+            icon: "mdi:cloud-outline"
+
+          - namespace: Routing
+            name: BGPRouterConfig
+            label: BGP Router Config
+            kind: InfraBGPRouterConfig
+            icon: "mdi:router-wireless"
+
+          - namespace: Routing
+            name: BGPPeerGroup
+            label: BGP Peer Groups
+            kind: InfraBGPPeerGroup
+            icon: "mdi:account-group"
+
+          - namespace: Routing
+            name: BGPSession
+            label: BGP Sessions
+            kind: InfraBGPSession
+            icon: "mdi:connection"
+
+          - namespace: Routing
+            name: BGPAddressFamily
+            label: BGP Address Families
+            kind: InfraBGPAddressFamily
+            icon: "mdi:format-list-bulleted"
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # VRF
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - namespace: Vrf
+      name: Mainmenu
+      label: VRF
+      icon: "mdi:router"
+      children:
+        data:
+          - namespace: Vrf
+            name: Vrf
+            label: VRFs
+            kind: InfraVRF
+            icon: "mdi:router"
+
+          - namespace: Vrf
+            name: RouteTarget
+            label: Route Targets
+            kind: InfraRouteTarget
+            icon: "mdi:target"
+
+          - namespace: Vrf
+            name: VrfAssignment
+            label: VRF Assignments
+            kind: InfraVRFDeviceAssignment
+            icon: "mdi:router-network"
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # MLAG
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - namespace: Mlag
+      name: Mainmenu
+      label: MLAG
+      icon: "mdi:link-variant"
+      children:
+        data:
+          - namespace: Mlag
+            name: MlagDomain
+            label: MLAG Domains
+            kind: InfraMlagDomain
+            icon: "mdi:link-variant"
+
+          - namespace: Mlag
+            name: MlagPeerConfig
+            label: MLAG Peer Config
+            kind: InfraMlagPeerConfig
+            icon: "mdi:server-network"
+
+          - namespace: Mlag
+            name: MlagInterface
+            label: MLAG Interfaces
+            kind: InfraMlagInterface
+            icon: "mdi:ethernet-cable"
+
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    # Host Connectivity
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - namespace: Connectivity
+      name: Mainmenu
+      label: Host Connectivity
+      icon: "mdi:desktop-tower"
+      children:
+        data:
+          - namespace: Connectivity
+            name: HostConnection
+            label: Host Connections
+            kind: InfraHostConnection
+            icon: "mdi:desktop-tower"

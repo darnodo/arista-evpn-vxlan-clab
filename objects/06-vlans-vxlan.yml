@@ -1,0 +1,167 @@
+# VLANs, VNIs, VTEPs, VLAN-VNI mappings, EVPN instances
+# Depends on: 02-devices, 03-interfaces
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraVLAN
+  data:
+    - vlan_id: 34
+      name: vrf-gold-subnet
+      description: VRF gold L3 subnet (leaf3/leaf4)
+      status: active
+      vlan_type: standard
+    - vlan_id: 40
+      name: test-l2-vxlan
+      description: L2 VXLAN test VLAN
+      status: active
+      vlan_type: standard
+    - vlan_id: 78
+      name: vrf-gold-subnet
+      description: VRF gold L3 subnet (leaf7/leaf8)
+      status: active
+      vlan_type: standard
+    - vlan_id: 900
+      name: bgp-border
+      description: BGP border peering VLAN
+      status: active
+      vlan_type: standard
+    - vlan_id: 4090
+      name: mlag-peer
+      description: MLAG peer-link control
+      status: active
+      vlan_type: mlag_peer
+      trunk_groups:
+        - mlag-peer
+      stp_enabled: false
+    - vlan_id: 4091
+      name: mlag-ibgp
+      description: MLAG iBGP peering
+      status: active
+      vlan_type: mlag_ibgp
+      trunk_groups:
+        - mlag-peer
+      stp_enabled: false
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraVNI
+  data:
+    - vni: 110040
+      description: L2VNI for VLAN 40 (test-l2-vxlan)
+      vni_type: l2vni
+      vlan: ["40"]
+    - vni: 100001
+      description: L3VNI for VRF gold
+      vni_type: l3vni
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraVTEP
+  data:
+    # VTEP on leaf1 (shared VTEP1 IP 10.0.255.11)
+    - device: ["leaf1"]
+      source_address: "10.0.255.11"
+      udp_port: 4789
+      learn_restrict: any
+      source_interface: ["leaf1", "Loopback1"]
+    # VTEP on leaf2 (shared VTEP1 IP 10.0.255.11)
+    - device: ["leaf2"]
+      source_address: "10.0.255.11"
+      udp_port: 4789
+      learn_restrict: any
+      source_interface: ["leaf2", "Loopback1"]
+    # VTEP on leaf3 (shared VTEP2 IP 10.0.255.12)
+    - device: ["leaf3"]
+      source_address: "10.0.255.12"
+      udp_port: 4789
+      learn_restrict: any
+      source_interface: ["leaf3", "Loopback1"]
+    # VTEP on leaf4 (shared VTEP2 IP 10.0.255.12)
+    - device: ["leaf4"]
+      source_address: "10.0.255.12"
+      udp_port: 4789
+      learn_restrict: any
+      source_interface: ["leaf4", "Loopback1"]
+    # VTEP on leaf5 (shared VTEP3 IP 10.0.255.13)
+    - device: ["leaf5"]
+      source_address: "10.0.255.13"
+      udp_port: 4789
+      learn_restrict: any
+      source_interface: ["leaf5", "Loopback1"]
+    # VTEP on leaf6 (shared VTEP3 IP 10.0.255.13)
+    - device: ["leaf6"]
+      source_address: "10.0.255.13"
+      udp_port: 4789
+      learn_restrict: any
+      source_interface: ["leaf6", "Loopback1"]
+    # VTEP on leaf7 (shared VTEP4 IP 10.0.255.14)
+    - device: ["leaf7"]
+      source_address: "10.0.255.14"
+      udp_port: 4789
+      learn_restrict: any
+      source_interface: ["leaf7", "Loopback1"]
+    # VTEP on leaf8 (shared VTEP4 IP 10.0.255.14)
+    - device: ["leaf8"]
+      source_address: "10.0.255.14"
+      udp_port: 4789
+      learn_restrict: any
+      source_interface: ["leaf8", "Loopback1"]
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraVlanVniMapping
+  data:
+    # VLAN 40 <-> VNI 110040 on leaf1/2/5/6 (L2 VXLAN leafs)
+    - vtep: ["leaf1"]
+      vlan: ["40"]
+      vni: ["110040"]
+      description: "VLAN 40 <-> VNI 110040"
+    - vtep: ["leaf2"]
+      vlan: ["40"]
+      vni: ["110040"]
+      description: "VLAN 40 <-> VNI 110040"
+    - vtep: ["leaf5"]
+      vlan: ["40"]
+      vni: ["110040"]
+      description: "VLAN 40 <-> VNI 110040"
+    - vtep: ["leaf6"]
+      vlan: ["40"]
+      vni: ["110040"]
+      description: "VLAN 40 <-> VNI 110040"
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraEVPNInstance
+  data:
+    # EVPN instance for VLAN 40 on L2 VXLAN leafs
+    # leaf1: rd 65001:110040, rt both 40:110040
+    - device: ["leaf1"]
+      vlan: ["40"]
+      route_distinguisher: "65001:110040"
+      route_target_import: "40:110040"
+      route_target_export: "40:110040"
+      redistribute_learned: true
+    - device: ["leaf2"]
+      vlan: ["40"]
+      route_distinguisher: "65001:110040"
+      route_target_import: "40:110040"
+      route_target_export: "40:110040"
+      redistribute_learned: true
+    # leaf5/6: rd 65003:110040, rt both 40:110040
+    - device: ["leaf5"]
+      vlan: ["40"]
+      route_distinguisher: "65003:110040"
+      route_target_import: "40:110040"
+      route_target_export: "40:110040"
+      redistribute_learned: true
+    - device: ["leaf6"]
+      vlan: ["40"]
+      route_distinguisher: "65003:110040"
+      route_target_import: "40:110040"
+      route_target_export: "40:110040"
+      redistribute_learned: true
