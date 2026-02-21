@@ -1,0 +1,475 @@
+# IP Address → Interface linkage
+# Depends on: 05-ipam, 08-ipam-vlans (IPs), 04-interfaces, 07-interface-vlans (interfaces)
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraIPAddress
+  data:
+    # ============================================================
+    # Loopback0 (Router-ID) — /32
+    # ============================================================
+    - address: "10.0.250.1/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["spine1"]
+          name: Loopback0
+    - address: "10.0.250.2/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["spine2"]
+          name: Loopback0
+    - address: "10.0.250.11/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf1"]
+          name: Loopback0
+    - address: "10.0.250.12/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf2"]
+          name: Loopback0
+    - address: "10.0.250.13/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf3"]
+          name: Loopback0
+    - address: "10.0.250.14/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf4"]
+          name: Loopback0
+    - address: "10.0.250.15/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf5"]
+          name: Loopback0
+    - address: "10.0.250.16/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf6"]
+          name: Loopback0
+    - address: "10.0.250.17/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf7"]
+          name: Loopback0
+    - address: "10.0.250.18/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf8"]
+          name: Loopback0
+    # ============================================================
+    # Loopback1 (VTEP) — /32
+    # ============================================================
+    - address: "10.0.255.11/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf1"]
+          name: Loopback1
+    - address: "10.0.255.11/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf2"]
+          name: Loopback1
+    - address: "10.0.255.12/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf3"]
+          name: Loopback1
+    - address: "10.0.255.12/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf4"]
+          name: Loopback1
+    - address: "10.0.255.13/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf5"]
+          name: Loopback1
+    - address: "10.0.255.13/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf6"]
+          name: Loopback1
+    - address: "10.0.255.14/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf7"]
+          name: Loopback1
+    - address: "10.0.255.14/32"
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf8"]
+          name: Loopback1
+    # ============================================================
+    # Spine1 P2P underlay — /31
+    # ============================================================
+    - address: "10.0.1.0/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet1
+    - address: "10.0.1.2/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet2
+    - address: "10.0.1.4/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet3
+    - address: "10.0.1.6/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet4
+    - address: "10.0.1.8/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet5
+    - address: "10.0.1.10/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet6
+    - address: "10.0.1.12/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet7
+    - address: "10.0.1.14/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet8
+    # ============================================================
+    # Spine2 P2P underlay — /31
+    # ============================================================
+    - address: "10.0.2.0/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet1
+    - address: "10.0.2.2/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet2
+    - address: "10.0.2.4/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet3
+    - address: "10.0.2.6/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet4
+    - address: "10.0.2.8/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet5
+    - address: "10.0.2.10/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet6
+    - address: "10.0.2.12/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet7
+    - address: "10.0.2.14/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet8
+    # ============================================================
+    # Leaf P2P underlay (leaf side) — /31
+    # ============================================================
+    # Leaf1
+    - address: "10.0.1.1/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf1"]
+          name: Ethernet11
+    - address: "10.0.2.1/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf1"]
+          name: Ethernet12
+    # Leaf2
+    - address: "10.0.1.3/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf2"]
+          name: Ethernet11
+    - address: "10.0.2.3/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf2"]
+          name: Ethernet12
+    # Leaf3
+    - address: "10.0.1.5/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf3"]
+          name: Ethernet11
+    - address: "10.0.2.5/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf3"]
+          name: Ethernet12
+    # Leaf4
+    - address: "10.0.1.7/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf4"]
+          name: Ethernet11
+    - address: "10.0.2.7/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf4"]
+          name: Ethernet12
+    # Leaf5
+    - address: "10.0.1.9/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf5"]
+          name: Ethernet11
+    - address: "10.0.2.9/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf5"]
+          name: Ethernet12
+    # Leaf6
+    - address: "10.0.1.11/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf6"]
+          name: Ethernet11
+    - address: "10.0.2.11/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf6"]
+          name: Ethernet12
+    # Leaf7
+    - address: "10.0.1.13/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf7"]
+          name: Ethernet11
+    - address: "10.0.2.13/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf7"]
+          name: Ethernet12
+    # Leaf8
+    - address: "10.0.1.15/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf8"]
+          name: Ethernet11
+    - address: "10.0.2.15/31"
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf8"]
+          name: Ethernet12
+    # ============================================================
+    # MLAG Peer-Link SVI (Vlan4090) — /31
+    # ============================================================
+    - address: "10.0.199.254/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf1"]
+          name: Vlan4090
+    - address: "10.0.199.255/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf2"]
+          name: Vlan4090
+    - address: "10.0.199.252/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf3"]
+          name: Vlan4090
+    - address: "10.0.199.253/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf4"]
+          name: Vlan4090
+    - address: "10.0.199.250/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf5"]
+          name: Vlan4090
+    - address: "10.0.199.251/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf6"]
+          name: Vlan4090
+    - address: "10.0.199.248/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf7"]
+          name: Vlan4090
+    - address: "10.0.199.249/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf8"]
+          name: Vlan4090
+    # ============================================================
+    # MLAG iBGP Peering SVI (Vlan4091) — /31
+    # ============================================================
+    - address: "10.0.3.0/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf1"]
+          name: Vlan4091
+    - address: "10.0.3.1/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf2"]
+          name: Vlan4091
+    - address: "10.0.3.2/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf3"]
+          name: Vlan4091
+    - address: "10.0.3.3/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf4"]
+          name: Vlan4091
+    - address: "10.0.3.4/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf5"]
+          name: Vlan4091
+    - address: "10.0.3.5/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf6"]
+          name: Vlan4091
+    - address: "10.0.3.6/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf7"]
+          name: Vlan4091
+    - address: "10.0.3.7/31"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf8"]
+          name: Vlan4091
+    # ============================================================
+    # VRF gold SVI addresses — /24
+    # ============================================================
+    # Vlan34 (leaf3/leaf4)
+    - address: "10.34.34.2/24"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf3"]
+          name: Vlan34
+    - address: "10.34.34.3/24"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf4"]
+          name: Vlan34
+    # Vlan78 (leaf7/leaf8)
+    - address: "10.78.78.2/24"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf7"]
+          name: Vlan78
+    - address: "10.78.78.3/24"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf8"]
+          name: Vlan78
+    # Vlan900 — BGP border (leaf7/leaf8)
+    - address: "10.90.90.2/29"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf7"]
+          name: Vlan900
+    - address: "10.90.90.3/29"
+      interface:
+        kind: InfraInterfaceVlan
+        data:
+          device: ["leaf8"]
+          name: Vlan900

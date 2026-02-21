@@ -11,111 +11,75 @@ spec:
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.1/32"
     - device: ["spine2"]
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.2/32"
     # Leaf loopbacks (Lo0 + Lo1)
     - device: ["leaf1"]
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.11/32"
     - device: ["leaf1"]
       name: Loopback1
       description: VTEP
       enabled: true
-      ip_addresses:
-        - "10.0.255.11/32"
     - device: ["leaf2"]
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.12/32"
     - device: ["leaf2"]
       name: Loopback1
       description: VTEP
       enabled: true
-      ip_addresses:
-        - "10.0.255.11/32"
     - device: ["leaf3"]
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.13/32"
     - device: ["leaf3"]
       name: Loopback1
       description: VTEP
       enabled: true
-      ip_addresses:
-        - "10.0.255.12/32"
     - device: ["leaf4"]
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.14/32"
     - device: ["leaf4"]
       name: Loopback1
       description: VTEP
       enabled: true
-      ip_addresses:
-        - "10.0.255.12/32"
     - device: ["leaf5"]
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.15/32"
     - device: ["leaf5"]
       name: Loopback1
       description: VTEP
       enabled: true
-      ip_addresses:
-        - "10.0.255.13/32"
     - device: ["leaf6"]
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.16/32"
     - device: ["leaf6"]
       name: Loopback1
       description: VTEP
       enabled: true
-      ip_addresses:
-        - "10.0.255.13/32"
     - device: ["leaf7"]
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.17/32"
     - device: ["leaf7"]
       name: Loopback1
       description: VTEP
       enabled: true
-      ip_addresses:
-        - "10.0.255.14/32"
     - device: ["leaf8"]
       name: Loopback0
       description: Router-ID
       enabled: true
-      ip_addresses:
-        - "10.0.250.18/32"
     - device: ["leaf8"]
       name: Loopback1
       description: VTEP
       enabled: true
-      ip_addresses:
-        - "10.0.255.14/32"
 ---
 apiVersion: infrahub.app/v1
 kind: Object
@@ -227,64 +191,48 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.0/31"
     - device: ["spine1"]
       name: Ethernet2
       description: leaf2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.2/31"
     - device: ["spine1"]
       name: Ethernet3
       description: leaf3
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.4/31"
     - device: ["spine1"]
       name: Ethernet4
       description: leaf4
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.6/31"
     - device: ["spine1"]
       name: Ethernet5
       description: leaf5
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.8/31"
     - device: ["spine1"]
       name: Ethernet6
       description: leaf6
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.10/31"
     - device: ["spine1"]
       name: Ethernet7
       description: leaf7
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.12/31"
     - device: ["spine1"]
       name: Ethernet8
       description: leaf8
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.14/31"
     # ============================================================
     # Spine2 Ethernet interfaces (underlay to leafs)
     # ============================================================
@@ -294,64 +242,48 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.0/31"
     - device: ["spine2"]
       name: Ethernet2
       description: leaf2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.2/31"
     - device: ["spine2"]
       name: Ethernet3
       description: leaf3
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.4/31"
     - device: ["spine2"]
       name: Ethernet4
       description: leaf4
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.6/31"
     - device: ["spine2"]
       name: Ethernet5
       description: leaf5
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.8/31"
     - device: ["spine2"]
       name: Ethernet6
       description: leaf6
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.10/31"
     - device: ["spine2"]
       name: Ethernet7
       description: leaf7
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.12/31"
     - device: ["spine2"]
       name: Ethernet8
       description: leaf8
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.14/31"
     # ============================================================
     # Leaf Ethernet interfaces
     # Each leaf has: Ethernet1 (host), Ethernet10 (mlag peer-link),
@@ -376,16 +308,12 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.1/31"
     - device: ["leaf1"]
       name: Ethernet12
       description: spine2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.1/31"
     # Leaf2
     - device: ["leaf2"]
       name: Ethernet1
@@ -405,16 +333,12 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.3/31"
     - device: ["leaf2"]
       name: Ethernet12
       description: spine2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.3/31"
     # Leaf3
     - device: ["leaf3"]
       name: Ethernet1
@@ -434,16 +358,12 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.5/31"
     - device: ["leaf3"]
       name: Ethernet12
       description: spine2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.5/31"
     # Leaf4
     - device: ["leaf4"]
       name: Ethernet1
@@ -463,16 +383,12 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.7/31"
     - device: ["leaf4"]
       name: Ethernet12
       description: spine2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.7/31"
     # Leaf5
     - device: ["leaf5"]
       name: Ethernet1
@@ -492,16 +408,12 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.9/31"
     - device: ["leaf5"]
       name: Ethernet12
       description: spine2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.9/31"
     # Leaf6
     - device: ["leaf6"]
       name: Ethernet1
@@ -521,16 +433,12 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.11/31"
     - device: ["leaf6"]
       name: Ethernet12
       description: spine2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.11/31"
     # Leaf7
     - device: ["leaf7"]
       name: Ethernet1
@@ -550,16 +458,12 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.13/31"
     - device: ["leaf7"]
       name: Ethernet12
       description: spine2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.13/31"
     # Leaf8
     - device: ["leaf8"]
       name: Ethernet1
@@ -579,13 +483,9 @@ spec:
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.1.15/31"
     - device: ["leaf8"]
       name: Ethernet12
       description: spine2
       enabled: true
       mtu: 9214
       mode: routed
-      ip_addresses:
-        - "10.0.2.15/31"

@@ -13,64 +13,48 @@ spec:
       enabled: true
       autostate: false
       vlan: ["4090"]
-      ip_addresses:
-        - "10.0.199.254/31"
     - device: ["leaf2"]
       name: Vlan4090
       description: MLAG Peer-Link
       enabled: true
       autostate: false
       vlan: ["4090"]
-      ip_addresses:
-        - "10.0.199.255/31"
     - device: ["leaf3"]
       name: Vlan4090
       description: MLAG Peer-Link
       enabled: true
       autostate: false
       vlan: ["4090"]
-      ip_addresses:
-        - "10.0.199.252/31"
     - device: ["leaf4"]
       name: Vlan4090
       description: MLAG Peer-Link
       enabled: true
       autostate: false
       vlan: ["4090"]
-      ip_addresses:
-        - "10.0.199.253/31"
     - device: ["leaf5"]
       name: Vlan4090
       description: MLAG Peer-Link
       enabled: true
       autostate: false
       vlan: ["4090"]
-      ip_addresses:
-        - "10.0.199.250/31"
     - device: ["leaf6"]
       name: Vlan4090
       description: MLAG Peer-Link
       enabled: true
       autostate: false
       vlan: ["4090"]
-      ip_addresses:
-        - "10.0.199.251/31"
     - device: ["leaf7"]
       name: Vlan4090
       description: MLAG Peer-Link
       enabled: true
       autostate: false
       vlan: ["4090"]
-      ip_addresses:
-        - "10.0.199.248/31"
     - device: ["leaf8"]
       name: Vlan4090
       description: MLAG Peer-Link
       enabled: true
       autostate: false
       vlan: ["4090"]
-      ip_addresses:
-        - "10.0.199.249/31"
     # Vlan4091 — MLAG iBGP Peering SVI (all leafs)
     - device: ["leaf1"]
       name: Vlan4091
@@ -78,64 +62,48 @@ spec:
       enabled: true
       mtu: 9214
       vlan: ["4091"]
-      ip_addresses:
-        - "10.0.3.0/31"
     - device: ["leaf2"]
       name: Vlan4091
       description: MLAG iBGP Peering
       enabled: true
       mtu: 9214
       vlan: ["4091"]
-      ip_addresses:
-        - "10.0.3.1/31"
     - device: ["leaf3"]
       name: Vlan4091
       description: MLAG iBGP Peering
       enabled: true
       mtu: 9214
       vlan: ["4091"]
-      ip_addresses:
-        - "10.0.3.2/31"
     - device: ["leaf4"]
       name: Vlan4091
       description: MLAG iBGP Peering
       enabled: true
       mtu: 9214
       vlan: ["4091"]
-      ip_addresses:
-        - "10.0.3.3/31"
     - device: ["leaf5"]
       name: Vlan4091
       description: MLAG iBGP Peering
       enabled: true
       mtu: 9214
       vlan: ["4091"]
-      ip_addresses:
-        - "10.0.3.4/31"
     - device: ["leaf6"]
       name: Vlan4091
       description: MLAG iBGP Peering
       enabled: true
       mtu: 9214
       vlan: ["4091"]
-      ip_addresses:
-        - "10.0.3.5/31"
     - device: ["leaf7"]
       name: Vlan4091
       description: MLAG iBGP Peering
       enabled: true
       mtu: 9214
       vlan: ["4091"]
-      ip_addresses:
-        - "10.0.3.6/31"
     - device: ["leaf8"]
       name: Vlan4091
       description: MLAG iBGP Peering
       enabled: true
       mtu: 9214
       vlan: ["4091"]
-      ip_addresses:
-        - "10.0.3.7/31"
     # Vlan34 — VRF gold subnet (leaf3/leaf4)
     - device: ["leaf3"]
       name: Vlan34
@@ -143,16 +111,12 @@ spec:
       enabled: true
       virtual_router_address: "10.34.34.1"
       vlan: ["34"]
-      ip_addresses:
-        - "10.34.34.2/24"
     - device: ["leaf4"]
       name: Vlan34
       description: VRF gold subnet
       enabled: true
       virtual_router_address: "10.34.34.1"
       vlan: ["34"]
-      ip_addresses:
-        - "10.34.34.3/24"
     # Vlan78 — VRF gold subnet (leaf7/leaf8)
     - device: ["leaf7"]
       name: Vlan78
@@ -160,28 +124,20 @@ spec:
       enabled: true
       virtual_router_address: "10.78.78.1"
       vlan: ["78"]
-      ip_addresses:
-        - "10.78.78.2/24"
     - device: ["leaf8"]
       name: Vlan78
       description: VRF gold subnet
       enabled: true
       virtual_router_address: "10.78.78.1"
       vlan: ["78"]
-      ip_addresses:
-        - "10.78.78.3/24"
     # Vlan900 — BGP border peering (leaf7/leaf8)
     - device: ["leaf7"]
       name: Vlan900
       description: BGP border peering
       enabled: true
       vlan: ["900"]
-      ip_addresses:
-        - "10.90.90.2/29"
     - device: ["leaf8"]
       name: Vlan900
       description: BGP border peering
       enabled: true
       vlan: ["900"]
-      ip_addresses:
-        - "10.90.90.3/29"
