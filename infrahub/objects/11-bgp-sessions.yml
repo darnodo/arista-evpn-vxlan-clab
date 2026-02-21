@@ -1,5 +1,5 @@
 # BGP Sessions and Address Families
-# Depends on: 09-bgp (RouterConfig and PeerGroups must exist)
+# Depends on: 09-bgp (RouterConfig and PeerGroups must exist), 10-vrfs (InfraVRF must exist before VRF references)
 ---
 apiVersion: infrahub.app/v1
 kind: Object
