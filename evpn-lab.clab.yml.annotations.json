@@ -1,371 +1,109 @@
 {
-  "freeTextAnnotations": [
-    {
-      "id": "freeText_1764841883236_2",
-      "text": "AS60001",
-      "position": {
-        "x": -26,
-        "y": 237
-      },
-      "fontSize": 8,
-      "fontColor": "#ffffff",
-      "backgroundColor": "transparent",
-      "fontWeight": "normal",
-      "fontStyle": "normal",
-      "textDecoration": "none",
-      "fontFamily": "monospace",
-      "textAlign": "left",
-      "rotation": 0,
-      "roundedBackground": false
-    },
-    {
-      "id": "freeText_1764842048180_3",
-      "text": "AS60002",
-      "position": {
-        "x": 101,
-        "y": 237
-      },
-      "fontSize": 8,
-      "fontColor": "#ffffff",
-      "backgroundColor": "transparent",
-      "fontWeight": "normal",
-      "fontStyle": "normal",
-      "textDecoration": "none",
-      "fontFamily": "monospace",
-      "textAlign": "left",
-      "rotation": 0,
-      "roundedBackground": false
-    },
-    {
-      "id": "freeText_1764842063537_4",
-      "text": "AS60003",
-      "position": {
-        "x": 227,
-        "y": 237
-      },
-      "fontSize": 8,
-      "fontColor": "#ffffff",
-      "backgroundColor": "transparent",
-      "fontWeight": "normal",
-      "fontStyle": "normal",
-      "textDecoration": "none",
-      "fontFamily": "monospace",
-      "textAlign": "left",
-      "rotation": 0,
-      "roundedBackground": false
-    },
-    {
-      "id": "freeText_1764842074248_5",
-      "text": "AS60004",
-      "position": {
-        "x": 353,
-        "y": 236
-      },
-      "fontSize": 8,
-      "fontColor": "#ffffff",
-      "backgroundColor": "transparent",
-      "fontWeight": "normal",
-      "fontStyle": "normal",
-      "textDecoration": "none",
-      "fontFamily": "monospace",
-      "textAlign": "left",
-      "rotation": 0,
-      "roundedBackground": false
-    },
-    {
-      "id": "freeText_1764842138314_6",
-      "text": "AS60000",
-      "position": {
-        "x": 154,
-        "y": 109
-      },
-      "fontSize": 8,
-      "fontColor": "#ffffff",
-      "backgroundColor": "transparent",
-      "fontWeight": "normal",
-      "fontStyle": "normal",
-      "textDecoration": "none",
-      "fontFamily": "monospace",
-      "textAlign": "left",
-      "rotation": 0,
-      "roundedBackground": false
-    }
-  ],
-  "freeShapeAnnotations": [
-    {
-      "id": "freeShape_1764841793539_3",
-      "shapeType": "rectangle",
-      "position": {
-        "x": -35,
-        "y": 206
-      },
-      "fillColor": "#ffffff",
-      "fillOpacity": 0,
-      "borderColor": "#646464",
-      "borderWidth": 1,
-      "borderStyle": "dashed",
-      "rotation": 0,
-      "width": 84,
-      "height": 50,
-      "cornerRadius": 0,
-      "lineStartArrow": false,
-      "lineEndArrow": false,
-      "lineArrowSize": 10
-    },
-    {
-      "id": "freeShape_1764841972637_4",
-      "shapeType": "rectangle",
-      "position": {
-        "x": 92,
-        "y": 206
-      },
-      "fillColor": "#ffffff",
-      "fillOpacity": 0,
-      "borderColor": "#646464",
-      "borderWidth": 1,
-      "borderStyle": "dashed",
-      "rotation": 0,
-      "width": 84,
-      "height": 50,
-      "cornerRadius": 0,
-      "lineStartArrow": false,
-      "lineEndArrow": false,
-      "lineArrowSize": 10
-    },
-    {
-      "id": "freeShape_1764842019973_5",
-      "shapeType": "rectangle",
-      "position": {
-        "x": 341,
-        "y": 206
-      },
-      "fillColor": "#ffffff",
-      "fillOpacity": 0,
-      "borderColor": "#646464",
-      "borderWidth": 1,
-      "borderStyle": "dashed",
-      "rotation": 0,
-      "width": 84,
-      "height": 50,
-      "cornerRadius": 0,
-      "lineStartArrow": false,
-      "lineEndArrow": false,
-      "lineArrowSize": 10
-    },
-    {
-      "id": "freeShape_1764842019973_6",
-      "shapeType": "rectangle",
-      "position": {
-        "x": 216,
-        "y": 206
-      },
-      "fillColor": "#ffffff",
-      "fillOpacity": 0,
-      "borderColor": "#646464",
-      "borderWidth": 1,
-      "borderStyle": "dashed",
-      "rotation": 0,
-      "width": 84,
-      "height": 50,
-      "cornerRadius": 0,
-      "lineStartArrow": false,
-      "lineEndArrow": false,
-      "lineArrowSize": 10
-    },
-    {
-      "id": "freeShape_1764842118754_8",
-      "shapeType": "rectangle",
-      "position": {
-        "x": 155,
-        "y": 111
-      },
-      "fillColor": "#ffffff",
-      "fillOpacity": 0,
-      "borderColor": "#646464",
-      "borderWidth": 1,
-      "borderStyle": "dashed",
-      "rotation": 0,
-      "width": 181,
-      "height": 54,
-      "cornerRadius": 0,
-      "lineStartArrow": false,
-      "lineEndArrow": false,
-      "lineArrowSize": 10
-    }
-  ],
+  "freeTextAnnotations": [],
+  "freeShapeAnnotations": [],
   "groupStyleAnnotations": [],
-  "cloudNodeAnnotations": [],
+  "networkNodeAnnotations": [],
   "nodeAnnotations": [
     {
       "id": "spine1",
-      "icon": "router",
       "position": {
-        "x": 91,
-        "y": 105
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 340,
+        "y": 180
       }
     },
     {
       "id": "spine2",
-      "icon": "router",
       "position": {
-        "x": 217,
-        "y": 105
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 660,
+        "y": 180
       }
     },
     {
       "id": "leaf1",
-      "icon": "router",
       "position": {
-        "x": -63,
-        "y": 203
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": -60,
+        "y": 420
       }
     },
     {
       "id": "leaf2",
-      "icon": "router",
       "position": {
-        "x": -7,
-        "y": 203
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 100,
+        "y": 420
       }
     },
     {
       "id": "leaf3",
-      "icon": "router",
       "position": {
-        "x": 63,
-        "y": 203
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 260,
+        "y": 420
       }
     },
     {
       "id": "leaf4",
-      "icon": "router",
       "position": {
-        "x": 119,
-        "y": 203
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 420,
+        "y": 420
       }
     },
     {
       "id": "leaf5",
-      "icon": "router",
       "position": {
-        "x": 189,
-        "y": 203
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 580,
+        "y": 420
       }
     },
     {
       "id": "leaf6",
-      "icon": "router",
       "position": {
-        "x": 245,
-        "y": 203
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 740,
+        "y": 420
       }
     },
     {
       "id": "leaf7",
-      "icon": "router",
       "position": {
-        "x": 315,
-        "y": 203
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 920,
+        "y": 420
       }
     },
     {
       "id": "leaf8",
-      "icon": "router",
       "position": {
-        "x": 371,
-        "y": 203
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 1080,
+        "y": 420
       }
     },
     {
       "id": "host1",
-      "icon": "router",
       "position": {
-        "x": -35,
-        "y": 259
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 20,
+        "y": 500
       }
     },
     {
       "id": "host2",
-      "icon": "router",
       "position": {
-        "x": 91,
-        "y": 259
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 340,
+        "y": 500
       }
     },
     {
       "id": "host3",
-      "icon": "router",
       "position": {
-        "x": 217,
-        "y": 259
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 660,
+        "y": 500
       }
     },
     {
       "id": "host4",
-      "icon": "router",
       "position": {
-        "x": 343,
-        "y": 259
-      },
-      "geoCoordinates": {
-        "lat": 48.684826888402256,
-        "lng": 9.007895390625677
+        "x": 1000,
+        "y": 500
       }
     }
   ],
-  "viewerSettings": {
-    "gridLineWidth": 0.5
-  }
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {}
 }
