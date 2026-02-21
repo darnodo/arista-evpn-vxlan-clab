@@ -11,171 +11,371 @@ spec:
     # ============================================================
     - address: "10.0.250.1/32"
       description: spine1 Router-ID
-      interface: ["spine1", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["spine1"]
+          name: Loopback0
     - address: "10.0.250.2/32"
       description: spine2 Router-ID
-      interface: ["spine2", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["spine2"]
+          name: Loopback0
     - address: "10.0.250.11/32"
       description: leaf1 Router-ID
-      interface: ["leaf1", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf1"]
+          name: Loopback0
     - address: "10.0.250.12/32"
       description: leaf2 Router-ID
-      interface: ["leaf2", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf2"]
+          name: Loopback0
     - address: "10.0.250.13/32"
       description: leaf3 Router-ID
-      interface: ["leaf3", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf3"]
+          name: Loopback0
     - address: "10.0.250.14/32"
       description: leaf4 Router-ID
-      interface: ["leaf4", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf4"]
+          name: Loopback0
     - address: "10.0.250.15/32"
       description: leaf5 Router-ID
-      interface: ["leaf5", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf5"]
+          name: Loopback0
     - address: "10.0.250.16/32"
       description: leaf6 Router-ID
-      interface: ["leaf6", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf6"]
+          name: Loopback0
     - address: "10.0.250.17/32"
       description: leaf7 Router-ID
-      interface: ["leaf7", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf7"]
+          name: Loopback0
     - address: "10.0.250.18/32"
       description: leaf8 Router-ID
-      interface: ["leaf8", "Loopback0"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf8"]
+          name: Loopback0
     # ============================================================
     # Loopback1 addresses (VTEP) — /32
     # ============================================================
     - address: "10.0.255.11/32"
       description: leaf1 VTEP (shared VTEP1)
-      interface: ["leaf1", "Loopback1"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf1"]
+          name: Loopback1
     - address: "10.0.255.11/32"
       description: leaf2 VTEP (shared VTEP1)
-      interface: ["leaf2", "Loopback1"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf2"]
+          name: Loopback1
     - address: "10.0.255.12/32"
       description: leaf3 VTEP (shared VTEP2)
-      interface: ["leaf3", "Loopback1"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf3"]
+          name: Loopback1
     - address: "10.0.255.12/32"
       description: leaf4 VTEP (shared VTEP2)
-      interface: ["leaf4", "Loopback1"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf4"]
+          name: Loopback1
     - address: "10.0.255.13/32"
       description: leaf5 VTEP (shared VTEP3)
-      interface: ["leaf5", "Loopback1"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf5"]
+          name: Loopback1
     - address: "10.0.255.13/32"
       description: leaf6 VTEP (shared VTEP3)
-      interface: ["leaf6", "Loopback1"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf6"]
+          name: Loopback1
     - address: "10.0.255.14/32"
       description: leaf7 VTEP (shared VTEP4)
-      interface: ["leaf7", "Loopback1"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf7"]
+          name: Loopback1
     - address: "10.0.255.14/32"
       description: leaf8 VTEP (shared VTEP4)
-      interface: ["leaf8", "Loopback1"]
+      interface:
+        kind: InfraInterfaceLoopback
+        data:
+          device: ["leaf8"]
+          name: Loopback1
     # ============================================================
     # Spine1 P2P underlay — /31
     # ============================================================
     - address: "10.0.1.0/31"
       description: spine1 Ethernet1 to leaf1
-      interface: ["spine1", "Ethernet1"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet1
     - address: "10.0.1.2/31"
       description: spine1 Ethernet2 to leaf2
-      interface: ["spine1", "Ethernet2"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet2
     - address: "10.0.1.4/31"
       description: spine1 Ethernet3 to leaf3
-      interface: ["spine1", "Ethernet3"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet3
     - address: "10.0.1.6/31"
       description: spine1 Ethernet4 to leaf4
-      interface: ["spine1", "Ethernet4"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet4
     - address: "10.0.1.8/31"
       description: spine1 Ethernet5 to leaf5
-      interface: ["spine1", "Ethernet5"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet5
     - address: "10.0.1.10/31"
       description: spine1 Ethernet6 to leaf6
-      interface: ["spine1", "Ethernet6"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet6
     - address: "10.0.1.12/31"
       description: spine1 Ethernet7 to leaf7
-      interface: ["spine1", "Ethernet7"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet7
     - address: "10.0.1.14/31"
       description: spine1 Ethernet8 to leaf8
-      interface: ["spine1", "Ethernet8"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine1"]
+          name: Ethernet8
     # ============================================================
     # Spine2 P2P underlay — /31
     # ============================================================
     - address: "10.0.2.0/31"
       description: spine2 Ethernet1 to leaf1
-      interface: ["spine2", "Ethernet1"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet1
     - address: "10.0.2.2/31"
       description: spine2 Ethernet2 to leaf2
-      interface: ["spine2", "Ethernet2"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet2
     - address: "10.0.2.4/31"
       description: spine2 Ethernet3 to leaf3
-      interface: ["spine2", "Ethernet3"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet3
     - address: "10.0.2.6/31"
       description: spine2 Ethernet4 to leaf4
-      interface: ["spine2", "Ethernet4"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet4
     - address: "10.0.2.8/31"
       description: spine2 Ethernet5 to leaf5
-      interface: ["spine2", "Ethernet5"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet5
     - address: "10.0.2.10/31"
       description: spine2 Ethernet6 to leaf6
-      interface: ["spine2", "Ethernet6"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet6
     - address: "10.0.2.12/31"
       description: spine2 Ethernet7 to leaf7
-      interface: ["spine2", "Ethernet7"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet7
     - address: "10.0.2.14/31"
       description: spine2 Ethernet8 to leaf8
-      interface: ["spine2", "Ethernet8"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["spine2"]
+          name: Ethernet8
     # ============================================================
     # Leaf P2P underlay (leaf side) — /31
     # ============================================================
     # Leaf1
     - address: "10.0.1.1/31"
       description: leaf1 Ethernet11 to spine1
-      interface: ["leaf1", "Ethernet11"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf1"]
+          name: Ethernet11
     - address: "10.0.2.1/31"
       description: leaf1 Ethernet12 to spine2
-      interface: ["leaf1", "Ethernet12"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf1"]
+          name: Ethernet12
     # Leaf2
     - address: "10.0.1.3/31"
       description: leaf2 Ethernet11 to spine1
-      interface: ["leaf2", "Ethernet11"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf2"]
+          name: Ethernet11
     - address: "10.0.2.3/31"
       description: leaf2 Ethernet12 to spine2
-      interface: ["leaf2", "Ethernet12"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf2"]
+          name: Ethernet12
     # Leaf3
     - address: "10.0.1.5/31"
       description: leaf3 Ethernet11 to spine1
-      interface: ["leaf3", "Ethernet11"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf3"]
+          name: Ethernet11
     - address: "10.0.2.5/31"
       description: leaf3 Ethernet12 to spine2
-      interface: ["leaf3", "Ethernet12"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf3"]
+          name: Ethernet12
     # Leaf4
     - address: "10.0.1.7/31"
       description: leaf4 Ethernet11 to spine1
-      interface: ["leaf4", "Ethernet11"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf4"]
+          name: Ethernet11
     - address: "10.0.2.7/31"
       description: leaf4 Ethernet12 to spine2
-      interface: ["leaf4", "Ethernet12"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf4"]
+          name: Ethernet12
     # Leaf5
     - address: "10.0.1.9/31"
       description: leaf5 Ethernet11 to spine1
-      interface: ["leaf5", "Ethernet11"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf5"]
+          name: Ethernet11
     - address: "10.0.2.9/31"
       description: leaf5 Ethernet12 to spine2
-      interface: ["leaf5", "Ethernet12"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf5"]
+          name: Ethernet12
     # Leaf6
     - address: "10.0.1.11/31"
       description: leaf6 Ethernet11 to spine1
-      interface: ["leaf6", "Ethernet11"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf6"]
+          name: Ethernet11
     - address: "10.0.2.11/31"
       description: leaf6 Ethernet12 to spine2
-      interface: ["leaf6", "Ethernet12"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf6"]
+          name: Ethernet12
     # Leaf7
     - address: "10.0.1.13/31"
       description: leaf7 Ethernet11 to spine1
-      interface: ["leaf7", "Ethernet11"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf7"]
+          name: Ethernet11
     - address: "10.0.2.13/31"
       description: leaf7 Ethernet12 to spine2
-      interface: ["leaf7", "Ethernet12"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf7"]
+          name: Ethernet12
     # Leaf8
     - address: "10.0.1.15/31"
       description: leaf8 Ethernet11 to spine1
-      interface: ["leaf8", "Ethernet11"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf8"]
+          name: Ethernet11
     - address: "10.0.2.15/31"
       description: leaf8 Ethernet12 to spine2
-      interface: ["leaf8", "Ethernet12"]
+      interface:
+        kind: InfraInterfaceEthernet
+        data:
+          device: ["leaf8"]
+          name: Ethernet12
