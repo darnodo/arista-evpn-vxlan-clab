@@ -11,122 +11,271 @@ spec:
     # ============================================================
     - address: "10.0.250.1/32"
       description: spine1 Router-ID
+      interface:
+        node: spine1__Loopback0
+        kind: InfraInterfaceLoopback
     - address: "10.0.250.2/32"
       description: spine2 Router-ID
+      interface:
+        node: spine2__Loopback0
+        kind: InfraInterfaceLoopback
     - address: "10.0.250.11/32"
       description: leaf1 Router-ID
+      interface:
+        node: leaf1__Loopback0
+        kind: InfraInterfaceLoopback
     - address: "10.0.250.12/32"
       description: leaf2 Router-ID
+      interface:
+        node: leaf2__Loopback0
+        kind: InfraInterfaceLoopback
     - address: "10.0.250.13/32"
       description: leaf3 Router-ID
+      interface:
+        node: leaf3__Loopback0
+        kind: InfraInterfaceLoopback
     - address: "10.0.250.14/32"
       description: leaf4 Router-ID
+      interface:
+        node: leaf4__Loopback0
+        kind: InfraInterfaceLoopback
     - address: "10.0.250.15/32"
       description: leaf5 Router-ID
+      interface:
+        node: leaf5__Loopback0
+        kind: InfraInterfaceLoopback
     - address: "10.0.250.16/32"
       description: leaf6 Router-ID
+      interface:
+        node: leaf6__Loopback0
+        kind: InfraInterfaceLoopback
     - address: "10.0.250.17/32"
       description: leaf7 Router-ID
+      interface:
+        node: leaf7__Loopback0
+        kind: InfraInterfaceLoopback
     - address: "10.0.250.18/32"
       description: leaf8 Router-ID
+      interface:
+        node: leaf8__Loopback0
+        kind: InfraInterfaceLoopback
     # ============================================================
     # Loopback1 addresses (VTEP) — /32
     # ============================================================
     - address: "10.0.255.11/32"
       description: leaf1 VTEP (shared VTEP1)
+      interface:
+        node: leaf1__Loopback1
+        kind: InfraInterfaceLoopback
     - address: "10.0.255.11/32"
       description: leaf2 VTEP (shared VTEP1)
+      interface:
+        node: leaf2__Loopback1
+        kind: InfraInterfaceLoopback
     - address: "10.0.255.12/32"
       description: leaf3 VTEP (shared VTEP2)
+      interface:
+        node: leaf3__Loopback1
+        kind: InfraInterfaceLoopback
     - address: "10.0.255.12/32"
       description: leaf4 VTEP (shared VTEP2)
+      interface:
+        node: leaf4__Loopback1
+        kind: InfraInterfaceLoopback
     - address: "10.0.255.13/32"
       description: leaf5 VTEP (shared VTEP3)
+      interface:
+        node: leaf5__Loopback1
+        kind: InfraInterfaceLoopback
     - address: "10.0.255.13/32"
       description: leaf6 VTEP (shared VTEP3)
+      interface:
+        node: leaf6__Loopback1
+        kind: InfraInterfaceLoopback
     - address: "10.0.255.14/32"
       description: leaf7 VTEP (shared VTEP4)
+      interface:
+        node: leaf7__Loopback1
+        kind: InfraInterfaceLoopback
     - address: "10.0.255.14/32"
       description: leaf8 VTEP (shared VTEP4)
+      interface:
+        node: leaf8__Loopback1
+        kind: InfraInterfaceLoopback
     # ============================================================
     # Spine1 P2P underlay — /31
     # ============================================================
     - address: "10.0.1.0/31"
       description: spine1 Ethernet1 to leaf1
+      interface:
+        node: spine1__Ethernet1
+        kind: InfraInterfaceEthernet
     - address: "10.0.1.2/31"
       description: spine1 Ethernet2 to leaf2
+      interface:
+        node: spine1__Ethernet2
+        kind: InfraInterfaceEthernet
     - address: "10.0.1.4/31"
       description: spine1 Ethernet3 to leaf3
+      interface:
+        node: spine1__Ethernet3
+        kind: InfraInterfaceEthernet
     - address: "10.0.1.6/31"
       description: spine1 Ethernet4 to leaf4
+      interface:
+        node: spine1__Ethernet4
+        kind: InfraInterfaceEthernet
     - address: "10.0.1.8/31"
       description: spine1 Ethernet5 to leaf5
+      interface:
+        node: spine1__Ethernet5
+        kind: InfraInterfaceEthernet
     - address: "10.0.1.10/31"
       description: spine1 Ethernet6 to leaf6
+      interface:
+        node: spine1__Ethernet6
+        kind: InfraInterfaceEthernet
     - address: "10.0.1.12/31"
       description: spine1 Ethernet7 to leaf7
+      interface:
+        node: spine1__Ethernet7
+        kind: InfraInterfaceEthernet
     - address: "10.0.1.14/31"
       description: spine1 Ethernet8 to leaf8
+      interface:
+        node: spine1__Ethernet8
+        kind: InfraInterfaceEthernet
     # ============================================================
     # Spine2 P2P underlay — /31
     # ============================================================
     - address: "10.0.2.0/31"
       description: spine2 Ethernet1 to leaf1
+      interface:
+        node: spine2__Ethernet1
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.2/31"
       description: spine2 Ethernet2 to leaf2
+      interface:
+        node: spine2__Ethernet2
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.4/31"
       description: spine2 Ethernet3 to leaf3
+      interface:
+        node: spine2__Ethernet3
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.6/31"
       description: spine2 Ethernet4 to leaf4
+      interface:
+        node: spine2__Ethernet4
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.8/31"
       description: spine2 Ethernet5 to leaf5
+      interface:
+        node: spine2__Ethernet5
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.10/31"
       description: spine2 Ethernet6 to leaf6
+      interface:
+        node: spine2__Ethernet6
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.12/31"
       description: spine2 Ethernet7 to leaf7
+      interface:
+        node: spine2__Ethernet7
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.14/31"
       description: spine2 Ethernet8 to leaf8
+      interface:
+        node: spine2__Ethernet8
+        kind: InfraInterfaceEthernet
     # ============================================================
     # Leaf P2P underlay (leaf side) — /31
     # ============================================================
     # Leaf1
     - address: "10.0.1.1/31"
       description: leaf1 Ethernet11 to spine1
+      interface:
+        node: leaf1__Ethernet11
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.1/31"
       description: leaf1 Ethernet12 to spine2
+      interface:
+        node: leaf1__Ethernet12
+        kind: InfraInterfaceEthernet
     # Leaf2
     - address: "10.0.1.3/31"
       description: leaf2 Ethernet11 to spine1
+      interface:
+        node: leaf2__Ethernet11
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.3/31"
       description: leaf2 Ethernet12 to spine2
+      interface:
+        node: leaf2__Ethernet12
+        kind: InfraInterfaceEthernet
     # Leaf3
     - address: "10.0.1.5/31"
       description: leaf3 Ethernet11 to spine1
+      interface:
+        node: leaf3__Ethernet11
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.5/31"
       description: leaf3 Ethernet12 to spine2
+      interface:
+        node: leaf3__Ethernet12
+        kind: InfraInterfaceEthernet
     # Leaf4
     - address: "10.0.1.7/31"
       description: leaf4 Ethernet11 to spine1
+      interface:
+        node: leaf4__Ethernet11
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.7/31"
       description: leaf4 Ethernet12 to spine2
+      interface:
+        node: leaf4__Ethernet12
+        kind: InfraInterfaceEthernet
     # Leaf5
     - address: "10.0.1.9/31"
       description: leaf5 Ethernet11 to spine1
+      interface:
+        node: leaf5__Ethernet11
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.9/31"
       description: leaf5 Ethernet12 to spine2
+      interface:
+        node: leaf5__Ethernet12
+        kind: InfraInterfaceEthernet
     # Leaf6
     - address: "10.0.1.11/31"
       description: leaf6 Ethernet11 to spine1
+      interface:
+        node: leaf6__Ethernet11
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.11/31"
       description: leaf6 Ethernet12 to spine2
+      interface:
+        node: leaf6__Ethernet12
+        kind: InfraInterfaceEthernet
     # Leaf7
     - address: "10.0.1.13/31"
       description: leaf7 Ethernet11 to spine1
+      interface:
+        node: leaf7__Ethernet11
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.13/31"
       description: leaf7 Ethernet12 to spine2
+      interface:
+        node: leaf7__Ethernet12
+        kind: InfraInterfaceEthernet
     # Leaf8
     - address: "10.0.1.15/31"
       description: leaf8 Ethernet11 to spine1
+      interface:
+        node: leaf8__Ethernet11
+        kind: InfraInterfaceEthernet
     - address: "10.0.2.15/31"
       description: leaf8 Ethernet12 to spine2
-
+      interface:
+        node: leaf8__Ethernet12
+        kind: InfraInterfaceEthernet
