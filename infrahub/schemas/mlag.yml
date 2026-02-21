@@ -79,7 +79,7 @@ nodes:
     display_label: "{{ local_interface_ip__value }}"
     attributes:
       - name: local_interface_ip
-        kind: IPNetwork
+        kind: IPHost
         description: IP on MLAG peer VLAN SVI
       - name: peer_address
         kind: IPHost
