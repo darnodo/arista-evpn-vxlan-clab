@@ -55,8 +55,15 @@ nodes:
         description: AS used by spine layer
       - name: sites
         peer: LocationSite
+        identifier: fabric__sites
         cardinality: many
         optional: true
+      - name: devices
+        peer: InfraDevice
+        identifier: fabric__devices
+        cardinality: many
+        kind: Generic
+        description: Devices in this fabric
 
   # ================================================================
   # Underlay P2P Link

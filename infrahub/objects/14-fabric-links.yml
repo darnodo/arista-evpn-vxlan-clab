@@ -1,0 +1,28 @@
+# Fabric-to-Device links
+# Depends on: 02-devices, 03-fabric
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraDevice
+  data:
+    - name: spine1
+      fabric: "evpn-lab"
+    - name: spine2
+      fabric: "evpn-lab"
+    - name: leaf1
+      fabric: "evpn-lab"
+    - name: leaf2
+      fabric: "evpn-lab"
+    - name: leaf3
+      fabric: "evpn-lab"
+    - name: leaf4
+      fabric: "evpn-lab"
+    - name: leaf5
+      fabric: "evpn-lab"
+    - name: leaf6
+      fabric: "evpn-lab"
+    - name: leaf7
+      fabric: "evpn-lab"
+    - name: leaf8
+      fabric: "evpn-lab"

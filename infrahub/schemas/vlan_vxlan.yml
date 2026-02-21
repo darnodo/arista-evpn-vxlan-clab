@@ -70,6 +70,12 @@ nodes:
         peer: LocationSite
         cardinality: one
         optional: true
+      - name: svi_interfaces
+        peer: InfraInterfaceVlan
+        identifier: vlan__svi
+        cardinality: many
+        kind: Generic
+        description: SVI interfaces for this VLAN
 
   # ================================================================
   # VNI (VXLAN Network Identifier)
