@@ -1,0 +1,32 @@
+[
+  {
+    "vlan_id": 40,
+    "name": "test-l2-vxlan",
+    "status": "ACTIVE",
+    "vlan_type": "standard",
+    "trunk_groups": [],
+    "stp_enabled": true,
+    "vni": 110040,
+    "vni_type": "l2vni"
+  },
+  {
+    "vlan_id": 4090,
+    "name": "mlag-peer",
+    "status": "ACTIVE",
+    "vlan_type": "mlag_peer",
+    "trunk_groups": ["mlag-peer"],
+    "stp_enabled": false,
+    "vni": null,
+    "vni_type": null
+  },
+  {
+    "vlan_id": 4091,
+    "name": "mlag-ibgp",
+    "status": "ACTIVE",
+    "vlan_type": "mlag_ibgp",
+    "trunk_groups": ["mlag-peer"],
+    "stp_enabled": false,
+    "vni": null,
+    "vni_type": null
+  }
+]

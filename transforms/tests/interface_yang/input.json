@@ -1,0 +1,350 @@
+{
+  "data": {
+    "InfraInterfaceLoopback": {
+      "edges": [
+        {
+          "node": {
+            "name": {
+              "value": "Loopback0"
+            },
+            "description": {
+              "value": "Router-ID"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": null
+            },
+            "ip_addresses": {
+              "edges": [
+                {
+                  "node": {
+                    "address": {
+                      "value": "10.0.250.11/32"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "node": {
+            "name": {
+              "value": "Loopback1"
+            },
+            "description": {
+              "value": "VTEP"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": null
+            },
+            "ip_addresses": {
+              "edges": [
+                {
+                  "node": {
+                    "address": {
+                      "value": "10.0.255.11/32"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "InfraInterfaceEthernet": {
+      "edges": [
+        {
+          "node": {
+            "name": {
+              "value": "Ethernet1"
+            },
+            "description": {
+              "value": "host1"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": null
+            },
+            "speed": {
+              "value": null
+            },
+            "mode": {
+              "value": "trunk"
+            },
+            "lag": {
+              "node": {
+                "name": {
+                  "value": "Port-Channel1"
+                }
+              }
+            },
+            "ip_addresses": {
+              "edges": []
+            }
+          }
+        },
+        {
+          "node": {
+            "name": {
+              "value": "Ethernet10"
+            },
+            "description": {
+              "value": "mlag peer link"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": null
+            },
+            "speed": {
+              "value": null
+            },
+            "mode": {
+              "value": "trunk"
+            },
+            "lag": {
+              "node": {
+                "name": {
+                  "value": "Port-Channel999"
+                }
+              }
+            },
+            "ip_addresses": {
+              "edges": []
+            }
+          }
+        },
+        {
+          "node": {
+            "name": {
+              "value": "Ethernet11"
+            },
+            "description": {
+              "value": "spine1"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": 9214
+            },
+            "speed": {
+              "value": null
+            },
+            "mode": {
+              "value": "routed"
+            },
+            "lag": null,
+            "ip_addresses": {
+              "edges": [
+                {
+                  "node": {
+                    "address": {
+                      "value": "10.0.1.1/31"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "node": {
+            "name": {
+              "value": "Ethernet12"
+            },
+            "description": {
+              "value": "spine2"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": 9214
+            },
+            "speed": {
+              "value": null
+            },
+            "mode": {
+              "value": "routed"
+            },
+            "lag": null,
+            "ip_addresses": {
+              "edges": [
+                {
+                  "node": {
+                    "address": {
+                      "value": "10.0.2.1/31"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "InfraInterfaceVlan": {
+      "edges": [
+        {
+          "node": {
+            "name": {
+              "value": "Vlan4090"
+            },
+            "description": {
+              "value": "MLAG Peer-Link"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": null
+            },
+            "virtual_router_address": {
+              "value": null
+            },
+            "autostate": {
+              "value": false
+            },
+            "vlan": {
+              "node": {
+                "vlan_id": {
+                  "value": 4090
+                }
+              }
+            },
+            "ip_addresses": {
+              "edges": [
+                {
+                  "node": {
+                    "address": {
+                      "value": "10.255.255.0/31"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "node": {
+            "name": {
+              "value": "Vlan4091"
+            },
+            "description": {
+              "value": "MLAG iBGP Peering"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": 9214
+            },
+            "virtual_router_address": {
+              "value": null
+            },
+            "autostate": {
+              "value": true
+            },
+            "vlan": {
+              "node": {
+                "vlan_id": {
+                  "value": 4091
+                }
+              }
+            },
+            "ip_addresses": {
+              "edges": []
+            }
+          }
+        }
+      ]
+    },
+    "InfraInterfaceLag": {
+      "edges": [
+        {
+          "node": {
+            "name": {
+              "value": "Port-Channel1"
+            },
+            "description": {
+              "value": "host1"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": null
+            },
+            "lacp_mode": {
+              "value": "active"
+            },
+            "mlag_id": {
+              "value": 1
+            },
+            "members": {
+              "edges": [
+                {
+                  "node": {
+                    "name": {
+                      "value": "Ethernet1"
+                    }
+                  }
+                }
+              ]
+            },
+            "ip_addresses": {
+              "edges": []
+            }
+          }
+        },
+        {
+          "node": {
+            "name": {
+              "value": "Port-Channel999"
+            },
+            "description": {
+              "value": "MLAG Peer"
+            },
+            "enabled": {
+              "value": true
+            },
+            "mtu": {
+              "value": null
+            },
+            "lacp_mode": {
+              "value": "active"
+            },
+            "mlag_id": {
+              "value": null
+            },
+            "members": {
+              "edges": [
+                {
+                  "node": {
+                    "name": {
+                      "value": "Ethernet10"
+                    }
+                  }
+                }
+              ]
+            },
+            "ip_addresses": {
+              "edges": []
+            }
+          }
+        }
+      ]
+    }
+  }
+}

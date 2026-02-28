@@ -1,0 +1,106 @@
+[
+  {
+    "type": "ethernet",
+    "name": "Ethernet1",
+    "description": "host1",
+    "enabled": true,
+    "mtu": null,
+    "speed": null,
+    "mode": "trunk",
+    "lag": "Port-Channel1",
+    "ip_addresses": []
+  },
+  {
+    "type": "ethernet",
+    "name": "Ethernet10",
+    "description": "mlag peer link",
+    "enabled": true,
+    "mtu": null,
+    "speed": null,
+    "mode": "trunk",
+    "lag": "Port-Channel999",
+    "ip_addresses": []
+  },
+  {
+    "type": "ethernet",
+    "name": "Ethernet11",
+    "description": "spine1",
+    "enabled": true,
+    "mtu": 9214,
+    "speed": null,
+    "mode": "routed",
+    "lag": null,
+    "ip_addresses": ["10.0.1.1/31"]
+  },
+  {
+    "type": "ethernet",
+    "name": "Ethernet12",
+    "description": "spine2",
+    "enabled": true,
+    "mtu": 9214,
+    "speed": null,
+    "mode": "routed",
+    "lag": null,
+    "ip_addresses": ["10.0.2.1/31"]
+  },
+  {
+    "type": "loopback",
+    "name": "Loopback0",
+    "description": "Router-ID",
+    "enabled": true,
+    "mtu": null,
+    "ip_addresses": ["10.0.250.11/32"]
+  },
+  {
+    "type": "loopback",
+    "name": "Loopback1",
+    "description": "VTEP",
+    "enabled": true,
+    "mtu": null,
+    "ip_addresses": ["10.0.255.11/32"]
+  },
+  {
+    "type": "lag",
+    "name": "Port-Channel1",
+    "description": "host1",
+    "enabled": true,
+    "mtu": null,
+    "lacp_mode": "active",
+    "mlag_id": 1,
+    "members": ["Ethernet1"],
+    "ip_addresses": []
+  },
+  {
+    "type": "lag",
+    "name": "Port-Channel999",
+    "description": "MLAG Peer",
+    "enabled": true,
+    "mtu": null,
+    "lacp_mode": "active",
+    "mlag_id": null,
+    "members": ["Ethernet10"],
+    "ip_addresses": []
+  },
+  {
+    "type": "vlan",
+    "name": "Vlan4090",
+    "description": "MLAG Peer-Link",
+    "enabled": true,
+    "mtu": null,
+    "vlan_id": 4090,
+    "virtual_router_address": null,
+    "autostate": false,
+    "ip_addresses": ["10.255.255.0/31"]
+  },
+  {
+    "type": "vlan",
+    "name": "Vlan4091",
+    "description": "MLAG iBGP Peering",
+    "enabled": true,
+    "mtu": 9214,
+    "vlan_id": 4091,
+    "virtual_router_address": null,
+    "autostate": true,
+    "ip_addresses": []
+  }
+]

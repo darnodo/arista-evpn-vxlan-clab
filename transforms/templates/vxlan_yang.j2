@@ -1,0 +1,88 @@
+{#
+  vxlan_yang.j2 — Produce a JSON object representing the VXLAN/VTEP configuration
+  for the device, including VLAN-to-VNI mappings and VRF-to-VNI mappings.
+
+  Input: GraphQL response from vxlan_intent query.
+#}
+{%- set vtep_edges = data.InfraVTEP.edges -%}
+{%- set vrf_edges = data.InfraVRFDeviceAssignment.edges -%}
+
+{#— Build VTEP section (there is one VTEP per device) —#}
+{%- if vtep_edges | length > 0 -%}
+  {%- set vtep = vtep_edges[0].node -%}
+  {%- set source_iface = null -%}
+  {%- if vtep.source_interface and vtep.source_interface.node -%}
+    {%- set source_iface = vtep.source_interface.node.name.value -%}
+  {%- endif -%}
+
+  {#— Build VLAN-to-VNI mapping list —#}
+  {%- set vlan_vni_list = [] -%}
+  {%- for mapping_edge in vtep.vlan_vni_mappings.edges -%}
+    {%- set m = mapping_edge.node -%}
+    {%- set vlan_id = null -%}
+    {%- set vlan_name = null -%}
+    {%- if m.vlan and m.vlan.node -%}
+      {%- set vlan_id = m.vlan.node.vlan_id.value -%}
+      {%- set vlan_name = m.vlan.node.name.value -%}
+    {%- endif -%}
+    {%- set vni_val = null -%}
+    {%- set vni_type_val = null -%}
+    {%- if m.vni and m.vni.node -%}
+      {%- set vni_val = m.vni.node.vni.value -%}
+      {%- set vni_type_val = m.vni.node.vni_type.value -%}
+    {%- endif -%}
+    {%- set _ = vlan_vni_list.append({
+      "vlan_id": vlan_id,
+      "vlan_name": vlan_name,
+      "vni": vni_val,
+      "vni_type": vni_type_val
+    }) -%}
+  {%- endfor -%}
+
+  {#— Build VRF-to-VNI mapping list —#}
+  {%- set vrf_vni_list = [] -%}
+  {%- for vrf_edge in vrf_edges -%}
+    {%- set assignment = vrf_edge.node -%}
+    {%- set vrf_name = null -%}
+    {%- set l3vni = null -%}
+    {%- set import_rts = [] -%}
+    {%- set export_rts = [] -%}
+    {%- if assignment.vrf and assignment.vrf.node -%}
+      {%- set vrf_node = assignment.vrf.node -%}
+      {%- set vrf_name = vrf_node.name.value -%}
+      {%- if vrf_node.l3vni and vrf_node.l3vni.node -%}
+        {%- set l3vni = vrf_node.l3vni.node.vni.value -%}
+      {%- endif -%}
+      {%- for rt_edge in vrf_node.import_targets.edges -%}
+        {%- set _ = import_rts.append(rt_edge.node.target.value) -%}
+      {%- endfor -%}
+      {%- for rt_edge in vrf_node.export_targets.edges -%}
+        {%- set _ = export_rts.append(rt_edge.node.target.value) -%}
+      {%- endfor -%}
+    {%- endif -%}
+    {%- set _ = vrf_vni_list.append({
+      "vrf": vrf_name,
+      "l3vni": l3vni,
+      "route_distinguisher": assignment.route_distinguisher.value,
+      "import_targets": import_rts,
+      "export_targets": export_rts
+    }) -%}
+  {%- endfor -%}
+
+  {%- set result = {
+    "vtep": {
+      "source_address": vtep.source_address.value,
+      "source_interface": source_iface,
+      "udp_port": vtep.udp_port.value,
+      "learn_restrict": vtep.learn_restrict.value,
+      "vlan_vni_mappings": vlan_vni_list | sort(attribute='vlan_id'),
+      "vrf_vni_mappings": vrf_vni_list
+    }
+  } -%}
+{%- else -%}
+  {%- set result = {
+    "vtep": null,
+    "vrf_vni_mappings": []
+  } -%}
+{%- endif -%}
+{{ result | tojson(indent=2) }}

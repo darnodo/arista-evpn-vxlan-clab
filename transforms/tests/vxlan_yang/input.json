@@ -1,0 +1,62 @@
+{
+  "data": {
+    "InfraVTEP": {
+      "edges": [
+        {
+          "node": {
+            "source_address": {
+              "value": "10.0.255.11"
+            },
+            "udp_port": {
+              "value": 4789
+            },
+            "learn_restrict": {
+              "value": "any"
+            },
+            "source_interface": {
+              "node": {
+                "name": {
+                  "value": "Loopback1"
+                }
+              }
+            },
+            "vlan_vni_mappings": {
+              "edges": [
+                {
+                  "node": {
+                    "description": {
+                      "value": "VLAN 40 <-> VNI 110040"
+                    },
+                    "vlan": {
+                      "node": {
+                        "vlan_id": {
+                          "value": 40
+                        },
+                        "name": {
+                          "value": "test-l2-vxlan"
+                        }
+                      }
+                    },
+                    "vni": {
+                      "node": {
+                        "vni": {
+                          "value": 110040
+                        },
+                        "vni_type": {
+                          "value": "l2vni"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "InfraVRFDeviceAssignment": {
+      "edges": []
+    }
+  }
+}

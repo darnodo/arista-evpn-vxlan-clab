@@ -1,0 +1,13 @@
+---
+# Integration test for interface_yang_transform
+# Usage: infrahubctl test transforms/tests/interface_yang/test.yml
+apiVersion: infrahub.app/v1
+kind: IntegrationTest
+spec:
+  kind: jinja2-transform-integration
+  name: interface_yang_transform_leaf1
+  transform: interface_yang_transform
+  params:
+    device_name: leaf1
+  input: input.json
+  output: output.json

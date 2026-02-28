@@ -1,0 +1,155 @@
+query InterfaceIntent($device_name: String!) {
+  # Loopback interfaces
+  InfraInterfaceLoopback(device__name__value: $device_name) {
+    edges {
+      node {
+        name {
+          value
+        }
+        description {
+          value
+        }
+        enabled {
+          value
+        }
+        mtu {
+          value
+        }
+        ip_addresses {
+          edges {
+            node {
+              address {
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  # Ethernet interfaces
+  InfraInterfaceEthernet(device__name__value: $device_name) {
+    edges {
+      node {
+        name {
+          value
+        }
+        description {
+          value
+        }
+        enabled {
+          value
+        }
+        mtu {
+          value
+        }
+        speed {
+          value
+        }
+        mode {
+          value
+        }
+        lag {
+          node {
+            name {
+              value
+            }
+          }
+        }
+        ip_addresses {
+          edges {
+            node {
+              address {
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  # VLAN SVI interfaces
+  InfraInterfaceVlan(device__name__value: $device_name) {
+    edges {
+      node {
+        name {
+          value
+        }
+        description {
+          value
+        }
+        enabled {
+          value
+        }
+        mtu {
+          value
+        }
+        virtual_router_address {
+          value
+        }
+        autostate {
+          value
+        }
+        vlan {
+          node {
+            vlan_id {
+              value
+            }
+          }
+        }
+        ip_addresses {
+          edges {
+            node {
+              address {
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  # LAG / Port-Channel interfaces
+  InfraInterfaceLag(device__name__value: $device_name) {
+    edges {
+      node {
+        name {
+          value
+        }
+        description {
+          value
+        }
+        enabled {
+          value
+        }
+        mtu {
+          value
+        }
+        lacp_mode {
+          value
+        }
+        mlag_id {
+          value
+        }
+        members {
+          edges {
+            node {
+              name {
+                value
+              }
+            }
+          }
+        }
+        ip_addresses {
+          edges {
+            node {
+              address {
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

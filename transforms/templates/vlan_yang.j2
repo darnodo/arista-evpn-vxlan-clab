@@ -1,0 +1,67 @@
+{#
+  vlan_yang.j2 — Produce a JSON array of VLAN configuration objects.
+
+  Input: GraphQL response from vlan_intent query.
+  The query returns VLANs from two sources:
+    1. data.InfraVTEP[].vlan_vni_mappings[].vlan  (L2/VXLAN VLANs)
+    2. data.InfraInterfaceVlan[].vlan              (SVI/routing/MLAG VLANs)
+
+  We merge both sources, deduplicate by vlan_id, and emit one object per VLAN.
+#}
+{%- set vlans = {} -%}
+
+{#— Collect VLANs from VTEP VLAN-VNI mappings —#}
+{%- for vtep_edge in data.InfraVTEP.edges -%}
+  {%- for mapping_edge in vtep_edge.node.vlan_vni_mappings.edges -%}
+    {%- set vlan_node = mapping_edge.node.vlan.node -%}
+    {%- set vid = vlan_node.vlan_id.value | string -%}
+    {%- if vid not in vlans -%}
+      {%- set vni_val = null -%}
+      {%- set vni_type_val = null -%}
+      {%- if vlan_node.vni and vlan_node.vni.node -%}
+        {%- set vni_val = vlan_node.vni.node.vni.value -%}
+        {%- set vni_type_val = vlan_node.vni.node.vni_type.value -%}
+      {%- endif -%}
+      {%- set _ = vlans.update({vid: {
+        "vlan_id": vlan_node.vlan_id.value,
+        "name": vlan_node.name.value,
+        "status": vlan_node.status.value | upper,
+        "vlan_type": vlan_node.vlan_type.value,
+        "trunk_groups": vlan_node.trunk_groups.value if vlan_node.trunk_groups.value else [],
+        "stp_enabled": vlan_node.stp_enabled.value,
+        "vni": vni_val,
+        "vni_type": vni_type_val
+      }}) -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+
+{#— Collect VLANs from SVI interfaces —#}
+{%- for svi_edge in data.InfraInterfaceVlan.edges -%}
+  {%- if svi_edge.node.vlan and svi_edge.node.vlan.node -%}
+    {%- set vlan_node = svi_edge.node.vlan.node -%}
+    {%- set vid = vlan_node.vlan_id.value | string -%}
+    {%- if vid not in vlans -%}
+      {%- set vni_val = null -%}
+      {%- set vni_type_val = null -%}
+      {%- if vlan_node.vni and vlan_node.vni.node -%}
+        {%- set vni_val = vlan_node.vni.node.vni.value -%}
+        {%- set vni_type_val = vlan_node.vni.node.vni_type.value -%}
+      {%- endif -%}
+      {%- set _ = vlans.update({vid: {
+        "vlan_id": vlan_node.vlan_id.value,
+        "name": vlan_node.name.value,
+        "status": vlan_node.status.value | upper,
+        "vlan_type": vlan_node.vlan_type.value,
+        "trunk_groups": vlan_node.trunk_groups.value if vlan_node.trunk_groups.value else [],
+        "stp_enabled": vlan_node.stp_enabled.value,
+        "vni": vni_val,
+        "vni_type": vni_type_val
+      }}) -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{#— Sort by vlan_id and emit JSON array —#}
+{%- set sorted_vlans = vlans.values() | sort(attribute='vlan_id') -%}
+{{ sorted_vlans | tojson(indent=2) }}

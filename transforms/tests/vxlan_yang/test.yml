@@ -1,0 +1,13 @@
+---
+# Integration test for vxlan_yang_transform
+# Usage: infrahubctl test transforms/tests/vxlan_yang/test.yml
+apiVersion: infrahub.app/v1
+kind: IntegrationTest
+spec:
+  kind: jinja2-transform-integration
+  name: vxlan_yang_transform_leaf1
+  transform: vxlan_yang_transform
+  params:
+    device_name: leaf1
+  input: input.json
+  output: output.json
