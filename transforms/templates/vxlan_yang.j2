@@ -10,8 +10,8 @@
 {#— Build VTEP section (there is one VTEP per device) —#}
 {%- if vtep_edges | length > 0 -%}
   {%- set vtep = vtep_edges[0].node -%}
-  {%- set source_iface = null -%}
-  {%- if vtep.source_interface and vtep.source_interface.node -%}
+  {%- set source_iface = none -%}
+  {%- if vtep.source_interface is defined and vtep.source_interface is not none and vtep.source_interface.node is not none -%}
     {%- set source_iface = vtep.source_interface.node.name.value -%}
   {%- endif -%}
 
@@ -19,15 +19,15 @@
   {%- set vlan_vni_list = [] -%}
   {%- for mapping_edge in vtep.vlan_vni_mappings.edges -%}
     {%- set m = mapping_edge.node -%}
-    {%- set vlan_id = null -%}
-    {%- set vlan_name = null -%}
-    {%- if m.vlan and m.vlan.node -%}
+    {%- set vlan_id = none -%}
+    {%- set vlan_name = none -%}
+    {%- if m.vlan is defined and m.vlan is not none and m.vlan.node is not none -%}
       {%- set vlan_id = m.vlan.node.vlan_id.value -%}
       {%- set vlan_name = m.vlan.node.name.value -%}
     {%- endif -%}
-    {%- set vni_val = null -%}
-    {%- set vni_type_val = null -%}
-    {%- if m.vni and m.vni.node -%}
+    {%- set vni_val = none -%}
+    {%- set vni_type_val = none -%}
+    {%- if m.vni is defined and m.vni is not none and m.vni.node is not none -%}
       {%- set vni_val = m.vni.node.vni.value -%}
       {%- set vni_type_val = m.vni.node.vni_type.value -%}
     {%- endif -%}
@@ -43,14 +43,14 @@
   {%- set vrf_vni_list = [] -%}
   {%- for vrf_edge in vrf_edges -%}
     {%- set assignment = vrf_edge.node -%}
-    {%- set vrf_name = null -%}
-    {%- set l3vni = null -%}
+    {%- set vrf_name = none -%}
+    {%- set l3vni = none -%}
     {%- set import_rts = [] -%}
     {%- set export_rts = [] -%}
-    {%- if assignment.vrf and assignment.vrf.node -%}
+    {%- if assignment.vrf is defined and assignment.vrf is not none and assignment.vrf.node is not none -%}
       {%- set vrf_node = assignment.vrf.node -%}
       {%- set vrf_name = vrf_node.name.value -%}
-      {%- if vrf_node.l3vni and vrf_node.l3vni.node -%}
+      {%- if vrf_node.l3vni is defined and vrf_node.l3vni is not none and vrf_node.l3vni.node is not none -%}
         {%- set l3vni = vrf_node.l3vni.node.vni.value -%}
       {%- endif -%}
       {%- for rt_edge in vrf_node.import_targets.edges -%}
@@ -63,7 +63,7 @@
     {%- set _ = vrf_vni_list.append({
       "vrf": vrf_name,
       "l3vni": l3vni,
-      "route_distinguisher": assignment.route_distinguisher.value,
+      "route_distinguisher": assignment.route_distinguisher.value | default(none),
       "import_targets": import_rts,
       "export_targets": export_rts
     }) -%}
@@ -74,14 +74,14 @@
       "source_address": vtep.source_address.value,
       "source_interface": source_iface,
       "udp_port": vtep.udp_port.value,
-      "learn_restrict": vtep.learn_restrict.value,
+      "learn_restrict": vtep.learn_restrict.value | default(none),
       "vlan_vni_mappings": vlan_vni_list | sort(attribute='vlan_id'),
       "vrf_vni_mappings": vrf_vni_list
     }
   } -%}
 {%- else -%}
   {%- set result = {
-    "vtep": null,
+    "vtep": none,
     "vrf_vni_mappings": []
   } -%}
 {%- endif -%}
