@@ -10,6 +10,6 @@ infrahub_tests:
       - name: render_leaf1
         spec:
           kind: jinja2-transform-unit-render
-          directory: transforms/tests/interface_yang
+          directory: infrahub/transforms/tests/interface_yang
           input: input.json
           output: output.json

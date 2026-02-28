@@ -19,22 +19,22 @@ objects:
 
 queries:
   - name: vlan_intent
-    file_path: transforms/queries/vlan_intent.gql
+    file_path: infrahub/transforms/queries/vlan_intent.gql
   - name: interface_intent
-    file_path: transforms/queries/interface_intent.gql
+    file_path: infrahub/transforms/queries/interface_intent.gql
   - name: vxlan_intent
-    file_path: transforms/queries/vxlan_intent.gql
+    file_path: infrahub/transforms/queries/vxlan_intent.gql
 
 jinja2_transforms:
   - name: vlan_yang_transform
     description: "Generate VLAN configuration payload from Infrahub intent"
     query: vlan_intent
-    template_path: transforms/templates/vlan_yang.j2
+    template_path: infrahub/transforms/templates/vlan_yang.j2
   - name: interface_yang_transform
     description: "Generate interface configuration payload from Infrahub intent"
     query: interface_intent
-    template_path: transforms/templates/interface_yang.j2
+    template_path: infrahub/transforms/templates/interface_yang.j2
   - name: vxlan_yang_transform
     description: "Generate VXLAN/VTEP configuration payload from Infrahub intent"
     query: vxlan_intent
-    template_path: transforms/templates/vxlan_yang.j2
+    template_path: infrahub/transforms/templates/vxlan_yang.j2
