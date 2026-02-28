@@ -44,15 +44,7 @@
               "value": null
             },
             "ip_addresses": {
-              "edges": [
-                {
-                  "node": {
-                    "address": {
-                      "value": "10.0.255.11/32"
-                    }
-                  }
-                }
-              ]
+              "edges": []
             }
           }
         }
@@ -228,7 +220,7 @@
                 {
                   "node": {
                     "address": {
-                      "value": "10.255.255.0/31"
+                      "value": "10.0.199.254/31"
                     }
                   }
                 }
@@ -264,7 +256,15 @@
               }
             },
             "ip_addresses": {
-              "edges": []
+              "edges": [
+                {
+                  "node": {
+                    "address": {
+                      "value": "10.0.3.0/31"
+                    }
+                  }
+                }
+              ]
             }
           }
         }

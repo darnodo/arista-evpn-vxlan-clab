@@ -5,7 +5,7 @@
         {
           "node": {
             "source_address": {
-              "value": "10.0.255.11"
+              "value": "10.0.255.11/32"
             },
             "udp_port": {
               "value": 4789

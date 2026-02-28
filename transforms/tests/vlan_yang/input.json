@@ -29,7 +29,7 @@
                           "value": "standard"
                         },
                         "trunk_groups": {
-                          "value": []
+                          "value": null
                         },
                         "stp_enabled": {
                           "value": true
