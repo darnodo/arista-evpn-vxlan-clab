@@ -1,0 +1,101 @@
+{#
+  interface_yang.j2 — Produce a JSON array of interface configuration objects.
+
+  Input: GraphQL response from interface_intent query.
+  Returns all interface types (loopback, ethernet, vlan, lag) for the device,
+  each with a "type" discriminator and type-specific attributes.
+#}
+{%- set interfaces = [] -%}
+
+{#— Loopback interfaces —#}
+{%- for edge in data.InfraInterfaceLoopback.edges -%}
+  {%- set iface = edge.node -%}
+  {%- set ip_list = [] -%}
+  {%- for ip_edge in iface.ip_addresses.edges -%}
+    {%- set _ = ip_list.append(ip_edge.node.address.value) -%}
+  {%- endfor -%}
+  {%- set _ = interfaces.append({
+    "type": "loopback",
+    "name": iface.name.value,
+    "description": iface.description.value | default(none),
+    "enabled": iface.enabled.value,
+    "mtu": iface.mtu.value | default(none),
+    "ip_addresses": ip_list
+  }) -%}
+{%- endfor -%}
+
+{#— Ethernet interfaces —#}
+{%- for edge in data.InfraInterfaceEthernet.edges -%}
+  {%- set iface = edge.node -%}
+  {%- set ip_list = [] -%}
+  {%- for ip_edge in iface.ip_addresses.edges -%}
+    {%- set _ = ip_list.append(ip_edge.node.address.value) -%}
+  {%- endfor -%}
+  {%- set lag_name = none -%}
+  {%- if iface.lag is defined and iface.lag is not none and iface.lag.node is not none -%}
+    {%- set lag_name = iface.lag.node.name.value -%}
+  {%- endif -%}
+  {%- set _ = interfaces.append({
+    "type": "ethernet",
+    "name": iface.name.value,
+    "description": iface.description.value | default(none),
+    "enabled": iface.enabled.value,
+    "mtu": iface.mtu.value | default(none),
+    "speed": iface.speed.value | default(none),
+    "mode": iface.mode.value | default(none),
+    "lag": lag_name,
+    "ip_addresses": ip_list
+  }) -%}
+{%- endfor -%}
+
+{#— VLAN SVI interfaces —#}
+{%- for edge in data.InfraInterfaceVlan.edges -%}
+  {%- set iface = edge.node -%}
+  {%- set ip_list = [] -%}
+  {%- for ip_edge in iface.ip_addresses.edges -%}
+    {%- set _ = ip_list.append(ip_edge.node.address.value) -%}
+  {%- endfor -%}
+  {%- set vlan_id = none -%}
+  {%- if iface.vlan is defined and iface.vlan is not none and iface.vlan.node is not none -%}
+    {%- set vlan_id = iface.vlan.node.vlan_id.value -%}
+  {%- endif -%}
+  {%- set _ = interfaces.append({
+    "type": "vlan",
+    "name": iface.name.value,
+    "description": iface.description.value | default(none),
+    "enabled": iface.enabled.value,
+    "mtu": iface.mtu.value | default(none),
+    "vlan_id": vlan_id,
+    "virtual_router_address": iface.virtual_router_address.value | default(none),
+    "autostate": iface.autostate.value,
+    "ip_addresses": ip_list
+  }) -%}
+{%- endfor -%}
+
+{#— LAG / Port-Channel interfaces —#}
+{%- for edge in data.InfraInterfaceLag.edges -%}
+  {%- set iface = edge.node -%}
+  {%- set ip_list = [] -%}
+  {%- for ip_edge in iface.ip_addresses.edges -%}
+    {%- set _ = ip_list.append(ip_edge.node.address.value) -%}
+  {%- endfor -%}
+  {%- set member_list = [] -%}
+  {%- for member_edge in iface.members.edges -%}
+    {%- set _ = member_list.append(member_edge.node.name.value) -%}
+  {%- endfor -%}
+  {%- set _ = interfaces.append({
+    "type": "lag",
+    "name": iface.name.value,
+    "description": iface.description.value | default(none),
+    "enabled": iface.enabled.value,
+    "mtu": iface.mtu.value | default(none),
+    "lacp_mode": iface.lacp_mode.value | default(none),
+    "mlag_id": iface.mlag_id.value | default(none),
+    "members": member_list,
+    "ip_addresses": ip_list
+  }) -%}
+{%- endfor -%}
+
+{#— Sort by name and emit JSON array —#}
+{%- set sorted_ifaces = interfaces | sort(attribute='name') -%}
+{{ sorted_ifaces | tojson(indent=2) }}
