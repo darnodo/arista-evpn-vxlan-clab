@@ -1,0 +1,266 @@
+{
+  "data": {
+    "InfraBGPRouterConfig": {
+      "edges": [
+        {
+          "node": {
+            "router_id": { "value": "10.0.250.1" },
+            "default_ipv4_unicast": { "value": false },
+            "log_neighbor_changes": { "value": true },
+            "ecmp_max_paths": { "value": 4 },
+            "ecmp_max_ecmp": { "value": 64 },
+            "ebgp_distance": { "value": 20 },
+            "ibgp_distance": { "value": 200 },
+            "local_distance": { "value": 200 },
+            "local_asn": {
+              "node": {
+                "asn": { "value": 65000 }
+              }
+            },
+            "peer_groups": {
+              "edges": [
+                {
+                  "node": {
+                    "name": { "value": "evpn" },
+                    "peer_group_type": { "value": "evpn" },
+                    "update_source": { "value": "Loopback0" },
+                    "ebgp_multihop": { "value": 3 },
+                    "send_community": { "value": "extended" },
+                    "next_hop_self": { "value": false },
+                    "next_hop_unchanged": { "value": true },
+                    "maximum_routes": { "value": 12000 },
+                    "maximum_routes_warning_only": { "value": true },
+                    "remote_asn": { "node": null }
+                  }
+                }
+              ]
+            },
+            "sessions": {
+              "edges": [
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.1.1" },
+                    "description": { "value": "underlay to leaf1" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": null },
+                    "remote_asn": { "node": { "asn": { "value": 65001 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf1" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.1.3" },
+                    "description": { "value": "underlay to leaf2" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": null },
+                    "remote_asn": { "node": { "asn": { "value": 65001 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf2" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.1.5" },
+                    "description": { "value": "underlay to leaf3" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": null },
+                    "remote_asn": { "node": { "asn": { "value": 65002 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf3" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.1.7" },
+                    "description": { "value": "underlay to leaf4" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": null },
+                    "remote_asn": { "node": { "asn": { "value": 65002 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf4" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.1.9" },
+                    "description": { "value": "underlay to leaf5" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": null },
+                    "remote_asn": { "node": { "asn": { "value": 65003 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf5" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.1.11" },
+                    "description": { "value": "underlay to leaf6" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": null },
+                    "remote_asn": { "node": { "asn": { "value": 65003 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf6" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.1.13" },
+                    "description": { "value": "underlay to leaf7" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": null },
+                    "remote_asn": { "node": { "asn": { "value": 65004 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf7" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.1.15" },
+                    "description": { "value": "underlay to leaf8" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": null },
+                    "remote_asn": { "node": { "asn": { "value": 65004 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf8" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.11" },
+                    "description": { "value": "EVPN to leaf1" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "spine1__evpn" } } },
+                    "remote_asn": { "node": { "asn": { "value": 65001 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf1" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.12" },
+                    "description": { "value": "EVPN to leaf2" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "spine1__evpn" } } },
+                    "remote_asn": { "node": { "asn": { "value": 65001 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf2" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.13" },
+                    "description": { "value": "EVPN to leaf3" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "spine1__evpn" } } },
+                    "remote_asn": { "node": { "asn": { "value": 65002 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf3" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.14" },
+                    "description": { "value": "EVPN to leaf4" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "spine1__evpn" } } },
+                    "remote_asn": { "node": { "asn": { "value": 65002 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf4" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.15" },
+                    "description": { "value": "EVPN to leaf5" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "spine1__evpn" } } },
+                    "remote_asn": { "node": { "asn": { "value": 65003 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf5" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.16" },
+                    "description": { "value": "EVPN to leaf6" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "spine1__evpn" } } },
+                    "remote_asn": { "node": { "asn": { "value": 65003 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf6" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.17" },
+                    "description": { "value": "EVPN to leaf7" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "spine1__evpn" } } },
+                    "remote_asn": { "node": { "asn": { "value": 65004 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf7" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.18" },
+                    "description": { "value": "EVPN to leaf8" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "spine1__evpn" } } },
+                    "remote_asn": { "node": { "asn": { "value": 65004 } } },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf8" } } }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "InfraBGPAddressFamily": {
+      "edges": [
+        {
+          "node": {
+            "afi": { "value": "ipv4" },
+            "safi": { "value": "unicast" },
+            "vrf": { "node": null },
+            "active_peer_groups": { "edges": [] },
+            "active_sessions": {
+              "edges": [
+                { "node": { "peer_address": { "value": "10.0.1.1" } } },
+                { "node": { "peer_address": { "value": "10.0.1.3" } } },
+                { "node": { "peer_address": { "value": "10.0.1.5" } } },
+                { "node": { "peer_address": { "value": "10.0.1.7" } } },
+                { "node": { "peer_address": { "value": "10.0.1.9" } } },
+                { "node": { "peer_address": { "value": "10.0.1.11" } } },
+                { "node": { "peer_address": { "value": "10.0.1.13" } } },
+                { "node": { "peer_address": { "value": "10.0.1.15" } } }
+              ]
+            },
+            "networks": {
+              "edges": [
+                { "node": { "address": { "value": "10.0.250.1/32" } } }
+              ]
+            }
+          }
+        },
+        {
+          "node": {
+            "afi": { "value": "evpn" },
+            "safi": { "value": "unicast" },
+            "vrf": { "node": null },
+            "active_peer_groups": {
+              "edges": [
+                { "node": { "name": { "value": "evpn" } } }
+              ]
+            },
+            "active_sessions": { "edges": [] },
+            "networks": { "edges": [] }
+          }
+        }
+      ]
+    }
+  }
+}

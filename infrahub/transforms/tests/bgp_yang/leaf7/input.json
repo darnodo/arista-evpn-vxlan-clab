@@ -1,0 +1,205 @@
+{
+  "data": {
+    "InfraBGPRouterConfig": {
+      "edges": [
+        {
+          "node": {
+            "router_id": { "value": "10.0.250.17" },
+            "default_ipv4_unicast": { "value": false },
+            "log_neighbor_changes": { "value": true },
+            "ecmp_max_paths": { "value": 4 },
+            "ecmp_max_ecmp": { "value": 64 },
+            "ebgp_distance": { "value": 20 },
+            "ibgp_distance": { "value": 200 },
+            "local_distance": { "value": 200 },
+            "local_asn": {
+              "node": {
+                "asn": { "value": 65004 }
+              }
+            },
+            "peer_groups": {
+              "edges": [
+                {
+                  "node": {
+                    "name": { "value": "underlay" },
+                    "peer_group_type": { "value": "underlay" },
+                    "update_source": { "value": null },
+                    "ebgp_multihop": { "value": null },
+                    "send_community": { "value": "none" },
+                    "next_hop_self": { "value": false },
+                    "next_hop_unchanged": { "value": false },
+                    "maximum_routes": { "value": 12000 },
+                    "maximum_routes_warning_only": { "value": true },
+                    "remote_asn": {
+                      "node": {
+                        "asn": { "value": 65000 }
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "name": { "value": "underlay_ibgp" },
+                    "peer_group_type": { "value": "underlay_ibgp" },
+                    "update_source": { "value": null },
+                    "ebgp_multihop": { "value": null },
+                    "send_community": { "value": "none" },
+                    "next_hop_self": { "value": true },
+                    "next_hop_unchanged": { "value": false },
+                    "maximum_routes": { "value": 12000 },
+                    "maximum_routes_warning_only": { "value": true },
+                    "remote_asn": {
+                      "node": {
+                        "asn": { "value": 65004 }
+                      }
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "name": { "value": "evpn" },
+                    "peer_group_type": { "value": "evpn" },
+                    "update_source": { "value": "Loopback0" },
+                    "ebgp_multihop": { "value": 3 },
+                    "send_community": { "value": "extended" },
+                    "next_hop_self": { "value": false },
+                    "next_hop_unchanged": { "value": false },
+                    "maximum_routes": { "value": 12000 },
+                    "maximum_routes_warning_only": { "value": true },
+                    "remote_asn": {
+                      "node": {
+                        "asn": { "value": 65000 }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "sessions": {
+              "edges": [
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.1.12" },
+                    "description": { "value": "underlay to spine1" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "underlay" }, "local_identifier": { "value": "leaf7__underlay" } } },
+                    "remote_asn": { "node": null },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "spine1" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.2.12" },
+                    "description": { "value": "underlay to spine2" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "underlay" }, "local_identifier": { "value": "leaf7__underlay" } } },
+                    "remote_asn": { "node": null },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "spine2" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.3.7" },
+                    "description": { "value": "iBGP to leaf8" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "underlay_ibgp" }, "local_identifier": { "value": "leaf7__underlay_ibgp" } } },
+                    "remote_asn": { "node": null },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "leaf8" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.1" },
+                    "description": { "value": "EVPN to spine1" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "leaf7__evpn" } } },
+                    "remote_asn": { "node": null },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "spine1" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.0.250.2" },
+                    "description": { "value": "EVPN to spine2" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": { "name": { "value": "evpn" }, "local_identifier": { "value": "leaf7__evpn" } } },
+                    "remote_asn": { "node": null },
+                    "vrf": { "node": null },
+                    "peer_device": { "node": { "name": { "value": "spine2" } } }
+                  }
+                },
+                {
+                  "node": {
+                    "peer_address": { "value": "10.90.90.1" },
+                    "description": { "value": "border peering to AS 64999 in VRF gold" },
+                    "enabled": { "value": true },
+                    "peer_group": { "node": null },
+                    "remote_asn": { "node": { "asn": { "value": 64999 } } },
+                    "vrf": { "node": { "name": { "value": "gold" } } },
+                    "peer_device": { "node": null }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "InfraBGPAddressFamily": {
+      "edges": [
+        {
+          "node": {
+            "afi": { "value": "ipv4" },
+            "safi": { "value": "unicast" },
+            "vrf": { "node": null },
+            "active_peer_groups": {
+              "edges": [
+                { "node": { "name": { "value": "underlay" } } },
+                { "node": { "name": { "value": "underlay_ibgp" } } }
+              ]
+            },
+            "active_sessions": { "edges": [] },
+            "networks": {
+              "edges": [
+                { "node": { "address": { "value": "10.0.250.17/32" } } },
+                { "node": { "address": { "value": "10.0.255.14/32" } } }
+              ]
+            }
+          }
+        },
+        {
+          "node": {
+            "afi": { "value": "evpn" },
+            "safi": { "value": "unicast" },
+            "vrf": { "node": null },
+            "active_peer_groups": {
+              "edges": [
+                { "node": { "name": { "value": "evpn" } } }
+              ]
+            },
+            "active_sessions": { "edges": [] },
+            "networks": { "edges": [] }
+          }
+        },
+        {
+          "node": {
+            "afi": { "value": "ipv4" },
+            "safi": { "value": "unicast" },
+            "vrf": { "node": { "name": { "value": "gold" } } },
+            "active_peer_groups": { "edges": [] },
+            "active_sessions": {
+              "edges": [
+                { "node": { "peer_address": { "value": "10.90.90.1" } } }
+              ]
+            },
+            "networks": { "edges": [] }
+          }
+        }
+      ]
+    }
+  }
+}

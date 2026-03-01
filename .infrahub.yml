@@ -28,6 +28,8 @@ queries:
     file_path: infrahub/transforms/queries/vrf_intent.gql
   - name: mlag_intent
     file_path: infrahub/transforms/queries/mlag_intent.gql
+  - name: bgp_intent
+    file_path: infrahub/transforms/queries/bgp_intent.gql
 
 jinja2_transforms:
   - name: vlan_yang_transform
@@ -50,3 +52,7 @@ jinja2_transforms:
     description: "Generate MLAG configuration payload from Infrahub intent"
     query: mlag_intent
     template_path: infrahub/transforms/templates/mlag_yang.j2
+  - name: bgp_yang_transform
+    description: "Generate BGP configuration payload from Infrahub intent"
+    query: bgp_intent
+    template_path: infrahub/transforms/templates/bgp_yang.j2
