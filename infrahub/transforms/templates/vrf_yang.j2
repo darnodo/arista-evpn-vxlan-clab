@@ -1,0 +1,78 @@
+{#
+  vrf_yang.j2 — Produce a JSON array of VRF configuration objects.
+
+  Input: GraphQL response from vrf_intent query.
+  For each VRFDeviceAssignment, produce one VRF config entry with:
+    - device-specific RD (falls back to VRF-level RD if not set on assignment)
+    - L3VNI from the VRF's l3vni relationship
+    - import/export targets: device-level if present, otherwise VRF-level
+#}
+{%- set vrf_list = [] -%}
+
+{%- for assignment_edge in data.InfraVRFDeviceAssignment.edges -%}
+  {%- set assignment = assignment_edge.node -%}
+
+  {#— Resolve VRF node —#}
+  {%- set vrf_name = none -%}
+  {%- set vrf_description = none -%}
+  {%- set l3vni = none -%}
+  {%- set vrf_level_import_rts = [] -%}
+  {%- set vrf_level_export_rts = [] -%}
+
+  {%- if assignment.vrf is defined and assignment.vrf is not none and assignment.vrf.node is not none -%}
+    {%- set vrf_node = assignment.vrf.node -%}
+    {%- set vrf_name = vrf_node.name.value -%}
+    {%- set vrf_description = vrf_node.description.value | default(none) -%}
+
+    {%- if vrf_node.l3vni is defined and vrf_node.l3vni is not none and vrf_node.l3vni.node is not none -%}
+      {%- set l3vni = vrf_node.l3vni.node.vni.value -%}
+    {%- endif -%}
+
+    {%- for rt_edge in vrf_node.import_targets.edges -%}
+      {%- set _ = vrf_level_import_rts.append(rt_edge.node.target.value) -%}
+    {%- endfor -%}
+    {%- for rt_edge in vrf_node.export_targets.edges -%}
+      {%- set _ = vrf_level_export_rts.append(rt_edge.node.target.value) -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {#— Resolve route_distinguisher: device-specific first, fall back to VRF-level —#}
+  {%- set rd = none -%}
+  {%- if assignment.route_distinguisher is defined and assignment.route_distinguisher is not none and assignment.route_distinguisher.value is not none and assignment.route_distinguisher.value != "" -%}
+    {%- set rd = assignment.route_distinguisher.value -%}
+  {%- elif assignment.vrf is defined and assignment.vrf is not none and assignment.vrf.node is not none and assignment.vrf.node.route_distinguisher is defined and assignment.vrf.node.route_distinguisher is not none -%}
+    {%- set rd = assignment.vrf.node.route_distinguisher.value | default(none) -%}
+  {%- endif -%}
+
+  {#— Resolve import targets: device-level if present, otherwise VRF-level —#}
+  {%- set import_rts = [] -%}
+  {%- if assignment.import_targets is defined and assignment.import_targets is not none and assignment.import_targets.edges | length > 0 -%}
+    {%- for rt_edge in assignment.import_targets.edges -%}
+      {%- set _ = import_rts.append(rt_edge.node.target.value) -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- set import_rts = vrf_level_import_rts -%}
+  {%- endif -%}
+
+  {#— Resolve export targets: device-level if present, otherwise VRF-level —#}
+  {%- set export_rts = [] -%}
+  {%- if assignment.export_targets is defined and assignment.export_targets is not none and assignment.export_targets.edges | length > 0 -%}
+    {%- for rt_edge in assignment.export_targets.edges -%}
+      {%- set _ = export_rts.append(rt_edge.node.target.value) -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- set export_rts = vrf_level_export_rts -%}
+  {%- endif -%}
+
+  {%- set _ = vrf_list.append({
+    "vrf_name": vrf_name,
+    "description": vrf_description,
+    "route_distinguisher": rd,
+    "l3vni": l3vni,
+    "import_targets": import_rts,
+    "export_targets": export_rts,
+    "redistribute_connected": true
+  }) -%}
+{%- endfor -%}
+
+{{ vrf_list | tojson(indent=2) }}

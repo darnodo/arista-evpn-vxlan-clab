@@ -1,0 +1,15 @@
+---
+version: "1.0"
+infrahub_tests:
+  - resource: Jinja2Transform
+    resource_name: vrf_yang_transform
+    tests:
+      - name: smoke_check
+        spec:
+          kind: jinja2-transform-smoke
+      - name: render_leaf3
+        spec:
+          kind: jinja2-transform-unit-render
+          directory: infrahub/transforms/tests/vrf_yang
+          input: input.json
+          output: output.json

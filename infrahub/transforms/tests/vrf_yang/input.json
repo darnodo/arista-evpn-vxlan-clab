@@ -1,0 +1,82 @@
+{
+  "data": {
+    "InfraVRFDeviceAssignment": {
+      "edges": [
+        {
+          "node": {
+            "route_distinguisher": {
+              "value": "10.0.250.13:1"
+            },
+            "vrf": {
+              "node": {
+                "name": {
+                  "value": "gold"
+                },
+                "description": {
+                  "value": "VRF gold - L3 VXLAN with symmetric IRB"
+                },
+                "route_distinguisher": {
+                  "value": null
+                },
+                "l3vni": {
+                  "node": {
+                    "vni": {
+                      "value": 100001
+                    },
+                    "vni_type": {
+                      "value": "l3vni"
+                    }
+                  }
+                },
+                "import_targets": {
+                  "edges": [
+                    {
+                      "node": {
+                        "target": {
+                          "value": "1:100001"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "export_targets": {
+                  "edges": [
+                    {
+                      "node": {
+                        "target": {
+                          "value": "1:100001"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "import_targets": {
+              "edges": [
+                {
+                  "node": {
+                    "target": {
+                      "value": "1:100001"
+                    }
+                  }
+                }
+              ]
+            },
+            "export_targets": {
+              "edges": [
+                {
+                  "node": {
+                    "target": {
+                      "value": "1:100001"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
