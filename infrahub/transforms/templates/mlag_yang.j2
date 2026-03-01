@@ -1,0 +1,90 @@
+{#
+  mlag_yang.j2 — Produce a JSON object with the MLAG configuration payload
+  for a single device, targeting Arista-native YANG paths.
+
+  Input: GraphQL response from mlag_intent query.
+  Returns an empty array [] if the device has no MLAG peer config (e.g. spines).
+
+  Output structure:
+  {
+    "mlag": {
+      "config": { ... },          # /arista-mlag-augments:mlag/config
+      "dual_primary_detection": { ... },
+      "virtual_mac": "...",
+      "peer_vlan_id": ...,
+      "ibgp_vlan_id": ...,
+      "local_interface_ip": "..."
+    }
+  }
+#}
+{%- set peer_configs = data.InfraMlagPeerConfig.edges -%}
+
+{%- if peer_configs | length == 0 -%}
+[]
+{%- else -%}
+  {%- set cfg = peer_configs[0].node -%}
+
+  {#— Resolve local interface name —#}
+  {%- set local_iface_name = none -%}
+  {%- if cfg.local_interface is defined and cfg.local_interface is not none and cfg.local_interface.node is not none -%}
+    {%- set local_iface_name = cfg.local_interface.node.name.value -%}
+  {%- endif -%}
+
+  {#— Resolve peer-link name —#}
+  {%- set peer_link_name = none -%}
+  {%- if cfg.peer_link is defined and cfg.peer_link is not none and cfg.peer_link.node is not none -%}
+    {%- set peer_link_name = cfg.peer_link.node.name.value -%}
+  {%- endif -%}
+
+  {#— Resolve MLAG domain attributes —#}
+  {%- set domain_id = none -%}
+  {%- set virtual_mac = none -%}
+  {%- set heartbeat_vrf = none -%}
+  {%- set dual_primary_detection = false -%}
+  {%- set dual_primary_delay = none -%}
+  {%- set dual_primary_action = none -%}
+  {%- set peer_vlan_id = none -%}
+  {%- set ibgp_vlan_id = none -%}
+
+  {%- if cfg.mlag_domain is defined and cfg.mlag_domain is not none and cfg.mlag_domain.node is not none -%}
+    {%- set domain = cfg.mlag_domain.node -%}
+    {%- set domain_id = domain.domain_id.value -%}
+    {%- set virtual_mac = domain.virtual_mac.value | default(none) -%}
+    {%- set heartbeat_vrf = domain.heartbeat_vrf.value | default("mgmt") -%}
+    {%- set dual_primary_detection = domain.dual_primary_detection.value | default(false) -%}
+    {%- set dual_primary_delay = domain.dual_primary_delay.value | default(none) -%}
+    {%- set dual_primary_action = domain.dual_primary_action.value | default(none) -%}
+
+    {%- if domain.peer_vlan is defined and domain.peer_vlan is not none and domain.peer_vlan.node is not none -%}
+      {%- set peer_vlan_id = domain.peer_vlan.node.vlan_id.value -%}
+    {%- endif -%}
+
+    {%- if domain.ibgp_vlan is defined and domain.ibgp_vlan is not none and domain.ibgp_vlan.node is not none -%}
+      {%- set ibgp_vlan_id = domain.ibgp_vlan.node.vlan_id.value -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- set result = {
+    "mlag": {
+      "config": {
+        "domain-id": domain_id,
+        "peer-link": peer_link_name,
+        "local-interface": local_iface_name,
+        "peer-address": cfg.peer_address.value,
+        "shutdown": false
+      },
+      "dual_primary_detection": {
+        "enabled": dual_primary_detection,
+        "delay": dual_primary_delay,
+        "action": dual_primary_action,
+        "heartbeat_peer_ip": cfg.heartbeat_peer_ip.value,
+        "heartbeat_vrf": heartbeat_vrf
+      },
+      "virtual_mac": virtual_mac,
+      "peer_vlan_id": peer_vlan_id,
+      "ibgp_vlan_id": ibgp_vlan_id,
+      "local_interface_ip": cfg.local_interface_ip.value
+    }
+  } -%}
+{{ result | tojson(indent=2) }}
+{%- endif -%}

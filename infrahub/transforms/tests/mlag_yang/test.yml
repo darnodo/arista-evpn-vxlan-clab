@@ -1,0 +1,21 @@
+---
+version: "1.0"
+infrahub_tests:
+  - resource: Jinja2Transform
+    resource_name: mlag_yang_transform
+    tests:
+      - name: smoke_check
+        spec:
+          kind: jinja2-transform-smoke
+      - name: render_leaf1
+        spec:
+          kind: jinja2-transform-unit-render
+          directory: infrahub/transforms/tests/mlag_yang/leaf1
+          input: input.json
+          output: output.json
+      - name: render_spine1
+        spec:
+          kind: jinja2-transform-unit-render
+          directory: infrahub/transforms/tests/mlag_yang/spine1
+          input: input.json
+          output: output.json

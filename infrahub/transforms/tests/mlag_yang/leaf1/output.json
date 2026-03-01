@@ -1,0 +1,22 @@
+{
+  "mlag": {
+    "config": {
+      "domain-id": "leafs-1-2",
+      "peer-link": "Port-Channel999",
+      "local-interface": "Vlan4090",
+      "peer-address": "10.0.199.255",
+      "shutdown": false
+    },
+    "dual_primary_detection": {
+      "enabled": true,
+      "delay": 10,
+      "action": "errdisable",
+      "heartbeat_peer_ip": "172.16.0.50",
+      "heartbeat_vrf": "mgmt"
+    },
+    "virtual_mac": "c001.cafe.babe",
+    "peer_vlan_id": 4090,
+    "ibgp_vlan_id": 4091,
+    "local_interface_ip": "10.0.199.254/31"
+  }
+}

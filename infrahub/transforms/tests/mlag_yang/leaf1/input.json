@@ -1,0 +1,96 @@
+{
+  "data": {
+    "InfraMlagPeerConfig": {
+      "edges": [
+        {
+          "node": {
+            "local_interface_ip": {
+              "value": "10.0.199.254/31"
+            },
+            "peer_address": {
+              "value": "10.0.199.255"
+            },
+            "heartbeat_peer_ip": {
+              "value": "172.16.0.50"
+            },
+            "device": {
+              "node": {
+                "name": {
+                  "value": "leaf1"
+                }
+              }
+            },
+            "mlag_domain": {
+              "node": {
+                "domain_id": {
+                  "value": "leafs-1-2"
+                },
+                "virtual_mac": {
+                  "value": "c001.cafe.babe"
+                },
+                "heartbeat_vrf": {
+                  "value": "mgmt"
+                },
+                "dual_primary_detection": {
+                  "value": true
+                },
+                "dual_primary_delay": {
+                  "value": 10
+                },
+                "dual_primary_action": {
+                  "value": "errdisable"
+                },
+                "devices": {
+                  "edges": [
+                    {
+                      "node": {
+                        "name": {
+                          "value": "leaf1"
+                        }
+                      }
+                    },
+                    {
+                      "node": {
+                        "name": {
+                          "value": "leaf2"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "peer_vlan": {
+                  "node": {
+                    "vlan_id": {
+                      "value": 4090
+                    }
+                  }
+                },
+                "ibgp_vlan": {
+                  "node": {
+                    "vlan_id": {
+                      "value": 4091
+                    }
+                  }
+                }
+              }
+            },
+            "local_interface": {
+              "node": {
+                "name": {
+                  "value": "Vlan4090"
+                }
+              }
+            },
+            "peer_link": {
+              "node": {
+                "name": {
+                  "value": "Port-Channel999"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,53 @@
+query MlagIntent($device_name: String!) {
+  InfraMlagPeerConfig(device__name__value: $device_name) {
+    edges {
+      node {
+        local_interface_ip { value }
+        peer_address { value }
+        heartbeat_peer_ip { value }
+        device {
+          node {
+            name { value }
+          }
+        }
+        mlag_domain {
+          node {
+            domain_id { value }
+            virtual_mac { value }
+            heartbeat_vrf { value }
+            dual_primary_detection { value }
+            dual_primary_delay { value }
+            dual_primary_action { value }
+            devices {
+              edges {
+                node {
+                  name { value }
+                }
+              }
+            }
+            peer_vlan {
+              node {
+                vlan_id { value }
+              }
+            }
+            ibgp_vlan {
+              node {
+                vlan_id { value }
+              }
+            }
+          }
+        }
+        local_interface {
+          node {
+            name { value }
+          }
+        }
+        peer_link {
+          node {
+            name { value }
+          }
+        }
+      }
+    }
+  }
+}
