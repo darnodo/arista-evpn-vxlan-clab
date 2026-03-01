@@ -24,6 +24,8 @@ queries:
     file_path: infrahub/transforms/queries/interface_intent.gql
   - name: vxlan_intent
     file_path: infrahub/transforms/queries/vxlan_intent.gql
+  - name: vrf_intent
+    file_path: infrahub/transforms/queries/vrf_intent.gql
 
 jinja2_transforms:
   - name: vlan_yang_transform
@@ -38,3 +40,7 @@ jinja2_transforms:
     description: "Generate VXLAN/VTEP configuration payload from Infrahub intent"
     query: vxlan_intent
     template_path: infrahub/transforms/templates/vxlan_yang.j2
+  - name: vrf_yang_transform
+    description: "Generate VRF/L3VNI configuration payload from Infrahub intent"
+    query: vrf_intent
+    template_path: infrahub/transforms/templates/vrf_yang.j2

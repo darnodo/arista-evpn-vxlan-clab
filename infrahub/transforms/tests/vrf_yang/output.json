@@ -1,0 +1,15 @@
+[
+  {
+    "description": "VRF gold - L3 VXLAN with symmetric IRB",
+    "export_targets": [
+      "1:100001"
+    ],
+    "import_targets": [
+      "1:100001"
+    ],
+    "l3vni": 100001,
+    "redistribute_connected": true,
+    "route_distinguisher": "10.0.250.13:1",
+    "vrf_name": "gold"
+  }
+]
