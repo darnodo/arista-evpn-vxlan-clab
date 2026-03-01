@@ -512,6 +512,7 @@ spec:
     # Spine1 address families
     # ============================================================
     - bgp_config: ["spine1"]
+      device: ["spine1"]
       local_identifier: "spine1__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -527,6 +528,7 @@ spec:
       networks:
         - ["10.0.250.1/32"]
     - bgp_config: ["spine1"]
+      device: ["spine1"]
       local_identifier: "spine1__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -536,6 +538,7 @@ spec:
     # Spine2 address families
     # ============================================================
     - bgp_config: ["spine2"]
+      device: ["spine2"]
       local_identifier: "spine2__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -551,6 +554,7 @@ spec:
       networks:
         - ["10.0.250.2/32"]
     - bgp_config: ["spine2"]
+      device: ["spine2"]
       local_identifier: "spine2__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -560,6 +564,7 @@ spec:
     # Leaf1 address families
     # ============================================================
     - bgp_config: ["leaf1"]
+      device: ["leaf1"]
       local_identifier: "leaf1__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -570,6 +575,7 @@ spec:
         - ["10.0.250.11/32"]
         - ["10.0.255.11/32"]
     - bgp_config: ["leaf1"]
+      device: ["leaf1"]
       local_identifier: "leaf1__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -579,6 +585,7 @@ spec:
     # Leaf2 address families
     # ============================================================
     - bgp_config: ["leaf2"]
+      device: ["leaf2"]
       local_identifier: "leaf2__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -589,6 +596,7 @@ spec:
         - ["10.0.250.12/32"]
         - ["10.0.255.11/32"]
     - bgp_config: ["leaf2"]
+      device: ["leaf2"]
       local_identifier: "leaf2__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -598,6 +606,7 @@ spec:
     # Leaf3 address families
     # ============================================================
     - bgp_config: ["leaf3"]
+      device: ["leaf3"]
       local_identifier: "leaf3__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -608,6 +617,7 @@ spec:
         - ["10.0.250.13/32"]
         - ["10.0.255.12/32"]
     - bgp_config: ["leaf3"]
+      device: ["leaf3"]
       local_identifier: "leaf3__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -617,6 +627,7 @@ spec:
     # Leaf4 address families
     # ============================================================
     - bgp_config: ["leaf4"]
+      device: ["leaf4"]
       local_identifier: "leaf4__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -627,6 +638,7 @@ spec:
         - ["10.0.250.14/32"]
         - ["10.0.255.12/32"]
     - bgp_config: ["leaf4"]
+      device: ["leaf4"]
       local_identifier: "leaf4__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -636,6 +648,7 @@ spec:
     # Leaf5 address families
     # ============================================================
     - bgp_config: ["leaf5"]
+      device: ["leaf5"]
       local_identifier: "leaf5__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -646,6 +659,7 @@ spec:
         - ["10.0.250.15/32"]
         - ["10.0.255.13/32"]
     - bgp_config: ["leaf5"]
+      device: ["leaf5"]
       local_identifier: "leaf5__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -655,6 +669,7 @@ spec:
     # Leaf6 address families
     # ============================================================
     - bgp_config: ["leaf6"]
+      device: ["leaf6"]
       local_identifier: "leaf6__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -665,6 +680,7 @@ spec:
         - ["10.0.250.16/32"]
         - ["10.0.255.13/32"]
     - bgp_config: ["leaf6"]
+      device: ["leaf6"]
       local_identifier: "leaf6__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -674,6 +690,7 @@ spec:
     # Leaf7 address families
     # ============================================================
     - bgp_config: ["leaf7"]
+      device: ["leaf7"]
       local_identifier: "leaf7__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -684,6 +701,7 @@ spec:
         - ["10.0.250.17/32"]
         - ["10.0.255.14/32"]
     - bgp_config: ["leaf7"]
+      device: ["leaf7"]
       local_identifier: "leaf7__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -691,6 +709,7 @@ spec:
         - ["leaf7__evpn"]
     # Leaf7 IPv4 unicast in VRF gold (border peering)
     - bgp_config: ["leaf7"]
+      device: ["leaf7"]
       local_identifier: "leaf7__vrf_gold__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -701,6 +720,7 @@ spec:
     # Leaf8 address families
     # ============================================================
     - bgp_config: ["leaf8"]
+      device: ["leaf8"]
       local_identifier: "leaf8__ipv4_unicast"
       afi: ipv4
       safi: unicast
@@ -711,6 +731,7 @@ spec:
         - ["10.0.250.18/32"]
         - ["10.0.255.14/32"]
     - bgp_config: ["leaf8"]
+      device: ["leaf8"]
       local_identifier: "leaf8__evpn_unicast"
       afi: evpn
       safi: unicast
@@ -718,6 +739,7 @@ spec:
         - ["leaf8__evpn"]
     # Leaf8 IPv4 unicast in VRF gold (border peering)
     - bgp_config: ["leaf8"]
+      device: ["leaf8"]
       local_identifier: "leaf8__vrf_gold__ipv4_unicast"
       afi: ipv4
       safi: unicast

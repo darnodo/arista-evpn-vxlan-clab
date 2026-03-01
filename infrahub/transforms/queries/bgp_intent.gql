@@ -68,7 +68,7 @@ query BgpIntent($device_name: String!) {
       }
     }
   }
-  InfraBGPAddressFamily(bgp_config__device__name__value: $device_name) {
+  InfraBGPAddressFamily(device__name__value: $device_name) {
     edges {
       node {
         afi { value }
