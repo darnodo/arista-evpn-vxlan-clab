@@ -4,18 +4,7 @@ schemas:
 menus:
   - infrahub/menus
 objects:
-  - infrahub/objects/01-foundation.yml
-  - infrahub/objects/02-fabric.yml
-  - infrahub/objects/03-devices.yml
-  - infrahub/objects/04-interfaces.yml
-  - infrahub/objects/05-ipam.yml
-  - infrahub/objects/06-vlans-vxlan.yml
-  - infrahub/objects/07-interface-vlans.yml
-  - infrahub/objects/08-ipam-vlans.yml
-  - infrahub/objects/09-bgp.yml
-  - infrahub/objects/10-bgp-sessions.yml
-  - infrahub/objects/11-vrfs.yml
-  - infrahub/objects/12-mlag.yml
+  - infrahub/objects
 
 queries:
   - name: vlan_intent
