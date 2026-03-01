@@ -1,0 +1,194 @@
+{#
+  bgp_yang.j2 — Produce a JSON object with the complete BGP configuration
+  for a single device.
+
+  Input: GraphQL response from bgp_intent query.
+  Returns [] if the device has no BGP router config.
+
+  Output structure:
+  {
+    "bgp": {
+      "global": { asn, router_id, flags, distance, ecmp },
+      "peer_groups": [ ... ],
+      "neighbors": [ ... global-VRF sessions ... ],
+      "address_families": [ ... global-VRF AFs ... ],
+      "vrf_neighbors": [ ... VRF-scoped sessions ... ],
+      "vrf_address_families": [ ... VRF-scoped AFs ... ]
+    }
+  }
+#}
+{%- set router_configs = data.InfraBGPRouterConfig.edges -%}
+{%- set af_edges = data.InfraBGPAddressFamily.edges -%}
+
+{%- if router_configs | length == 0 -%}
+[]
+{%- else -%}
+  {%- set rc = router_configs[0].node -%}
+
+  {#— Global section —#}
+  {%- set asn = none -%}
+  {%- if rc.local_asn is defined and rc.local_asn is not none and rc.local_asn.node is not none -%}
+    {%- set asn = rc.local_asn.node.asn.value -%}
+  {%- endif -%}
+
+  {#— Build peer_groups list —#}
+  {%- set peer_groups = [] -%}
+  {%- for pg_edge in rc.peer_groups.edges -%}
+    {%- set pg = pg_edge.node -%}
+    {%- set pg_remote_asn = none -%}
+    {%- if pg.remote_asn is defined and pg.remote_asn is not none and pg.remote_asn.node is not none -%}
+      {%- set pg_remote_asn = pg.remote_asn.node.asn.value -%}
+    {%- endif -%}
+    {%- set pg_send_community = none -%}
+    {%- if pg.send_community is defined and pg.send_community is not none and pg.send_community.value is not none and pg.send_community.value != "none" -%}
+      {%- set pg_send_community = pg.send_community.value -%}
+    {%- endif -%}
+    {%- set pg_update_source = none -%}
+    {%- if pg.update_source is defined and pg.update_source is not none and pg.update_source.value is not none -%}
+      {%- set pg_update_source = pg.update_source.value -%}
+    {%- endif -%}
+    {%- set pg_ebgp_multihop = none -%}
+    {%- if pg.ebgp_multihop is defined and pg.ebgp_multihop is not none and pg.ebgp_multihop.value is not none -%}
+      {%- set pg_ebgp_multihop = pg.ebgp_multihop.value -%}
+    {%- endif -%}
+    {%- set pg_max_routes = none -%}
+    {%- if pg.maximum_routes is defined and pg.maximum_routes is not none and pg.maximum_routes.value is not none -%}
+      {%- set pg_max_routes = pg.maximum_routes.value -%}
+    {%- endif -%}
+    {%- set _ = peer_groups.append({
+      "name": pg.name.value,
+      "type": pg.peer_group_type.value,
+      "remote_asn": pg_remote_asn,
+      "update_source": pg_update_source,
+      "ebgp_multihop": pg_ebgp_multihop,
+      "send_community": pg_send_community,
+      "next_hop_self": pg.next_hop_self.value,
+      "next_hop_unchanged": pg.next_hop_unchanged.value,
+      "maximum_routes": pg_max_routes,
+      "maximum_routes_warning_only": pg.maximum_routes_warning_only.value
+    }) -%}
+  {%- endfor -%}
+
+  {#— Split sessions into global and VRF-scoped —#}
+  {%- set neighbors = [] -%}
+  {%- set vrf_neighbors = [] -%}
+  {%- for sess_edge in rc.sessions.edges -%}
+    {%- set sess = sess_edge.node -%}
+
+    {%- set sess_peer_group = none -%}
+    {%- if sess.peer_group is defined and sess.peer_group is not none and sess.peer_group.node is not none -%}
+      {%- set sess_peer_group = sess.peer_group.node.name.value -%}
+    {%- endif -%}
+
+    {%- set sess_remote_asn = none -%}
+    {%- if sess.remote_asn is defined and sess.remote_asn is not none and sess.remote_asn.node is not none -%}
+      {%- set sess_remote_asn = sess.remote_asn.node.asn.value -%}
+    {%- endif -%}
+
+    {%- set sess_vrf = none -%}
+    {%- if sess.vrf is defined and sess.vrf is not none and sess.vrf.node is not none -%}
+      {%- set sess_vrf = sess.vrf.node.name.value -%}
+    {%- endif -%}
+
+    {%- set sess_obj = {
+      "peer_address": sess.peer_address.value,
+      "description": sess.description.value | default(none),
+      "enabled": sess.enabled.value,
+      "peer_group": sess_peer_group,
+      "remote_asn": sess_remote_asn
+    } -%}
+
+    {%- if sess_vrf is not none -%}
+      {%- set vrf_sess_obj = {
+        "peer_address": sess.peer_address.value,
+        "description": sess.description.value | default(none),
+        "enabled": sess.enabled.value,
+        "peer_group": sess_peer_group,
+        "remote_asn": sess_remote_asn,
+        "vrf": sess_vrf
+      } -%}
+      {%- set _ = vrf_neighbors.append(vrf_sess_obj) -%}
+    {%- else -%}
+      {%- set _ = neighbors.append(sess_obj) -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {#— Split address families into global and VRF-scoped —#}
+  {%- set address_families = [] -%}
+  {%- set vrf_address_families = [] -%}
+  {%- for af_edge in af_edges -%}
+    {%- set af = af_edge.node -%}
+
+    {%- set af_vrf = none -%}
+    {%- if af.vrf is defined and af.vrf is not none and af.vrf.node is not none -%}
+      {%- set af_vrf = af.vrf.node.name.value -%}
+    {%- endif -%}
+
+    {%- set af_active_pgs = [] -%}
+    {%- for pg_edge in af.active_peer_groups.edges -%}
+      {%- set _ = af_active_pgs.append(pg_edge.node.name.value) -%}
+    {%- endfor -%}
+
+    {%- set af_active_sess = [] -%}
+    {%- if af.active_sessions is defined and af.active_sessions is not none -%}
+      {%- for s_edge in af.active_sessions.edges -%}
+        {%- set _ = af_active_sess.append(s_edge.node.peer_address.value) -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- set af_networks = [] -%}
+    {%- if af.networks is defined and af.networks is not none -%}
+      {%- for net_edge in af.networks.edges -%}
+        {%- set _ = af_networks.append(net_edge.node.address.value) -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- set af_obj = {
+      "afi": af.afi.value,
+      "safi": af.safi.value,
+      "active_peer_groups": af_active_pgs,
+      "active_sessions": af_active_sess,
+      "networks": af_networks
+    } -%}
+
+    {%- if af_vrf is not none -%}
+      {%- set vrf_af_obj = {
+        "afi": af.afi.value,
+        "safi": af.safi.value,
+        "vrf": af_vrf,
+        "active_peer_groups": af_active_pgs,
+        "active_sessions": af_active_sess,
+        "networks": af_networks
+      } -%}
+      {%- set _ = vrf_address_families.append(vrf_af_obj) -%}
+    {%- else -%}
+      {%- set _ = address_families.append(af_obj) -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- set result = {
+    "bgp": {
+      "global": {
+        "asn": asn,
+        "router_id": rc.router_id.value,
+        "default_ipv4_unicast": rc.default_ipv4_unicast.value,
+        "log_neighbor_changes": rc.log_neighbor_changes.value,
+        "distance": {
+          "ebgp": rc.ebgp_distance.value,
+          "ibgp": rc.ibgp_distance.value,
+          "local": rc.local_distance.value
+        },
+        "ecmp": {
+          "max_paths": rc.ecmp_max_paths.value,
+          "max_ecmp": rc.ecmp_max_ecmp.value
+        }
+      },
+      "peer_groups": peer_groups,
+      "neighbors": neighbors,
+      "address_families": address_families,
+      "vrf_neighbors": vrf_neighbors,
+      "vrf_address_families": vrf_address_families
+    }
+  } -%}
+{{ result | tojson(indent=2) }}
+{%- endif -%}

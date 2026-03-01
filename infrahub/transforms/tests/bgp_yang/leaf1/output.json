@@ -1,0 +1,120 @@
+{
+  "bgp": {
+    "global": {
+      "asn": 65001,
+      "router_id": "10.0.250.11",
+      "default_ipv4_unicast": false,
+      "log_neighbor_changes": true,
+      "distance": {
+        "ebgp": 20,
+        "ibgp": 200,
+        "local": 200
+      },
+      "ecmp": {
+        "max_paths": 4,
+        "max_ecmp": 64
+      }
+    },
+    "peer_groups": [
+      {
+        "name": "underlay",
+        "type": "underlay",
+        "remote_asn": 65000,
+        "update_source": null,
+        "ebgp_multihop": null,
+        "send_community": null,
+        "next_hop_self": false,
+        "next_hop_unchanged": false,
+        "maximum_routes": 12000,
+        "maximum_routes_warning_only": true
+      },
+      {
+        "name": "underlay_ibgp",
+        "type": "underlay_ibgp",
+        "remote_asn": 65001,
+        "update_source": null,
+        "ebgp_multihop": null,
+        "send_community": null,
+        "next_hop_self": true,
+        "next_hop_unchanged": false,
+        "maximum_routes": 12000,
+        "maximum_routes_warning_only": true
+      },
+      {
+        "name": "evpn",
+        "type": "evpn",
+        "remote_asn": 65000,
+        "update_source": "Loopback0",
+        "ebgp_multihop": 3,
+        "send_community": "extended",
+        "next_hop_self": false,
+        "next_hop_unchanged": false,
+        "maximum_routes": 12000,
+        "maximum_routes_warning_only": true
+      }
+    ],
+    "neighbors": [
+      {
+        "peer_address": "10.0.1.0",
+        "description": "underlay to spine1",
+        "enabled": true,
+        "peer_group": "underlay",
+        "remote_asn": null
+      },
+      {
+        "peer_address": "10.0.2.0",
+        "description": "underlay to spine2",
+        "enabled": true,
+        "peer_group": "underlay",
+        "remote_asn": null
+      },
+      {
+        "peer_address": "10.0.3.1",
+        "description": "iBGP to leaf2",
+        "enabled": true,
+        "peer_group": "underlay_ibgp",
+        "remote_asn": null
+      },
+      {
+        "peer_address": "10.0.250.1",
+        "description": "EVPN to spine1",
+        "enabled": true,
+        "peer_group": "evpn",
+        "remote_asn": null
+      },
+      {
+        "peer_address": "10.0.250.2",
+        "description": "EVPN to spine2",
+        "enabled": true,
+        "peer_group": "evpn",
+        "remote_asn": null
+      }
+    ],
+    "address_families": [
+      {
+        "afi": "ipv4",
+        "safi": "unicast",
+        "active_peer_groups": [
+          "underlay",
+          "underlay_ibgp"
+        ],
+        "active_sessions": [],
+        "networks": [
+          "10.0.250.11/32",
+          "10.0.255.11/32"
+        ]
+      },
+      {
+        "afi": "evpn",
+        "safi": "unicast",
+        "active_peer_groups": [
+          "evpn"
+        ],
+        "active_sessions": [],
+        "networks": []
+      }
+    ],
+    "vrf_neighbors": [],
+    "vrf_address_families": []
+  }
+}

@@ -264,6 +264,12 @@ nodes:
             label: Multicast
         description: Sub Address Family Identifier
     relationships:
+      - name: device
+        peer: InfraDevice
+        cardinality: one
+        kind: Attribute
+        optional: false
+        description: Device this address family belongs to (denormalized for query filtering)
       - name: bgp_config
         peer: InfraBGPRouterConfig
         cardinality: one
