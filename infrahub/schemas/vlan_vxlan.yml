@@ -174,8 +174,15 @@ nodes:
     label: VLAN-VNI Mapping
     icon: mdi--swap-horizontal
     include_in_menu: false
+    uniqueness_constraints:
+      - ["local_identifier__value"]
+    human_friendly_id:
+      - local_identifier__value
     display_label: "{{ description__value }}"
     attributes:
+      - name: local_identifier
+        kind: Text
+        description: "Unique identifier combining device name, VLAN ID and VNI (e.g. leaf1__vlan40__vni110040)"
       - name: description
         kind: Text
         optional: true
@@ -202,8 +209,15 @@ nodes:
     label: EVPN Instance
     icon: mdi--cloud-sync
     include_in_menu: false
+    uniqueness_constraints:
+      - ["local_identifier__value"]
+    human_friendly_id:
+      - local_identifier__value
     display_label: "{{ route_distinguisher__value }}"
     attributes:
+      - name: local_identifier
+        kind: Text
+        description: "Unique identifier combining device name and VLAN ID (e.g. leaf1__vlan40)"
       - name: route_distinguisher
         kind: Text
         description: "Route Distinguisher (format: ASN:VNI or IP:VNI)"

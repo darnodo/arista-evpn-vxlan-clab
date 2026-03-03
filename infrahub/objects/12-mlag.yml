@@ -132,3 +132,49 @@ spec:
       heartbeat_peer_ip: "172.16.0.31"
       local_interface: ["leaf8", "Vlan4090"]
       peer_link: ["leaf8", "Port-Channel999"]
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: InfraMlagInterface
+  data:
+    # MLAG interface 1 on leaf1/leaf2 pair (Port-Channel1 → host1)
+    - local_identifier: mlag1__leaf1-leaf2
+      mlag_id: 1
+      description: "MLAG interface 1 for leaf1/leaf2 pair (host1)"
+      lacp_fallback_timeout: 5
+      lacp_fallback_individual: true
+      mlag_domain: ["leafs-1-2"]
+      lag_interfaces:
+        - ["leaf1", "Port-Channel1"]
+        - ["leaf2", "Port-Channel1"]
+    # MLAG interface 1 on leaf3/leaf4 pair (Port-Channel1 → host2)
+    - local_identifier: mlag1__leaf3-leaf4
+      mlag_id: 1
+      description: "MLAG interface 1 for leaf3/leaf4 pair (host2)"
+      lacp_fallback_timeout: 5
+      lacp_fallback_individual: true
+      mlag_domain: ["leafs-3-4"]
+      lag_interfaces:
+        - ["leaf3", "Port-Channel1"]
+        - ["leaf4", "Port-Channel1"]
+    # MLAG interface 1 on leaf5/leaf6 pair (Port-Channel1 → host3)
+    - local_identifier: mlag1__leaf5-leaf6
+      mlag_id: 1
+      description: "MLAG interface 1 for leaf5/leaf6 pair (host3)"
+      lacp_fallback_timeout: 5
+      lacp_fallback_individual: true
+      mlag_domain: ["leafs-5-6"]
+      lag_interfaces:
+        - ["leaf5", "Port-Channel1"]
+        - ["leaf6", "Port-Channel1"]
+    # MLAG interface 1 on leaf7/leaf8 pair (Port-Channel1 → host4)
+    - local_identifier: mlag1__leaf7-leaf8
+      mlag_id: 1
+      description: "MLAG interface 1 for leaf7/leaf8 pair (host4)"
+      lacp_fallback_timeout: 5
+      lacp_fallback_individual: true
+      mlag_domain: ["leafs-7-8"]
+      lag_interfaces:
+        - ["leaf7", "Port-Channel1"]
+        - ["leaf8", "Port-Channel1"]

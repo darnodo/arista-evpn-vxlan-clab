@@ -74,8 +74,15 @@ nodes:
     label: Underlay Link
     icon: mdi--cable-data
     include_in_menu: false
+    uniqueness_constraints:
+      - ["local_identifier__value"]
+    human_friendly_id:
+      - local_identifier__value
     display_label: "{{ description__value }}"
     attributes:
+      - name: local_identifier
+        kind: Text
+        description: "Unique identifier combining local and remote device/interface (e.g. spine1-eth1__leaf1-eth11)"
       - name: description
         kind: Text
         description: Link description (e.g., spine1:eth1 <-> leaf1:eth11)
