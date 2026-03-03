@@ -116,19 +116,23 @@ spec:
   kind: InfraVlanVniMapping
   data:
     # VLAN 40 <-> VNI 110040 on leaf1/2/5/6 (L2 VXLAN leafs)
-    - vtep: ["leaf1"]
+    - local_identifier: leaf1__vlan40__vni110040
+      vtep: ["leaf1"]
       vlan: ["40"]
       vni: ["110040"]
       description: "VLAN 40 <-> VNI 110040"
-    - vtep: ["leaf2"]
+    - local_identifier: leaf2__vlan40__vni110040
+      vtep: ["leaf2"]
       vlan: ["40"]
       vni: ["110040"]
       description: "VLAN 40 <-> VNI 110040"
-    - vtep: ["leaf5"]
+    - local_identifier: leaf5__vlan40__vni110040
+      vtep: ["leaf5"]
       vlan: ["40"]
       vni: ["110040"]
       description: "VLAN 40 <-> VNI 110040"
-    - vtep: ["leaf6"]
+    - local_identifier: leaf6__vlan40__vni110040
+      vtep: ["leaf6"]
       vlan: ["40"]
       vni: ["110040"]
       description: "VLAN 40 <-> VNI 110040"
@@ -140,26 +144,30 @@ spec:
   data:
     # EVPN instance for VLAN 40 on L2 VXLAN leafs
     # leaf1: rd 65001:110040, rt both 40:110040
-    - device: ["leaf1"]
+    - local_identifier: leaf1__vlan40
+      device: ["leaf1"]
       vlan: ["40"]
       route_distinguisher: "65001:110040"
       route_target_import: "40:110040"
       route_target_export: "40:110040"
       redistribute_learned: true
-    - device: ["leaf2"]
+    - local_identifier: leaf2__vlan40
+      device: ["leaf2"]
       vlan: ["40"]
       route_distinguisher: "65001:110040"
       route_target_import: "40:110040"
       route_target_export: "40:110040"
       redistribute_learned: true
     # leaf5/6: rd 65003:110040, rt both 40:110040
-    - device: ["leaf5"]
+    - local_identifier: leaf5__vlan40
+      device: ["leaf5"]
       vlan: ["40"]
       route_distinguisher: "65003:110040"
       route_target_import: "40:110040"
       route_target_export: "40:110040"
       redistribute_learned: true
-    - device: ["leaf6"]
+    - local_identifier: leaf6__vlan40
+      device: ["leaf6"]
       vlan: ["40"]
       route_distinguisher: "65003:110040"
       route_target_import: "40:110040"

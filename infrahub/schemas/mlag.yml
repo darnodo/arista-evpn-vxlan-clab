@@ -114,8 +114,15 @@ nodes:
     label: MLAG Interface
     icon: mdi--ethernet-cable
     include_in_menu: false
+    uniqueness_constraints:
+      - ["local_identifier__value"]
+    human_friendly_id:
+      - local_identifier__value
     display_label: "{{ mlag_id__value }}"
     attributes:
+      - name: local_identifier
+        kind: Text
+        description: "Unique identifier combining mlag_id and peer devices (e.g. mlag1__leaf1-leaf2)"
       - name: mlag_id
         kind: Number
         description: MLAG interface ID
