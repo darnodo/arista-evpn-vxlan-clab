@@ -1,21 +1,22 @@
 {
   "freeTextAnnotations": [],
   "freeShapeAnnotations": [],
+  "trafficRateAnnotations": [],
   "groupStyleAnnotations": [],
   "networkNodeAnnotations": [],
   "nodeAnnotations": [
     {
       "id": "spine1",
       "position": {
-        "x": 340,
-        "y": 180
+        "x": 260,
+        "y": 160
       }
     },
     {
       "id": "spine2",
       "position": {
-        "x": 660,
-        "y": 180
+        "x": 740,
+        "y": 160
       }
     },
     {
@@ -78,28 +79,56 @@
       "id": "host1",
       "position": {
         "x": 20,
-        "y": 500
+        "y": 680
       }
     },
     {
       "id": "host2",
       "position": {
         "x": 340,
-        "y": 500
+        "y": 680
       }
     },
     {
       "id": "host3",
       "position": {
         "x": 660,
-        "y": 500
+        "y": 680
       }
     },
     {
       "id": "host4",
       "position": {
         "x": 1000,
-        "y": 500
+        "y": 680
+      }
+    },
+    {
+      "id": "access4",
+      "position": {
+        "x": 1000,
+        "y": 540
+      }
+    },
+    {
+      "id": "access3",
+      "position": {
+        "x": 660,
+        "y": 520
+      }
+    },
+    {
+      "id": "access2",
+      "position": {
+        "x": 340,
+        "y": 520
+      }
+    },
+    {
+      "id": "access1",
+      "position": {
+        "x": 20,
+        "y": 520
       }
     }
   ],
