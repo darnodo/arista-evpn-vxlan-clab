@@ -4,17 +4,18 @@ A production-ready Arista BGP EVPN-VXLAN data center fabric topology using Conta
 
 ## 🎯 Overview
 
-This lab demonstrates a complete EVPN-VXLAN data center fabric with:
+This lab demonstrates a complete 3-tier EVPN-VXLAN data center fabric with:
 
 - **2 Spine switches** (BGP Route Reflectors)
 - **8 Leaf switches** forming 4 VTEPs (MLAG pairs)
+- **4 Access switches** (L2-only, dual-homed to leaf MLAG pairs)
 - **BGP EVPN overlay** with L2/L3 VXLAN
 - **MLAG configuration** for high availability
 - **Test hosts** for validation
 
 ## 📐 Topology
 
-![Topology](assets/topology.svg)
+![Topology](assets/arista-evpn-fabric.svg)
 
 ## 🚀 Quick Start
 
@@ -58,6 +59,19 @@ docker exec -it clab-arista-evpn-fabric-leaf1 Cli
 - **VTEP3 (Leaf5/6)**: AS 65003
 - **VTEP4 (Leaf7/8)**: AS 65004
 
+### Access Switches
+
+| Access Switch | Uplink Leaf Pair | VLAN(s) | Connected Host |
+| ------------- | ---------------- | ------- | -------------- |
+| access1       | Leaf1/2 (VTEP1)  | 40      | host1          |
+| access2       | Leaf3/4 (VTEP2)  | 34      | host2          |
+| access3       | Leaf5/6 (VTEP3)  | 40      | host3          |
+| access4       | Leaf7/8 (VTEP4)  | 78      | host4          |
+
+- L2-only switches with LACP uplinks (Port-Channel 10) to leaf MLAG pairs
+- Host-facing downlinks via LACP (Port-Channel 1)
+- STP mode MSTP with edge-port BPDU guard
+
 ### IP Addressing
 
 #### Management Network
@@ -65,7 +79,8 @@ docker exec -it clab-arista-evpn-fabric-leaf1 Cli
 - Subnet: `172.16.0.0/24`
 - Spine1: `172.16.0.1`
 - Spine2: `172.16.0.2`
-- Leaf1-8: `172.16.0.25-32`
+- Leaf1: `172.16.0.25`, Leaf2: `172.16.0.50`, Leaf3-8: `172.16.0.27-32`
+- Access1-4: `172.16.0.41-44`
 
 #### Loopback Interfaces
 
@@ -99,7 +114,8 @@ docker exec -it clab-arista-evpn-fabric-leaf1 Cli
 
 - Host1 and Host3 are in VLAN 40 (L2 VXLAN only) and can communicate at Layer 2
 - Host2 and Host4 are in VRF "gold" with different subnets, communicating via EVPN Type-5 routes (L3 VXLAN)
-- All hosts use LACP bonding (802.3ad) with dual-homing to MLAG leaf pairs
+- All hosts use LACP bonding (802.3ad) with dual-homing to access switches
+- Each access switch is dual-homed via LACP (Port-Channel) to a leaf MLAG pair
 
 ### VXLAN Network Identifiers (VNI)
 
@@ -251,17 +267,16 @@ arista-evpn-vxlan-clab/
 ├── TROUBLESHOOTING.md           # Troubleshooting guide
 ├── END_TO_END_TESTING.md        # Testing procedures
 ├── evpn-lab.clab.yml            # ContainerLab topology
+├── assets/
+│   └── arista-evpn-fabric.svg   # Topology diagram
 ├── configs/                     # Device configurations
 │   ├── spine1.cfg
 │   ├── spine2.cfg
-│   ├── leaf1.cfg
-│   ├── leaf2.cfg
-│   ├── leaf3.cfg
-│   ├── leaf4.cfg
-│   ├── leaf5.cfg
-│   ├── leaf6.cfg
-│   ├── leaf7.cfg
-│   └── leaf8.cfg
+│   ├── leaf1.cfg through leaf8.cfg
+│   ├── access1.cfg
+│   ├── access2.cfg
+│   ├── access3.cfg
+│   └── access4.cfg
 └── hosts/                       # Host interface configurations
     ├── README.md
     ├── host1_interfaces
