@@ -11,7 +11,11 @@ topology:
             image: ceos:4.35.0F
 
     nodes:
-        # Spine Switches
+        # =====================================================
+        # DATACENTER FABRIC
+        # =====================================================
+
+        # DC Spine Switches (AS 65000)
         spine1:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.1
@@ -22,7 +26,7 @@ topology:
             mgmt-ipv4: 172.16.0.2
             startup-config: configs/spine2.cfg
 
-        # Leaf Switches - VTEP1 (AS 65001)
+        # DC Leaf Switches - VTEP1 (AS 65001)
         leaf1:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.25
@@ -33,7 +37,7 @@ topology:
             mgmt-ipv4: 172.16.0.50
             startup-config: configs/leaf2.cfg
 
-        # Leaf Switches - VTEP2 (AS 65002)
+        # DC Leaf Switches - VTEP2 (AS 65002)
         leaf3:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.27
@@ -44,7 +48,7 @@ topology:
             mgmt-ipv4: 172.16.0.28
             startup-config: configs/leaf4.cfg
 
-        # Leaf Switches - VTEP3 (AS 65003)
+        # DC Leaf Switches - VTEP3 (AS 65003)
         leaf5:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.29
@@ -55,7 +59,7 @@ topology:
             mgmt-ipv4: 172.16.0.30
             startup-config: configs/leaf6.cfg
 
-        # Leaf Switches - VTEP4 (AS 65004)
+        # DC Leaf Switches - VTEP4 (AS 65004)
         leaf7:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.31
@@ -66,7 +70,18 @@ topology:
             mgmt-ipv4: 172.16.0.32
             startup-config: configs/leaf8.cfg
 
-        # Access Switches - L2 only
+        # DC Border Leafs - MLAG pair (AS 65005)
+        border-leaf-dc1:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.3
+            startup-config: configs/border-leaf-dc1.cfg
+
+        border-leaf-dc2:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.4
+            startup-config: configs/border-leaf-dc2.cfg
+
+        # DC Access Switches - L2 only
         access1:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.41
@@ -87,7 +102,7 @@ topology:
             mgmt-ipv4: 172.16.0.44
             startup-config: configs/access4.cfg
 
-        # Host devices - DUAL-HOMED with LACP bonding to access switches
+        # DC Host devices - dual-homed with LACP bonding
         host1:
             kind: linux
             mgmt-ipv4: 172.16.0.101
@@ -130,6 +145,7 @@ topology:
                 - ip link set bond0.34 up
                 - ip addr add 10.34.34.102/24 dev bond0.34
                 - ip route add 10.78.78.0/24 via 10.34.34.1
+                - ip route add 10.60.0.0/16 via 10.34.34.1
 
         host3:
             kind: linux
@@ -175,9 +191,143 @@ topology:
                 - ip link set bond0.78 up
                 - ip addr add 10.78.78.104/24 dev bond0.78
                 - ip route add 10.34.34.0/24 via 10.78.78.1
+                - ip route add 10.60.0.0/16 via 10.78.78.1
+
+        # =====================================================
+        # CORE L3 (inter-fabric transit)
+        # =====================================================
+
+        # Core routers (AS 65500, iBGP between them)
+        core1:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.10
+            startup-config: configs/core1.cfg
+
+        core2:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.11
+            startup-config: configs/core2.cfg
+
+        # =====================================================
+        # CAMPUS FABRIC
+        # =====================================================
+
+        # Campus Spines (AS 66000)
+        campus-spine1:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.20
+            startup-config: configs/campus-spine1.cfg
+
+        campus-spine2:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.21
+            startup-config: configs/campus-spine2.cfg
+
+        # Campus Border Leafs - MLAG pair (AS 66005)
+        border-leaf-campus1:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.22
+            startup-config: configs/border-leaf-campus1.cfg
+
+        border-leaf-campus2:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.23
+            startup-config: configs/border-leaf-campus2.cfg
+
+        # Campus Leafs - VTEP1 (AS 66001)
+        campus-leaf1:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.51
+            startup-config: configs/campus-leaf1.cfg
+
+        campus-leaf2:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.52
+            startup-config: configs/campus-leaf2.cfg
+
+        # Campus Leafs - VTEP2 (AS 66002)
+        campus-leaf3:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.53
+            startup-config: configs/campus-leaf3.cfg
+
+        campus-leaf4:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.54
+            startup-config: configs/campus-leaf4.cfg
+
+        # Campus Access switches - L2 only
+        campus-access1:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.61
+            startup-config: configs/campus-access1.cfg
+
+        campus-access2:
+            kind: arista_ceos
+            mgmt-ipv4: 172.16.0.62
+            startup-config: configs/campus-access2.cfg
+
+        # Campus Hosts - dual-homed with LACP bonding
+        campus-host1:
+            kind: linux
+            mgmt-ipv4: 172.16.0.105
+            image: ghcr.io/hellt/network-multitool
+            cap-add:
+                - NET_ADMIN
+            exec:
+                - ip link add bond0 type bond mode 802.3ad
+                - ip link set dev bond0 type bond xmit_hash_policy layer3+4
+                - ip link set dev eth1 down
+                - ip link set dev eth2 down
+                - ip link set eth1 master bond0
+                - ip link set eth2 master bond0
+                - ip link set dev eth1 up
+                - ip link set dev eth2 up
+                - ip link set dev bond0 type bond lacp_rate fast
+                - ip link set dev bond0 up
+                - ip link add link bond0 name bond0.50 type vlan id 50
+                - ip link set bond0.50 up
+                - ip addr add 10.50.50.101/24 dev bond0.50
+                - ip link add link bond0 name bond0.60 type vlan id 60
+                - ip link set bond0.60 up
+                - ip addr add 10.60.60.101/24 dev bond0.60
+                - ip route add 10.60.70.0/24 via 10.60.60.1
+                - ip route add 10.34.34.0/24 via 10.60.60.1
+                - ip route add 10.78.78.0/24 via 10.60.60.1
+
+        campus-host2:
+            kind: linux
+            mgmt-ipv4: 172.16.0.106
+            image: ghcr.io/hellt/network-multitool
+            cap-add:
+                - NET_ADMIN
+            exec:
+                - ip link add bond0 type bond mode 802.3ad
+                - ip link set dev bond0 type bond xmit_hash_policy layer3+4
+                - ip link set dev eth1 down
+                - ip link set dev eth2 down
+                - ip link set eth1 master bond0
+                - ip link set eth2 master bond0
+                - ip link set dev eth1 up
+                - ip link set dev eth2 up
+                - ip link set dev bond0 type bond lacp_rate fast
+                - ip link set dev bond0 up
+                - ip link add link bond0 name bond0.50 type vlan id 50
+                - ip link set bond0.50 up
+                - ip addr add 10.50.50.102/24 dev bond0.50
+                - ip link add link bond0 name bond0.70 type vlan id 70
+                - ip link set bond0.70 up
+                - ip addr add 10.60.70.102/24 dev bond0.70
+                - ip route add 10.60.60.0/24 via 10.60.70.1
+                - ip route add 10.34.34.0/24 via 10.60.70.1
+                - ip route add 10.78.78.0/24 via 10.60.70.1
 
     links:
-        # Spine1 to Leaf connections (underlay fabric)
+        # =====================================================
+        # DATACENTER FABRIC LINKS
+        # =====================================================
+
+        # Spine1 to Leaf/Border-Leaf connections (underlay)
         - endpoints: ["spine1:eth1", "leaf1:eth11"]
         - endpoints: ["spine1:eth2", "leaf2:eth11"]
         - endpoints: ["spine1:eth3", "leaf3:eth11"]
@@ -186,8 +336,10 @@ topology:
         - endpoints: ["spine1:eth6", "leaf6:eth11"]
         - endpoints: ["spine1:eth7", "leaf7:eth11"]
         - endpoints: ["spine1:eth8", "leaf8:eth11"]
+        - endpoints: ["spine1:eth9", "border-leaf-dc1:eth11"]
+        - endpoints: ["spine1:eth10", "border-leaf-dc2:eth11"]
 
-        # Spine2 to Leaf connections (underlay fabric)
+        # Spine2 to Leaf/Border-Leaf connections (underlay)
         - endpoints: ["spine2:eth1", "leaf1:eth12"]
         - endpoints: ["spine2:eth2", "leaf2:eth12"]
         - endpoints: ["spine2:eth3", "leaf3:eth12"]
@@ -196,43 +348,88 @@ topology:
         - endpoints: ["spine2:eth6", "leaf6:eth12"]
         - endpoints: ["spine2:eth7", "leaf7:eth12"]
         - endpoints: ["spine2:eth8", "leaf8:eth12"]
+        - endpoints: ["spine2:eth9", "border-leaf-dc1:eth12"]
+        - endpoints: ["spine2:eth10", "border-leaf-dc2:eth12"]
 
-        # MLAG Peer Links (leaf pairs)
+        # DC MLAG Peer Links (leaf pairs + border-leaf pair)
         - endpoints: ["leaf1:eth10", "leaf2:eth10"]
         - endpoints: ["leaf3:eth10", "leaf4:eth10"]
         - endpoints: ["leaf5:eth10", "leaf6:eth10"]
         - endpoints: ["leaf7:eth10", "leaf8:eth10"]
+        - endpoints: ["border-leaf-dc1:eth10", "border-leaf-dc2:eth10"]
 
-        # Access switch uplinks to leaf MLAG pairs (dual-homed via LACP)
-        # access1 dual-homed to leaf1 + leaf2
+        # DC Access switch uplinks to leaf MLAG pairs (dual-homed via LACP)
         - endpoints: ["leaf1:eth1", "access1:eth1"]
         - endpoints: ["leaf2:eth1", "access1:eth2"]
-
-        # access2 dual-homed to leaf3 + leaf4
         - endpoints: ["leaf3:eth1", "access2:eth1"]
         - endpoints: ["leaf4:eth1", "access2:eth2"]
-
-        # access3 dual-homed to leaf5 + leaf6
         - endpoints: ["leaf5:eth1", "access3:eth1"]
         - endpoints: ["leaf6:eth1", "access3:eth2"]
-
-        # access4 dual-homed to leaf7 + leaf8
         - endpoints: ["leaf7:eth1", "access4:eth1"]
         - endpoints: ["leaf8:eth1", "access4:eth2"]
 
-        # Host connections to access switches (dual-homed via LACP)
-        # host1 dual-homed to access1
+        # DC Host connections to access switches (dual-homed via LACP)
         - endpoints: ["access1:eth3", "host1:eth1"]
         - endpoints: ["access1:eth4", "host1:eth2"]
-
-        # host2 dual-homed to access2
         - endpoints: ["access2:eth3", "host2:eth1"]
         - endpoints: ["access2:eth4", "host2:eth2"]
-
-        # host3 dual-homed to access3
         - endpoints: ["access3:eth3", "host3:eth1"]
         - endpoints: ["access3:eth4", "host3:eth2"]
-
-        # host4 dual-homed to access4
         - endpoints: ["access4:eth3", "host4:eth1"]
         - endpoints: ["access4:eth4", "host4:eth2"]
+
+        # =====================================================
+        # CORE INTERCONNECT (DC Border Leafs <-> Core <-> Campus Border Leafs)
+        # =====================================================
+
+        # DC Border Leafs to Core routers (4 links)
+        - endpoints: ["border-leaf-dc1:eth13", "core1:eth1"]
+        - endpoints: ["border-leaf-dc1:eth14", "core2:eth1"]
+        - endpoints: ["border-leaf-dc2:eth13", "core1:eth2"]
+        - endpoints: ["border-leaf-dc2:eth14", "core2:eth2"]
+
+        # Campus Border Leafs to Core routers (4 links)
+        - endpoints: ["border-leaf-campus1:eth13", "core1:eth3"]
+        - endpoints: ["border-leaf-campus1:eth14", "core2:eth3"]
+        - endpoints: ["border-leaf-campus2:eth13", "core1:eth4"]
+        - endpoints: ["border-leaf-campus2:eth14", "core2:eth4"]
+
+        # Core routers interconnect
+        - endpoints: ["core1:eth5", "core2:eth5"]
+
+        # =====================================================
+        # CAMPUS FABRIC LINKS
+        # =====================================================
+
+        # Campus Spine1 to Leafs/Border-Leafs (underlay)
+        - endpoints: ["campus-spine1:eth1", "campus-leaf1:eth11"]
+        - endpoints: ["campus-spine1:eth2", "campus-leaf2:eth11"]
+        - endpoints: ["campus-spine1:eth3", "campus-leaf3:eth11"]
+        - endpoints: ["campus-spine1:eth4", "campus-leaf4:eth11"]
+        - endpoints: ["campus-spine1:eth5", "border-leaf-campus1:eth11"]
+        - endpoints: ["campus-spine1:eth6", "border-leaf-campus2:eth11"]
+
+        # Campus Spine2 to Leafs/Border-Leafs (underlay)
+        - endpoints: ["campus-spine2:eth1", "campus-leaf1:eth12"]
+        - endpoints: ["campus-spine2:eth2", "campus-leaf2:eth12"]
+        - endpoints: ["campus-spine2:eth3", "campus-leaf3:eth12"]
+        - endpoints: ["campus-spine2:eth4", "campus-leaf4:eth12"]
+        - endpoints: ["campus-spine2:eth5", "border-leaf-campus1:eth12"]
+        - endpoints: ["campus-spine2:eth6", "border-leaf-campus2:eth12"]
+
+        # Campus MLAG Peer Links (leaf pairs + border-leaf pair)
+        - endpoints: ["campus-leaf1:eth10", "campus-leaf2:eth10"]
+        - endpoints: ["campus-leaf3:eth10", "campus-leaf4:eth10"]
+        - endpoints: ["border-leaf-campus1:eth10", "border-leaf-campus2:eth10"]
+
+        # Campus Access switch uplinks to leaf MLAG pairs (dual-homed via LACP)
+        - endpoints: ["campus-leaf1:eth1", "campus-access1:eth1"]
+        - endpoints: ["campus-leaf2:eth1", "campus-access1:eth2"]
+        - endpoints: ["campus-leaf3:eth1", "campus-access2:eth1"]
+        - endpoints: ["campus-leaf4:eth1", "campus-access2:eth2"]
+
+        # Campus Host connections to access switches (dual-homed via LACP)
+        - endpoints: ["campus-access1:eth3", "campus-host1:eth1"]
+        - endpoints: ["campus-access1:eth4", "campus-host1:eth2"]
+        - endpoints: ["campus-access2:eth3", "campus-host2:eth1"]
+        - endpoints: ["campus-access2:eth4", "campus-host2:eth2"]
