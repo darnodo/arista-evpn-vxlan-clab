@@ -13,8 +13,12 @@ This directory contains network interface configuration files for Alpine Linux h
 
 ### Campus hosts
 
-- `campus-host1_interfaces` - Configuration for campus-host1 (VLAN 50 stretched L2 10.50.50.101, VLAN 60 VRF gold 10.60.60.101)
-- `campus-host2_interfaces` - Configuration for campus-host2 (VLAN 50 stretched L2 10.50.50.102, VLAN 70 VRF gold 10.60.70.102)
+Campus hosts are **single-attached** to a Campus access switch (enterprise user endpoint
+pattern — no LACP bond, no VLAN trunking on the host side). Each host sits in a single
+access VLAN that maps to VRF `gold`.
+
+- `campus-host1_interfaces` - Configuration for campus-host1 (VLAN 60 VRF gold 10.60.60.101/24, GW 10.60.60.1)
+- `campus-host2_interfaces` - Configuration for campus-host2 (VLAN 70 VRF gold 10.60.70.102/24, GW 10.60.70.1)
 
 ## Usage
 
@@ -30,7 +34,9 @@ host1:
 
 ## Format
 
-Files use Debian/Alpine ifupdown format with bonding and VLAN extensions:
+Files use Debian/Alpine ifupdown format.
+
+### DC hosts (dual-homed via LACP to access switches)
 
 ```
 auto lo
@@ -50,20 +56,39 @@ iface bond0.<vlan> inet static
     vlan-raw-device bond0
 ```
 
+### Campus hosts (single-attached, no bonding, no VLAN tagging)
+
+```
+auto lo
+iface lo inet loopback
+
+auto eth1
+iface eth1 inet static
+    address <ip-address>/<mask>
+    gateway <gateway>
+```
+
 ## Key Concepts
 
-### LACP Bonding
-- All hosts use **mode 4** (802.3ad LACP) bonding
-- Dual-homed to MLAG leaf pairs for redundancy
+### DC: LACP Bonding
+- DC hosts use **mode 4** (802.3ad LACP) bonding
+- Dual-homed to MLAG leaf pairs — typical for DC servers that need NIC-level redundancy
 - Requires matching LACP configuration on switches
 
+### Campus: Single-attached user endpoints
+- Campus hosts use a single `eth1` interface connected to an access port
+- Redundancy is handled at the access-switch layer (the access switch is itself
+  dual-homed via LACP to the leaf MLAG pair), not at the host
+- This matches the realistic enterprise pattern for PCs, phones, printers, etc.
+
 ### VLAN Tagging
-- Hosts handle VLAN tagging via sub-interfaces
-- Format: `bond0.<vlan_id>` (e.g., bond0.40, bond0.34, bond0.78)
-- Switch ports are configured as trunks allowing specific VLANs
+- DC hosts: VLAN tagging happens in the host via `bond0.<vlan_id>` sub-interfaces
+  (e.g., bond0.40, bond0.34, bond0.78); switch ports are trunks
+- Campus hosts: no tagging on the host; the access switch places untagged frames
+  into `switchport access vlan <id>`
 
 ### IP Addressing
-- Static IP configuration on VLAN sub-interfaces
+- Static IP configuration on the host interface (sub-interface for DC, `eth1` for Campus)
 - Subnet assignment based on VLAN ID pattern (e.g., VLAN 40 = 10.40.40.0/24)
 
 ## Modification

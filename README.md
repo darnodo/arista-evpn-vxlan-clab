@@ -14,9 +14,16 @@ Key design choices:
 
 - **eBGP** in both fabrics (underlay + EVPN overlay) between spines and leafs / border leafs.
 - **OSPF area 0 + eBGP multi-hop** between each Border Leaf pair and both Core routers (over dot1q subinterfaces: `.100` = default VRF underlay, `.200` = VRF `gold`).
-- **MLAG** everywhere there is dual-homing (leaf pairs, border-leaf pairs, access → leafs, host → access).
+- **MLAG** everywhere there is dual-homing at the fabric layers (leaf pairs, border-leaf pairs, access → leafs, and DC host → access).
+- **Host attachment pattern**:
+  - **DC hosts** (servers) are **dual-homed via LACP** to an access switch — typical DC
+    server redundancy.
+  - **Campus hosts** (user endpoints: PC, phone, printer) are **single-attached** to a
+    Campus access switch via one plain Ethernet link. Redundancy lives at the access-switch
+    layer (the access switch itself is dual-homed via LACP to its leaf MLAG pair), not at
+    the host.
 - **VRF `gold`** is stretched end-to-end: DC leafs (VLAN 34 / 78) ↔ DC-BL ↔ Core ↔ Campus-BL ↔ Campus leafs (VLAN 60 / 70), all sharing L3 VNI `100001`.
-- **VLAN 50** is a campus-local L2 VXLAN stretched between the two Campus VTEPs.
+- **VLAN 50** remains defined as a campus-local L2 VXLAN stretched between the two Campus VTEPs (infrastructure-only, not wired to any host in the current topology).
 - **Convention**: L2 VNI = `110000 + vlan_id`, L3 VNI = `100001` for VRF `gold`, RT `1:100001` in both fabrics.
 
 ## 📐 Topology
@@ -93,16 +100,23 @@ docker exec -it clab-arista-evpn-fabric-border-leaf-dc1 Cli
 
 ### Access Switches
 
-| Access Switch   | Uplink Pair              | VLANs    | Host           |
-| --------------- | ------------------------ | -------- | -------------- |
-| access1         | leaf1/2 (VTEP1)          | 40       | host1          |
-| access2         | leaf3/4 (VTEP2)          | 34       | host2          |
-| access3         | leaf5/6 (VTEP3)          | 40       | host3          |
-| access4         | leaf7/8 (VTEP4)          | 78       | host4          |
-| campus-access1  | campus-leaf1/2 (VTEP1)   | 50, 60   | campus-host1   |
-| campus-access2  | campus-leaf3/4 (VTEP2)   | 50, 70   | campus-host2   |
+| Access Switch   | Uplink Pair              | VLANs    | Host           | Host attachment           |
+| --------------- | ------------------------ | -------- | -------------- | ------------------------- |
+| access1         | leaf1/2 (VTEP1)          | 40       | host1          | LACP Po1 (dual-homed)     |
+| access2         | leaf3/4 (VTEP2)          | 34       | host2          | LACP Po1 (dual-homed)     |
+| access3         | leaf5/6 (VTEP3)          | 40       | host3          | LACP Po1 (dual-homed)     |
+| access4         | leaf7/8 (VTEP4)          | 78       | host4          | LACP Po1 (dual-homed)     |
+| campus-access1  | campus-leaf1/2 (VTEP1)   | 60       | campus-host1   | access port (single link) |
+| campus-access2  | campus-leaf3/4 (VTEP2)   | 70       | campus-host2   | access port (single link) |
 
-All access switches are L2-only, LACP-bonded to their leaf MLAG pair via `Port-Channel10`, with host downlinks on `Port-Channel1`. MSTP + edge-port BPDU guard.
+All access switches are L2-only, LACP-bonded to their leaf MLAG pair via `Port-Channel10`. MSTP + edge-port BPDU guard.
+
+Host-facing ports:
+
+- **DC access switches** run a `Port-Channel1` trunk (VLANs allowed per host) for a host
+  dual-homed in LACP (two physical links, one bond on the Linux side).
+- **Campus access switches** use a plain `Ethernet3` in `switchport mode access` with
+  BPDU guard + portfast — the host connects with a single Ethernet link and no bonding.
 
 ## 🧭 IP Addressing Plan
 
@@ -171,10 +185,11 @@ Gateway: `172.16.0.254`.
 | host2         | 34   | gold     | 10.34.34.102/24   | 10.34.34.1   | DC L3 VRF gold                 |
 | host3         | 40   | default  | 10.40.40.103/24   | —            | DC L2 stretched                |
 | host4         | 78   | gold     | 10.78.78.104/24   | 10.78.78.1   | DC L3 VRF gold                 |
-| campus-host1  | 50   | default  | 10.50.50.101/24   | —            | Campus L2 stretched (VTEP1↔VTEP2) |
 | campus-host1  | 60   | gold     | 10.60.60.101/24   | 10.60.60.1   | Campus L3 VRF gold             |
-| campus-host2  | 50   | default  | 10.50.50.102/24   | —            | Campus L2 stretched            |
 | campus-host2  | 70   | gold     | 10.60.70.102/24   | 10.60.70.1   | Campus L3 VRF gold             |
+
+> DC hosts are dual-homed in LACP over `bond0` with tagged VLAN sub-interfaces.
+> Campus hosts are single-attached with one untagged `eth1` in a single access VLAN.
 
 ## 🏷️ VXLAN Network Identifiers
 
@@ -266,14 +281,16 @@ docker exec -it clab-arista-evpn-fabric-host2 ping -c 3 10.78.78.104
 
 ### Intra-Campus connectivity
 
-```bash
-# L2 VLAN 50: campus-host1 ↔ campus-host2
-docker exec -it clab-arista-evpn-fabric-campus-host1 ping -c 3 10.50.50.102
+Campus hosts sit in VRF `gold` — use the L3 test to validate VTEP1↔VTEP2 via campus spines.
 
+```bash
 # L3 VRF gold (Campus only): campus-host1 ↔ campus-host2
 docker exec -it clab-arista-evpn-fabric-campus-host1 ping -c 3 10.60.70.102
 docker exec -it clab-arista-evpn-fabric-campus-host2 ping -c 3 10.60.60.101
 ```
+
+> VLAN 50 (stretched L2 VXLAN) is still provisioned on the campus VTEPs as an
+> infrastructure example but is not wired to any host in the current topology.
 
 ### End-to-end Campus ↔ DC (VRF gold via Core)
 

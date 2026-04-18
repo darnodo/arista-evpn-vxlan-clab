@@ -84,10 +84,10 @@
   <text class="sub-label" x="150" y="310" text-anchor="middle">VTEP1 (AS 66001)</text>
   <text class="sub-label" x="350" y="310" text-anchor="middle">VTEP2 (AS 66002)</text>
   <text class="sub-label" x="300" y="450" text-anchor="middle">Campus Border Leafs MLAG (AS 66005)</text>
-  <text class="sub-label" x="140" y="700" text-anchor="middle">VLAN 50 (10.50.50.101)</text>
-  <text class="sub-label" x="140" y="714" text-anchor="middle">VLAN 60 (10.60.60.101, gold)</text>
-  <text class="sub-label" x="360" y="700" text-anchor="middle">VLAN 50 (10.50.50.102)</text>
-  <text class="sub-label" x="360" y="714" text-anchor="middle">VLAN 70 (10.60.70.102, gold)</text>
+  <text class="sub-label" x="140" y="700" text-anchor="middle">VLAN 60 (10.60.60.101, gold)</text>
+  <text class="sub-label" x="140" y="714" text-anchor="middle">single-attached (access)</text>
+  <text class="sub-label" x="360" y="700" text-anchor="middle">VLAN 70 (10.60.70.102, gold)</text>
+  <text class="sub-label" x="360" y="714" text-anchor="middle">single-attached (access)</text>
 
   <!-- Campus spine->leaf links -->
   <path class="link" d="M 195 174 L 100  260"/>
@@ -116,11 +116,9 @@
   <path class="link" d="M 300 294 L 360 530"/>
   <path class="link" d="M 400 294 L 360 530"/>
 
-  <!-- Campus access -> hosts (dual) -->
-  <path class="link" d="M 130 560 L 130 640"/>
-  <path class="link" d="M 150 560 L 150 640"/>
-  <path class="link" d="M 350 560 L 350 640"/>
-  <path class="link" d="M 370 560 L 370 640"/>
+  <!-- Campus access -> hosts (single link, enterprise user endpoint) -->
+  <path class="link" d="M 140 560 L 140 640"/>
+  <path class="link" d="M 360 560 L 360 640"/>
 
   <!-- =============== CORE =============== -->
   <g class="node node-core">
