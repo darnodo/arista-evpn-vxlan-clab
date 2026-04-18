@@ -1,389 +1,301 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2329" height="1022" viewBox="0 0 2329 1022"><defs>
-<filter id="text-shadow" x="-50%" y="-50%" width="200%" height="200%">
-  <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
-  <feFlood flood-color="#3C3E41" result="color"/>
-  <feComposite in="color" in2="blur" operator="in" result="shadow"/>
-  <feMerge>
-    <feMergeNode in="shadow"/>
-    <feMergeNode in="SourceGraphic"/>
-  </feMerge>
-</filter>
-</defs><g transform="translate(217.54237288135596, -69.64406779661022) scale(1.2923728813559323)"><g class="export-edge" data-id="Clab-Link0"><path d="M 260 196.25 L -20 423.75" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link1"><path d="M 267.6923076923077 200 L 132.30769230769232 420" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link2"><path d="M 280 200 L 280 420" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link3"><path d="M 292.3076923076923 200 L 427.6923076923077 420" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link4"><path d="M 300 196.25 L 580 423.75" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link5"><path d="M 300 190.83333333333334 L 740 429.1666666666667" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link6"><path d="M 300 187.87878787878788 L 920 432.1212121212121" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link7"><path d="M 300 186.34146341463415 L 1080 433.6585365853659" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link8"><path d="M 740 186.5 L -20 433.5" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link9"><path d="M 740 188.125 L 140 431.875" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link10"><path d="M 740 190.83333333333334 L 300 429.1666666666667" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link11"><path d="M 740 196.25 L 460 423.75" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link12"><path d="M 747.6923076923077 200 L 612.3076923076923 420" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link13"><path d="M 760 200 L 760 420" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link14"><path d="M 773.8461538461538 200 L 926.1538461538462 420" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link15"><path d="M 780 195.2941176470588 L 1080 424.70588235294116" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link16"><path d="M -20 440 L 100 440" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link17"><path d="M 300 440 L 420 440" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link18"><path d="M 620 440 L 740 440" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link19"><path d="M 960 440 L 1080 440" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link20"><path d="M -24 460 L 24 520" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link21"><path d="M 104 460 L 56 520" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link22"><path d="M 296 460 L 344 520" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link23"><path d="M 424 460 L 376 520" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link24"><path d="M 616 460 L 664 520" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link25"><path d="M 744 460 L 696 520" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link26"><path d="M 953.3333333333334 460 L 1006.6666666666666 540" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link27"><path d="M 1086.6666666666667 460 L 1033.3333333333333 540" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link28"><path d="M 40 560 Q 60 620 40 680" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link29"><path d="M 40 560 Q 20 620 40 680" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link30"><path d="M 360 560 Q 380 620 360 680" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link31"><path d="M 360 560 Q 340 620 360 680" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link32"><path d="M 680 560 Q 700 620 680 680" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link33"><path d="M 680 560 Q 660 620 680 680" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link34"><path d="M 1020 580 Q 1040 630 1020 680" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-edge" data-id="Clab-Link35"><path d="M 1020 580 Q 1000 630 1020 680" fill="none" stroke="#00df2b" stroke-width="2.5" opacity="0.5"/></g><g class="export-node topology-node" data-id="spine1"><g transform="rotate(0 280 180)"><rect x="260" y="160" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(260, 160)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="256.2" y="202" width="47.599999999999994" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="280" y="211.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">spine1</text></g><g class="export-node topology-node" data-id="spine2"><g transform="rotate(0 760 180)"><rect x="740" y="160" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(740, 160)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="736.2" y="202" width="47.599999999999994" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="760" y="211.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">spine2</text></g><g class="export-node topology-node" data-id="leaf1"><g transform="rotate(0 -40 440)"><rect x="-60" y="420" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(-60, 420)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="-60.5" y="462" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="-40" y="471.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">leaf1</text></g><g class="export-node topology-node" data-id="leaf2"><g transform="rotate(0 120 440)"><rect x="100" y="420" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(100, 420)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="99.5" y="462" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="120" y="471.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">leaf2</text></g><g class="export-node topology-node" data-id="leaf3"><g transform="rotate(0 280 440)"><rect x="260" y="420" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(260, 420)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="259.5" y="462" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="280" y="471.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">leaf3</text></g><g class="export-node topology-node" data-id="leaf4"><g transform="rotate(0 440 440)"><rect x="420" y="420" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(420, 420)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="419.5" y="462" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="440" y="471.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">leaf4</text></g><g class="export-node topology-node" data-id="leaf5"><g transform="rotate(0 600 440)"><rect x="580" y="420" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(580, 420)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="579.5" y="462" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="600" y="471.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">leaf5</text></g><g class="export-node topology-node" data-id="leaf6"><g transform="rotate(0 760 440)"><rect x="740" y="420" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(740, 420)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="739.5" y="462" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="760" y="471.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">leaf6</text></g><g class="export-node topology-node" data-id="leaf7"><g transform="rotate(0 940 440)"><rect x="920" y="420" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(920, 420)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="919.5" y="462" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="940" y="471.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">leaf7</text></g><g class="export-node topology-node" data-id="leaf8"><g transform="rotate(0 1100 440)"><rect x="1080" y="420" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(1080, 420)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="1079.5" y="462" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="1100" y="471.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">leaf8</text></g><g class="export-node topology-node" data-id="access1"><g transform="rotate(0 40 540)"><rect x="20" y="520" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(20, 520)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="12.900000000000002" y="562" width="54.199999999999996" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="40" y="571.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">access1</text></g><g class="export-node topology-node" data-id="access2"><g transform="rotate(0 360 540)"><rect x="340" y="520" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(340, 520)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="332.9" y="562" width="54.199999999999996" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="360" y="571.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">access2</text></g><g class="export-node topology-node" data-id="access3"><g transform="rotate(0 680 540)"><rect x="660" y="520" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(660, 520)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="652.9" y="562" width="54.199999999999996" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="680" y="571.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">access3</text></g><g class="export-node topology-node" data-id="access4"><g transform="rotate(0 1020 560)"><rect x="1000" y="540" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(1000, 540)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="992.9" y="582" width="54.199999999999996" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="1020" y="591.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">access4</text></g><g class="export-node topology-node" data-id="host1"><g transform="rotate(0 40 700)"><rect x="20" y="680" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(20, 680)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="19.5" y="722" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="40" y="731.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">host1</text></g><g class="export-node topology-node" data-id="host2"><g transform="rotate(0 360 700)"><rect x="340" y="680" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(340, 680)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="339.5" y="722" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="360" y="731.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">host2</text></g><g class="export-node topology-node" data-id="host3"><g transform="rotate(0 680 700)"><rect x="660" y="680" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(660, 680)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="659.5" y="722" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="680" y="731.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">host3</text></g><g class="export-node topology-node" data-id="host4"><g transform="rotate(0 1020 700)"><rect x="1000" y="680" width="40" height="40" rx="4" ry="4" fill="#005aff"/><g transform="translate(1000, 680)" style="color: #005aff"><g transform="scale(0.3333)">
-                        
-                        <rect height="120" width="120" fill="currentColor" />
-                        <g>
-                            <g>
-                                <path d="M71.7,19.7V48h28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M91.2,38.5l7.5,7.6c1.3,1.3,1.3,3.1,0,4.3L91.1,58" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M20,47.8h28.4v-28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M38.8,28.3l7.6-7.5c1.3-1.3,3.1-1.3,4.3,0l7.7,7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M48,100.3V72H20" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M28.5,81.5L21,73.9c-1.3-1.3-1.3-3.1,0-4.3l7.6-7.7" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <g>
-                                <path d="M100,71.9H71.6v28" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M81.2,91.4l-7.6,7.5c-1.3,1.3-3.1,1.3-4.3,0l-7.7-7.6" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                        </g>
-                    </g></g></g><rect x="999.5" y="722" width="41" height="15" fill="rgba(0, 0, 0, 0.85)" rx="3" ry="3"/><text x="1020" y="731.8" font-size="11" font-weight="500" font-family="system-ui, -apple-system, sans-serif" fill="#FFFFFF" text-anchor="middle" stroke="rgba(0, 0, 0, 0.95)" stroke-width="0.8" paint-order="stroke" stroke-linejoin="round" filter="url(#text-shadow)">host4</text></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" font-family="system-ui, -apple-system, sans-serif" font-size="12">
+  <defs>
+    <style>
+      .node-spine { fill: #005aff; stroke: #002f85; }
+      .node-leaf  { fill: #00a2ff; stroke: #005aff; }
+      .node-border{ fill: #ff9800; stroke: #a15c00; }
+      .node-core  { fill: #e91e63; stroke: #880e4f; }
+      .node-access{ fill: #9c27b0; stroke: #4a148c; }
+      .node-host  { fill: #4caf50; stroke: #1b5e20; }
+      .node text  { fill: #fff; font-weight: 600; }
+      .link       { stroke: #4caf50; stroke-width: 1.4; opacity: 0.6; fill: none; }
+      .link-core  { stroke: #ff5722; stroke-width: 1.6; opacity: 0.75; fill: none; }
+      .link-mlag  { stroke: #9e9e9e; stroke-width: 1.2; stroke-dasharray: 4 3; opacity: 0.75; fill: none; }
+      .box-label  { font-size: 16px; font-weight: 700; fill: #37474f; }
+      .sub-label  { font-size: 11px; fill: #546e7a; }
+      .domain-box { fill: none; stroke: #b0bec5; stroke-dasharray: 5 4; stroke-width: 1.2; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="800" y="30" text-anchor="middle" font-size="22" font-weight="700" fill="#263238">Arista EVPN-VXLAN Campus + DC Fabric</text>
+  <text x="800" y="52" text-anchor="middle" font-size="13" fill="#546e7a">Campus EVPN-VXLAN &#8596; Core L3 (OSPF + BGP) &#8596; DC EVPN-VXLAN</text>
+
+  <!-- Campus fabric dashed box -->
+  <rect class="domain-box" x="40"  y="80"  width="520" height="900" rx="10"/>
+  <text class="box-label" x="300" y="105" text-anchor="middle">CAMPUS FABRIC (AS 66000/66001/66002/66005)</text>
+
+  <!-- Core zone -->
+  <rect class="domain-box" x="600" y="380" width="400" height="280" rx="10"/>
+  <text class="box-label" x="800" y="405" text-anchor="middle">CORE L3 (AS 65500)</text>
+  <text class="sub-label" x="800" y="423" text-anchor="middle">OSPF area 0 + iBGP + VRF gold transit</text>
+
+  <!-- DC fabric dashed box -->
+  <rect class="domain-box" x="1040" y="80"  width="520" height="900" rx="10"/>
+  <text class="box-label" x="1300" y="105" text-anchor="middle">DATACENTER FABRIC (AS 65000/65001-65004/65005)</text>
+
+  <!-- =============== CAMPUS =============== -->
+  <!-- Campus spines row -->
+  <g class="node node-spine">
+    <rect x="160"  y="140" width="70" height="34" rx="4"/>
+    <text x="195" y="161" text-anchor="middle">campus-spine1</text>
+    <rect x="370"  y="140" width="70" height="34" rx="4"/>
+    <text x="405" y="161" text-anchor="middle">campus-spine2</text>
+  </g>
+
+  <!-- Campus leafs row -->
+  <g class="node node-leaf">
+    <rect x="60"  y="260" width="80" height="34" rx="4"/>
+    <text x="100" y="281" text-anchor="middle">campus-leaf1</text>
+    <rect x="160" y="260" width="80" height="34" rx="4"/>
+    <text x="200" y="281" text-anchor="middle">campus-leaf2</text>
+    <rect x="260" y="260" width="80" height="34" rx="4"/>
+    <text x="300" y="281" text-anchor="middle">campus-leaf3</text>
+    <rect x="360" y="260" width="80" height="34" rx="4"/>
+    <text x="400" y="281" text-anchor="middle">campus-leaf4</text>
+  </g>
+
+  <!-- Campus border leafs -->
+  <g class="node node-border">
+    <rect x="160" y="400" width="110" height="34" rx="4"/>
+    <text x="215" y="421" text-anchor="middle">border-leaf-campus1</text>
+    <rect x="330" y="400" width="110" height="34" rx="4"/>
+    <text x="385" y="421" text-anchor="middle">border-leaf-campus2</text>
+  </g>
+
+  <!-- Campus access row -->
+  <g class="node node-access">
+    <rect x="100" y="530" width="80" height="30" rx="4"/>
+    <text x="140" y="550" text-anchor="middle">campus-access1</text>
+    <rect x="320" y="530" width="80" height="30" rx="4"/>
+    <text x="360" y="550" text-anchor="middle">campus-access2</text>
+  </g>
+
+  <!-- Campus hosts -->
+  <g class="node node-host">
+    <rect x="100" y="640" width="80" height="30" rx="4"/>
+    <text x="140" y="660" text-anchor="middle">campus-host1</text>
+    <rect x="320" y="640" width="80" height="30" rx="4"/>
+    <text x="360" y="660" text-anchor="middle">campus-host2</text>
+  </g>
+
+  <!-- Campus labels -->
+  <text class="sub-label" x="300" y="194" text-anchor="middle">Route Reflectors (AS 66000)</text>
+  <text class="sub-label" x="150" y="310" text-anchor="middle">VTEP1 (AS 66001)</text>
+  <text class="sub-label" x="350" y="310" text-anchor="middle">VTEP2 (AS 66002)</text>
+  <text class="sub-label" x="300" y="450" text-anchor="middle">Campus Border Leafs MLAG (AS 66005)</text>
+  <text class="sub-label" x="140" y="700" text-anchor="middle">VLAN 50 (10.50.50.101)</text>
+  <text class="sub-label" x="140" y="714" text-anchor="middle">VLAN 60 (10.60.60.101, gold)</text>
+  <text class="sub-label" x="360" y="700" text-anchor="middle">VLAN 50 (10.50.50.102)</text>
+  <text class="sub-label" x="360" y="714" text-anchor="middle">VLAN 70 (10.60.70.102, gold)</text>
+
+  <!-- Campus spine->leaf links -->
+  <path class="link" d="M 195 174 L 100  260"/>
+  <path class="link" d="M 195 174 L 200  260"/>
+  <path class="link" d="M 195 174 L 300  260"/>
+  <path class="link" d="M 195 174 L 400  260"/>
+  <path class="link" d="M 405 174 L 100  260"/>
+  <path class="link" d="M 405 174 L 200  260"/>
+  <path class="link" d="M 405 174 L 300  260"/>
+  <path class="link" d="M 405 174 L 400  260"/>
+
+  <!-- Campus spines -> border-leaf-campus -->
+  <path class="link" d="M 195 174 L 215 400"/>
+  <path class="link" d="M 195 174 L 385 400"/>
+  <path class="link" d="M 405 174 L 215 400"/>
+  <path class="link" d="M 405 174 L 385 400"/>
+
+  <!-- Campus MLAG links (dashed) -->
+  <path class="link-mlag" d="M 140 294 L 200 294"/>
+  <path class="link-mlag" d="M 340 294 L 400 294"/>
+  <path class="link-mlag" d="M 270 434 L 330 434"/>
+
+  <!-- Campus leaf -> access (dual homed) -->
+  <path class="link" d="M 100 294 L 140 530"/>
+  <path class="link" d="M 200 294 L 140 530"/>
+  <path class="link" d="M 300 294 L 360 530"/>
+  <path class="link" d="M 400 294 L 360 530"/>
+
+  <!-- Campus access -> hosts (dual) -->
+  <path class="link" d="M 130 560 L 130 640"/>
+  <path class="link" d="M 150 560 L 150 640"/>
+  <path class="link" d="M 350 560 L 350 640"/>
+  <path class="link" d="M 370 560 L 370 640"/>
+
+  <!-- =============== CORE =============== -->
+  <g class="node node-core">
+    <rect x="660" y="470" width="70" height="36" rx="4"/>
+    <text x="695" y="493" text-anchor="middle">core1</text>
+    <rect x="870" y="470" width="70" height="36" rx="4"/>
+    <text x="905" y="493" text-anchor="middle">core2</text>
+  </g>
+  <path class="link-core" d="M 730 488 L 870 488"/>
+  <text class="sub-label" x="800" y="480" text-anchor="middle">iBGP + OSPF</text>
+
+  <!-- Campus BL -> Core links -->
+  <path class="link-core" d="M 270 417 L 660 488"/>
+  <path class="link-core" d="M 270 417 L 870 488"/>
+  <path class="link-core" d="M 440 417 L 660 488"/>
+  <path class="link-core" d="M 440 417 L 870 488"/>
+
+  <!-- DC BL -> Core links -->
+  <path class="link-core" d="M 1330 417 L 730 488"/>
+  <path class="link-core" d="M 1330 417 L 940 488"/>
+  <path class="link-core" d="M 1160 417 L 730 488"/>
+  <path class="link-core" d="M 1160 417 L 940 488"/>
+
+  <!-- =============== DC =============== -->
+  <!-- DC spines row -->
+  <g class="node node-spine">
+    <rect x="1160" y="140" width="60" height="34" rx="4"/>
+    <text x="1190" y="161" text-anchor="middle">spine1</text>
+    <rect x="1380" y="140" width="60" height="34" rx="4"/>
+    <text x="1410" y="161" text-anchor="middle">spine2</text>
+  </g>
+
+  <!-- DC leafs row (8) -->
+  <g class="node node-leaf">
+    <rect x="1060" y="260" width="60" height="34" rx="4"/>
+    <text x="1090" y="281" text-anchor="middle">leaf1</text>
+    <rect x="1125" y="260" width="60" height="34" rx="4"/>
+    <text x="1155" y="281" text-anchor="middle">leaf2</text>
+    <rect x="1190" y="260" width="60" height="34" rx="4"/>
+    <text x="1220" y="281" text-anchor="middle">leaf3</text>
+    <rect x="1255" y="260" width="60" height="34" rx="4"/>
+    <text x="1285" y="281" text-anchor="middle">leaf4</text>
+    <rect x="1320" y="260" width="60" height="34" rx="4"/>
+    <text x="1350" y="281" text-anchor="middle">leaf5</text>
+    <rect x="1385" y="260" width="60" height="34" rx="4"/>
+    <text x="1415" y="281" text-anchor="middle">leaf6</text>
+    <rect x="1450" y="260" width="60" height="34" rx="4"/>
+    <text x="1480" y="281" text-anchor="middle">leaf7</text>
+    <rect x="1515" y="260" width="60" height="34" rx="4"/>
+    <text x="1545" y="281" text-anchor="middle">leaf8</text>
+  </g>
+
+  <!-- DC border leafs -->
+  <g class="node node-border">
+    <rect x="1090" y="400" width="100" height="34" rx="4"/>
+    <text x="1140" y="421" text-anchor="middle">border-leaf-dc1</text>
+    <rect x="1260" y="400" width="100" height="34" rx="4"/>
+    <text x="1310" y="421" text-anchor="middle">border-leaf-dc2</text>
+  </g>
+
+  <!-- DC access -->
+  <g class="node node-access">
+    <rect x="1065" y="530" width="60" height="30" rx="4"/>
+    <text x="1095" y="550" text-anchor="middle">access1</text>
+    <rect x="1195" y="530" width="60" height="30" rx="4"/>
+    <text x="1225" y="550" text-anchor="middle">access2</text>
+    <rect x="1325" y="530" width="60" height="30" rx="4"/>
+    <text x="1355" y="550" text-anchor="middle">access3</text>
+    <rect x="1455" y="530" width="60" height="30" rx="4"/>
+    <text x="1485" y="550" text-anchor="middle">access4</text>
+  </g>
+
+  <!-- DC hosts -->
+  <g class="node node-host">
+    <rect x="1065" y="640" width="60" height="30" rx="4"/>
+    <text x="1095" y="660" text-anchor="middle">host1</text>
+    <rect x="1195" y="640" width="60" height="30" rx="4"/>
+    <text x="1225" y="660" text-anchor="middle">host2</text>
+    <rect x="1325" y="640" width="60" height="30" rx="4"/>
+    <text x="1355" y="660" text-anchor="middle">host3</text>
+    <rect x="1455" y="640" width="60" height="30" rx="4"/>
+    <text x="1485" y="660" text-anchor="middle">host4</text>
+  </g>
+
+  <!-- DC labels -->
+  <text class="sub-label" x="1300" y="194" text-anchor="middle">Route Reflectors (AS 65000)</text>
+  <text class="sub-label" x="1125" y="310" text-anchor="middle">VTEP1 (65001)</text>
+  <text class="sub-label" x="1255" y="310" text-anchor="middle">VTEP2 (65002)</text>
+  <text class="sub-label" x="1385" y="310" text-anchor="middle">VTEP3 (65003)</text>
+  <text class="sub-label" x="1515" y="310" text-anchor="middle">VTEP4 (65004)</text>
+  <text class="sub-label" x="1225" y="450" text-anchor="middle">DC Border Leafs MLAG (AS 65005)</text>
+  <text class="sub-label" x="1095" y="694" text-anchor="middle">VLAN 40</text>
+  <text class="sub-label" x="1225" y="694" text-anchor="middle">VLAN 34 (gold)</text>
+  <text class="sub-label" x="1355" y="694" text-anchor="middle">VLAN 40</text>
+  <text class="sub-label" x="1485" y="694" text-anchor="middle">VLAN 78 (gold)</text>
+
+  <!-- DC spine->leaf (meshed) -->
+  <g>
+    <path class="link" d="M 1190 174 L 1090 260"/>
+    <path class="link" d="M 1190 174 L 1155 260"/>
+    <path class="link" d="M 1190 174 L 1220 260"/>
+    <path class="link" d="M 1190 174 L 1285 260"/>
+    <path class="link" d="M 1190 174 L 1350 260"/>
+    <path class="link" d="M 1190 174 L 1415 260"/>
+    <path class="link" d="M 1190 174 L 1480 260"/>
+    <path class="link" d="M 1190 174 L 1545 260"/>
+    <path class="link" d="M 1410 174 L 1090 260"/>
+    <path class="link" d="M 1410 174 L 1155 260"/>
+    <path class="link" d="M 1410 174 L 1220 260"/>
+    <path class="link" d="M 1410 174 L 1285 260"/>
+    <path class="link" d="M 1410 174 L 1350 260"/>
+    <path class="link" d="M 1410 174 L 1415 260"/>
+    <path class="link" d="M 1410 174 L 1480 260"/>
+    <path class="link" d="M 1410 174 L 1545 260"/>
+    <!-- spine -> border-leaf-dc -->
+    <path class="link" d="M 1190 174 L 1140 400"/>
+    <path class="link" d="M 1190 174 L 1310 400"/>
+    <path class="link" d="M 1410 174 L 1140 400"/>
+    <path class="link" d="M 1410 174 L 1310 400"/>
+  </g>
+
+  <!-- DC MLAG peer-links -->
+  <g>
+    <path class="link-mlag" d="M 1120 294 L 1125 294"/>
+    <path class="link-mlag" d="M 1185 294 L 1190 294"/>
+    <path class="link-mlag" d="M 1250 294 L 1255 294"/>
+    <path class="link-mlag" d="M 1315 294 L 1320 294"/>
+    <path class="link-mlag" d="M 1380 294 L 1385 294"/>
+    <path class="link-mlag" d="M 1445 294 L 1450 294"/>
+    <path class="link-mlag" d="M 1510 294 L 1515 294"/>
+    <path class="link-mlag" d="M 1190 434 L 1260 434"/>
+  </g>
+
+  <!-- DC leaf -> access (dual) -->
+  <path class="link" d="M 1090 294 L 1095 530"/>
+  <path class="link" d="M 1155 294 L 1095 530"/>
+  <path class="link" d="M 1220 294 L 1225 530"/>
+  <path class="link" d="M 1285 294 L 1225 530"/>
+  <path class="link" d="M 1350 294 L 1355 530"/>
+  <path class="link" d="M 1415 294 L 1355 530"/>
+  <path class="link" d="M 1480 294 L 1485 530"/>
+  <path class="link" d="M 1545 294 L 1485 530"/>
+
+  <!-- DC access -> hosts -->
+  <path class="link" d="M 1085 560 L 1085 640"/>
+  <path class="link" d="M 1105 560 L 1105 640"/>
+  <path class="link" d="M 1215 560 L 1215 640"/>
+  <path class="link" d="M 1235 560 L 1235 640"/>
+  <path class="link" d="M 1345 560 L 1345 640"/>
+  <path class="link" d="M 1365 560 L 1365 640"/>
+  <path class="link" d="M 1475 560 L 1475 640"/>
+  <path class="link" d="M 1495 560 L 1495 640"/>
+
+  <!-- Legend -->
+  <g transform="translate(40, 860)">
+    <rect x="0" y="0" width="600" height="110" fill="#fafafa" stroke="#b0bec5" rx="6"/>
+    <text x="10" y="20" font-weight="700" fill="#263238">Legend</text>
+    <rect x="10"  y="30" width="18" height="12" class="node-spine"/>
+    <text x="34"  y="40" fill="#37474f">Spine (RR)</text>
+    <rect x="130" y="30" width="18" height="12" class="node-leaf"/>
+    <text x="154" y="40" fill="#37474f">Leaf (VTEP)</text>
+    <rect x="260" y="30" width="18" height="12" class="node-border"/>
+    <text x="284" y="40" fill="#37474f">Border Leaf</text>
+    <rect x="390" y="30" width="18" height="12" class="node-core"/>
+    <text x="414" y="40" fill="#37474f">Core router</text>
+    <rect x="510" y="30" width="18" height="12" class="node-access"/>
+    <text x="534" y="40" fill="#37474f">Access L2</text>
+    <rect x="10"  y="55" width="18" height="12" class="node-host"/>
+    <text x="34"  y="65" fill="#37474f">Host</text>
+    <line x1="130" y1="60" x2="170" y2="60" class="link"/>
+    <text x="178" y="65" fill="#37474f">Fabric (underlay + EVPN)</text>
+    <line x1="350" y1="60" x2="390" y2="60" class="link-core"/>
+    <text x="398" y="65" fill="#37474f">Core (OSPF+BGP / VRF gold)</text>
+    <line x1="10"  y1="85" x2="50"  y2="85" class="link-mlag"/>
+    <text x="58"  y="90" fill="#37474f">MLAG peer-link</text>
+    <text x="10"  y="100" fill="#546e7a" font-size="10">L2 VNI 110040 (DC VLAN 40), 110050 (Campus VLAN 50); L3 VNI 100001 (VRF gold, shared)</text>
+  </g>
+</svg>

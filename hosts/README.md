@@ -4,10 +4,17 @@ This directory contains network interface configuration files for Alpine Linux h
 
 ## Files
 
+### DC hosts
+
 - `host1_interfaces` - Configuration for host1 (VLAN 40, IP 10.40.40.101)
 - `host2_interfaces` - Configuration for host2 (VLAN 34, IP 10.34.34.102)
 - `host3_interfaces` - Configuration for host3 (VLAN 40, IP 10.40.40.103)
 - `host4_interfaces` - Configuration for host4 (VLAN 78, IP 10.78.78.104)
+
+### Campus hosts
+
+- `campus-host1_interfaces` - Configuration for campus-host1 (VLAN 50 stretched L2 10.50.50.101, VLAN 60 VRF gold 10.60.60.101)
+- `campus-host2_interfaces` - Configuration for campus-host2 (VLAN 50 stretched L2 10.50.50.102, VLAN 70 VRF gold 10.60.70.102)
 
 ## Usage
 
