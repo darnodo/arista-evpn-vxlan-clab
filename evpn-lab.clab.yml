@@ -8,7 +8,7 @@ mgmt:
 topology:
     kinds:
         arista_ceos:
-            image: ceos:4.35.0F
+            image: gitea.arnodo.fr/damien/ceos:4.36.0F
 
     nodes:
         # =====================================================
