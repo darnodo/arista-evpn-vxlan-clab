@@ -279,7 +279,7 @@ topology:
             exec:
                 - ip link set dev eth1 up
                 - ip addr add 10.60.60.101/24 dev eth1
-                - ip route add default via 10.60.60.1
+                - ip route replace default via 10.60.60.1
 
         campus-host2:
             kind: linux
@@ -292,7 +292,7 @@ topology:
             exec:
                 - ip link set dev eth1 up
                 - ip addr add 10.60.70.102/24 dev eth1
-                - ip route add default via 10.60.70.1
+                - ip route replace default via 10.60.70.1
 
     links:
         # =====================================================
