@@ -5,5 +5,4 @@ auto eth1
 iface eth1 inet static
     address 10.60.70.102
     netmask 255.255.255.0
-    gateway 10.60.70.1
     post-up ip route replace default via 10.60.70.1
