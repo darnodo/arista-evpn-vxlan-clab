@@ -28,7 +28,7 @@ Key design choices:
 
 ## 📐 Topology
 
-![Topology](assets/arista-evpn-fabric.svg)
+![Topology](assets/evpn-lab.clab.svg)
 
 ## 🚀 Quick Start
 
