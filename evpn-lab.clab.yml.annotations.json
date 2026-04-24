@@ -1,15 +1,5 @@
 {
-  "freeTextAnnotations": [
-    {
-      "id": "label-dc",
-      "text": "DATA CENTER FABRIC (AS 65000 / 65001-4 / 65005)",
-      "position": {
-        "x": 1600,
-        "y": 60
-      },
-      "fontSize": 16
-    }
-  ],
+  "freeTextAnnotations": [],
   "freeShapeAnnotations": [],
   "trafficRateAnnotations": [],
   "groupStyleAnnotations": [
