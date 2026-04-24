@@ -72,7 +72,7 @@ Ethernet11 is up, line protocol is up (connected)
 
 ### 2.1 Verify MLAG Peering
 
-**On each MLAG leaf pair (e.g., leaf1/leaf2):**
+**On each MLAG leaf pair (e.g., dc-leaf1/dc-leaf2):**
 
 ```bash
 # MLAG global status
@@ -173,7 +173,7 @@ Active Ports: Ethernet1
                                             local/remote
  mlag        desc             state       local       remote          status
 ------ -------------- ------------- ----------- ------------ ---------------
-    1          host1  active-full          Po1          Po1          up/up
+    1          dc-server1  active-full          Po1          Po1          up/up
 ```
 
 **Troubleshooting:**
@@ -528,7 +528,7 @@ Shows which remote VTEP the MAC is behind!
 
 ## End-to-End Traffic Flow
 
-### Scenario: host1 (VTEP1) pings host3 (VTEP3) - L2 VXLAN
+### Scenario: dc-server1 (VTEP1) pings dc-server3 (VTEP3) - L2 VXLAN
 
 Both hosts in VLAN 40 (10.40.40.0/24)
 
@@ -536,7 +536,7 @@ Both hosts in VLAN 40 (10.40.40.0/24)
 
 #### Step 1: Host Sends Packet
 
-**On host1:**
+**On dc-server1:**
 
 ```bash
 docker exec -it clab-arista-evpn-fabric-host1 sh
@@ -558,9 +558,9 @@ ping 10.40.40.103
 
 ---
 
-#### Step 2: Packet Arrives at leaf1 (VTEP1)
+#### Step 2: Packet Arrives at dc-leaf1 (VTEP1)
 
-**On leaf1:**
+**On dc-leaf1:**
 
 ```bash
 # Check Port-Channel received the packet
@@ -569,13 +569,13 @@ show interfaces Port-Channel1 | include packets
 # Check MAC learning
 show mac address-table dynamic vlan 40
 
-# Should see host1's MAC on Po1
+# Should see dc-server1's MAC on Po1
 ```
 
 **Traffic flow:**
 
 ```
-host1:bond0.40 → [802.1Q VLAN 40] → leaf1:Eth1 → Po1
+dc-server1:bond0.40 → [802.1Q VLAN 40] → dc-leaf1:Eth1 → Po1
 ```
 
 ---
@@ -603,12 +603,12 @@ show vxlan address-table address 00c1.ab00.0033
 **Encapsulation:**
 
 ```
-Original: [Eth: host1→host3][IP: 10.40.40.101→103][ICMP]
+Original: [Eth: dc-server1→dc-server3][IP: 10.40.40.101→103][ICMP]
 
 VXLAN:    [Outer IP: 10.0.255.11→10.0.255.13]
           [Outer UDP: src=random, dst=4789]
           [VXLAN Header: VNI=110040]
-          [Inner Eth: host1→host3][IP: 10.40.40.101→103][ICMP]
+          [Inner Eth: dc-server1→dc-server3][IP: 10.40.40.101→103][ICMP]
 ```
 
 ---
@@ -622,27 +622,27 @@ VXLAN:    [Outer IP: 10.0.255.11→10.0.255.13]
 show ip route 10.0.255.13
 
 # Output:
-# via 10.0.1.0, Ethernet11  (spine1)
-# via 10.0.2.0, Ethernet12  (spine2)
+# via 10.0.1.0, Ethernet11  (dc-spine1)
+# via 10.0.2.0, Ethernet12  (dc-spine2)
 ```
 
-ECMP: Packet can go via spine1 OR spine2!
+ECMP: Packet can go via dc-spine1 OR dc-spine2!
 
 **Spine forwards based on outer IP:**
 
 ```bash
-# On spine1
+# On dc-spine1
 show ip route 10.0.255.13
 
 # Output:
-# via 10.0.1.5, Ethernet3  (leaf5)
+# via 10.0.1.5, Ethernet3  (dc-leaf5)
 ```
 
 ---
 
-#### Step 5: Packet Arrives at leaf5 (VTEP3)
+#### Step 5: Packet Arrives at dc-leaf5 (VTEP3)
 
-**On leaf5:**
+**On dc-leaf5:**
 
 ```bash
 # Check VXLAN received the packet
@@ -655,7 +655,7 @@ show interfaces Vxlan1 | include packets
 
 ```
 VXLAN packet → Strip outer IP/UDP/VXLAN headers
-→ Original frame: [Eth: host1→host3][IP: 10.40.40.101→103][ICMP]
+→ Original frame: [Eth: dc-server1→dc-server3][IP: 10.40.40.101→103][ICMP]
 ```
 
 **Leaf5 checks MAC table:**
@@ -669,13 +669,13 @@ show mac address-table address 00c1.ab00.0033
 
 ---
 
-#### Step 6: Packet Delivered to host3
+#### Step 6: Packet Delivered to dc-server3
 
 ```
-leaf5:Vxlan1 → VLAN 40 → Po1 → Eth1 → host3:bond0.40
+dc-leaf5:Vxlan1 → VLAN 40 → Po1 → Eth1 → dc-server3:bond0.40
 ```
 
-**On host3:**
+**On dc-server3:**
 
 ```bash
 docker exec -it clab-arista-evpn-fabric-host3 sh
@@ -693,19 +693,19 @@ ping 10.40.40.101  # Reply should work!
 │                    L2 VXLAN Traffic Flow                        │
 └─────────────────────────────────────────────────────────────────┘
 
-host1 (10.40.40.101)                                host3 (10.40.40.103)
+dc-server1 (10.40.40.101)                                dc-server3 (10.40.40.103)
   │                                                        ▲
   │ 1. Send ping to 10.40.40.103                          │
   │    [VLAN 40 tag]                                      │ 6. Receive reply
   │                                                        │    [VLAN 40 tag]
   ▼                                                        │
-leaf1:Po1                                            leaf5:Po1
+dc-leaf1:Po1                                            dc-leaf5:Po1
   │                                                        ▲
   │ 2. MAC lookup:                                        │ 5. MAC lookup:
   │    00c1.ab00.0033 → Vx1 → 10.0.255.13                │    00c1.ab00.0011 → Vx1
   │                                                        │
   ▼                                                        │
-leaf1:Vxlan1                                         leaf5:Vxlan1
+dc-leaf1:Vxlan1                                         dc-leaf5:Vxlan1
   │                                                        ▲
   │ 3. VXLAN encap:                                       │ 4. VXLAN decap:
   │    Outer: 10.0.255.11 → 10.0.255.13                  │    Strip outer headers
@@ -713,7 +713,7 @@ leaf1:Vxlan1                                         leaf5:Vxlan1
   │    Inner: original frame                              │
   │                                                        │
   ▼                                                        │
-leaf1:Eth11 ──────► spine1 ──────► leaf5:Eth11 ──────────┘
+dc-leaf1:Eth11 ──────► dc-spine1 ──────► dc-leaf5:Eth11 ──────────┘
          (underlay BGP routing)
 ```
 
@@ -776,7 +776,7 @@ show vxlan address-table vlan 40
 
 **Symptoms:**
 
-- host2 (10.34.34.102) cannot ping host4 (10.78.78.104)
+- dc-server2 (10.34.34.102) cannot ping dc-server4 (10.78.78.104)
 - Both in VRF gold
 
 **Troubleshooting Steps:**
@@ -956,14 +956,14 @@ show mac address-table count
 **Test L2 VXLAN (VLAN 40):**
 
 ```bash
-# On host1
+# On dc-server1
 ping 10.40.40.103 -c 3
 
-# On leaf1 (VTEP1)
+# On dc-leaf1 (VTEP1)
 show mac address-table address 00c1.ab00.0033
 show vxlan address-table address 00c1.ab00.0033
 
-# On leaf5 (VTEP3)
+# On dc-leaf5 (VTEP3)
 show mac address-table address 00c1.ab00.0011
 show vxlan address-table address 00c1.ab00.0011
 ```
@@ -971,14 +971,14 @@ show vxlan address-table address 00c1.ab00.0011
 **Test L3 VXLAN (VRF gold):**
 
 ```bash
-# On host2
+# On dc-server2
 ping 10.78.78.104 -c 3
 
-# On leaf3 (VTEP2)
+# On dc-leaf3 (VTEP2)
 show ip route vrf gold 10.78.78.0/24
 show bgp evpn route-type ip-prefix ipv4 10.78.78.0/24
 
-# On leaf7 (VTEP4)
+# On dc-leaf7 (VTEP4)
 show ip route vrf gold 10.34.34.0/24
 ```
 

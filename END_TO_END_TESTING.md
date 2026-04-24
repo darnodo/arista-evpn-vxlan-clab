@@ -22,19 +22,19 @@ This document provides a step-by-step guide to test the EVPN VXLAN fabric after 
 ### 1. Check MLAG Status on All Leaf Pairs
 
 ```bash
-# Leaf Pair 1 (leaf1 & leaf2)
+# Leaf Pair 1 (dc-leaf1 & dc-leaf2)
 ssh admin@clab-arista-evpn-fabric-leaf1 "show mlag detail"
 ssh admin@clab-arista-evpn-fabric-leaf2 "show mlag detail"
 
-# Leaf Pair 2 (leaf3 & leaf4)
+# Leaf Pair 2 (dc-leaf3 & dc-leaf4)
 ssh admin@clab-arista-evpn-fabric-leaf3 "show mlag detail"
 ssh admin@clab-arista-evpn-fabric-leaf4 "show mlag detail"
 
-# Leaf Pair 3 (leaf5 & leaf6)
+# Leaf Pair 3 (dc-leaf5 & dc-leaf6)
 ssh admin@clab-arista-evpn-fabric-leaf5 "show mlag detail"
 ssh admin@clab-arista-evpn-fabric-leaf6 "show mlag detail"
 
-# Leaf Pair 4 (leaf7 & leaf8)
+# Leaf Pair 4 (dc-leaf7 & dc-leaf8)
 ssh admin@clab-arista-evpn-fabric-leaf7 "show mlag detail"
 ssh admin@clab-arista-evpn-fabric-leaf8 "show mlag detail"
 ```
@@ -69,11 +69,11 @@ ssh admin@clab-arista-evpn-fabric-leaf1 "show bgp evpn summary"
 #### Step 1: Verify Host Network Interfaces
 
 ```bash
-# Check host1 VLAN interface
+# Check dc-server1 VLAN interface
 docker exec clab-arista-evpn-fabric-host1 ip -d link show bond0.40
 docker exec clab-arista-evpn-fabric-host1 ip addr show bond0.40
 
-# Check host3 VLAN interface
+# Check dc-server3 VLAN interface
 docker exec clab-arista-evpn-fabric-host3 ip -d link show bond0.40
 docker exec clab-arista-evpn-fabric-host3 ip addr show bond0.40
 ```
@@ -103,12 +103,12 @@ timeout 10 docker exec clab-arista-evpn-fabric-host1 ping -c 4 10.40.40.103
 # On Leaf1 - check local MAC learning
 ssh admin@clab-arista-evpn-fabric-leaf1 "show mac address-table vlan 40"
 
-# Expected: MAC from host1 should appear on Port-Channel1
+# Expected: MAC from dc-server1 should appear on Port-Channel1
 
 # On Leaf5 - check MAC learning
 ssh admin@clab-arista-evpn-fabric-leaf5 "show mac address-table vlan 40"
 
-# Expected: MAC from host3 should appear on Port-Channel1
+# Expected: MAC from dc-server3 should appear on Port-Channel1
 ```
 
 #### Step 5: Verify VXLAN Learning
@@ -132,8 +132,8 @@ ssh admin@clab-arista-evpn-fabric-leaf1 "show vxlan address-table"
 ssh admin@clab-arista-evpn-fabric-leaf1 "show bgp evpn route-type mac-ip"
 
 # Expected:
-# - Local MAC (host1) with RD 65001:110040
-# - Remote MAC (host3) with RD 65003:110040 pointing to VTEP 10.0.255.13
+# - Local MAC (dc-server1) with RD 65001:110040
+# - Remote MAC (dc-server3) with RD 65003:110040 pointing to VTEP 10.0.255.13
 ```
 
 ## L3 VXLAN Testing (VRF gold)
@@ -147,11 +147,11 @@ ssh admin@clab-arista-evpn-fabric-leaf1 "show bgp evpn route-type mac-ip"
 #### Step 1: Verify Host Network Interfaces
 
 ```bash
-# Check host2 VLAN interface
+# Check dc-server2 VLAN interface
 docker exec clab-arista-evpn-fabric-host2 ip -d link show bond0.34
 docker exec clab-arista-evpn-fabric-host2 ip addr show bond0.34
 
-# Check host4 VLAN interface
+# Check dc-server4 VLAN interface
 docker exec clab-arista-evpn-fabric-host4 ip -d link show bond0.78
 docker exec clab-arista-evpn-fabric-host4 ip addr show bond0.78
 ```
