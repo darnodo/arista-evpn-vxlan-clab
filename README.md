@@ -36,7 +36,7 @@ Key design choices:
 
 - ContainerLab
 - Docker
-- Arista cEOS image: `ceos:4.35.0`
+- Arista cEOS image: `ceos:4.36.0`
 
 ### Deploy the Lab
 
