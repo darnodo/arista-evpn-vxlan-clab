@@ -58,9 +58,9 @@
   <!-- Campus border leafs -->
   <g class="node node-border">
     <rect x="160" y="400" width="110" height="34" rx="4"/>
-    <text x="215" y="421" text-anchor="middle">border-leaf-campus1</text>
+    <text x="215" y="421" text-anchor="middle">campus-border-leaf1</text>
     <rect x="330" y="400" width="110" height="34" rx="4"/>
-    <text x="385" y="421" text-anchor="middle">border-leaf-campus2</text>
+    <text x="385" y="421" text-anchor="middle">campus-border-leaf2</text>
   </g>
 
   <!-- Campus access row -->
@@ -99,7 +99,7 @@
   <path class="link" d="M 405 174 L 300  260"/>
   <path class="link" d="M 405 174 L 400  260"/>
 
-  <!-- Campus spines -> border-leaf-campus -->
+  <!-- Campus spines -> campus-border-leaf -->
   <path class="link" d="M 195 174 L 215 400"/>
   <path class="link" d="M 195 174 L 385 400"/>
   <path class="link" d="M 405 174 L 215 400"/>
@@ -146,61 +146,61 @@
   <!-- DC spines row -->
   <g class="node node-spine">
     <rect x="1160" y="140" width="60" height="34" rx="4"/>
-    <text x="1190" y="161" text-anchor="middle">spine1</text>
+    <text x="1190" y="161" text-anchor="middle">dc-spine1</text>
     <rect x="1380" y="140" width="60" height="34" rx="4"/>
-    <text x="1410" y="161" text-anchor="middle">spine2</text>
+    <text x="1410" y="161" text-anchor="middle">dc-spine2</text>
   </g>
 
   <!-- DC leafs row (8) -->
   <g class="node node-leaf">
     <rect x="1060" y="260" width="60" height="34" rx="4"/>
-    <text x="1090" y="281" text-anchor="middle">leaf1</text>
+    <text x="1090" y="281" text-anchor="middle">dc-leaf1</text>
     <rect x="1125" y="260" width="60" height="34" rx="4"/>
-    <text x="1155" y="281" text-anchor="middle">leaf2</text>
+    <text x="1155" y="281" text-anchor="middle">dc-leaf2</text>
     <rect x="1190" y="260" width="60" height="34" rx="4"/>
-    <text x="1220" y="281" text-anchor="middle">leaf3</text>
+    <text x="1220" y="281" text-anchor="middle">dc-leaf3</text>
     <rect x="1255" y="260" width="60" height="34" rx="4"/>
-    <text x="1285" y="281" text-anchor="middle">leaf4</text>
+    <text x="1285" y="281" text-anchor="middle">dc-leaf4</text>
     <rect x="1320" y="260" width="60" height="34" rx="4"/>
-    <text x="1350" y="281" text-anchor="middle">leaf5</text>
+    <text x="1350" y="281" text-anchor="middle">dc-leaf5</text>
     <rect x="1385" y="260" width="60" height="34" rx="4"/>
-    <text x="1415" y="281" text-anchor="middle">leaf6</text>
+    <text x="1415" y="281" text-anchor="middle">dc-leaf6</text>
     <rect x="1450" y="260" width="60" height="34" rx="4"/>
-    <text x="1480" y="281" text-anchor="middle">leaf7</text>
+    <text x="1480" y="281" text-anchor="middle">dc-leaf7</text>
     <rect x="1515" y="260" width="60" height="34" rx="4"/>
-    <text x="1545" y="281" text-anchor="middle">leaf8</text>
+    <text x="1545" y="281" text-anchor="middle">dc-leaf8</text>
   </g>
 
   <!-- DC border leafs -->
   <g class="node node-border">
     <rect x="1090" y="400" width="100" height="34" rx="4"/>
-    <text x="1140" y="421" text-anchor="middle">border-leaf-dc1</text>
+    <text x="1140" y="421" text-anchor="middle">dc-border-leaf1</text>
     <rect x="1260" y="400" width="100" height="34" rx="4"/>
-    <text x="1310" y="421" text-anchor="middle">border-leaf-dc2</text>
+    <text x="1310" y="421" text-anchor="middle">dc-border-leaf2</text>
   </g>
 
   <!-- DC access -->
   <g class="node node-access">
     <rect x="1065" y="530" width="60" height="30" rx="4"/>
-    <text x="1095" y="550" text-anchor="middle">access1</text>
+    <text x="1095" y="550" text-anchor="middle">dc-access1</text>
     <rect x="1195" y="530" width="60" height="30" rx="4"/>
-    <text x="1225" y="550" text-anchor="middle">access2</text>
+    <text x="1225" y="550" text-anchor="middle">dc-access2</text>
     <rect x="1325" y="530" width="60" height="30" rx="4"/>
-    <text x="1355" y="550" text-anchor="middle">access3</text>
+    <text x="1355" y="550" text-anchor="middle">dc-access3</text>
     <rect x="1455" y="530" width="60" height="30" rx="4"/>
-    <text x="1485" y="550" text-anchor="middle">access4</text>
+    <text x="1485" y="550" text-anchor="middle">dc-access4</text>
   </g>
 
   <!-- DC hosts -->
   <g class="node node-host">
     <rect x="1065" y="640" width="60" height="30" rx="4"/>
-    <text x="1095" y="660" text-anchor="middle">host1</text>
+    <text x="1095" y="660" text-anchor="middle">dc-server1</text>
     <rect x="1195" y="640" width="60" height="30" rx="4"/>
-    <text x="1225" y="660" text-anchor="middle">host2</text>
+    <text x="1225" y="660" text-anchor="middle">dc-server2</text>
     <rect x="1325" y="640" width="60" height="30" rx="4"/>
-    <text x="1355" y="660" text-anchor="middle">host3</text>
+    <text x="1355" y="660" text-anchor="middle">dc-server3</text>
     <rect x="1455" y="640" width="60" height="30" rx="4"/>
-    <text x="1485" y="660" text-anchor="middle">host4</text>
+    <text x="1485" y="660" text-anchor="middle">dc-server4</text>
   </g>
 
   <!-- DC labels -->
@@ -233,7 +233,7 @@
     <path class="link" d="M 1410 174 L 1415 260"/>
     <path class="link" d="M 1410 174 L 1480 260"/>
     <path class="link" d="M 1410 174 L 1545 260"/>
-    <!-- spine -> border-leaf-dc -->
+    <!-- dc-spine -> dc-border-leaf -->
     <path class="link" d="M 1190 174 L 1140 400"/>
     <path class="link" d="M 1190 174 L 1310 400"/>
     <path class="link" d="M 1410 174 L 1140 400"/>

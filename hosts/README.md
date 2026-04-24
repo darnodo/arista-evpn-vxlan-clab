@@ -6,10 +6,10 @@ This directory contains network interface configuration files for Alpine Linux h
 
 ### DC hosts
 
-- `host1_interfaces` - Configuration for host1 (VLAN 40, IP 10.40.40.101)
-- `host2_interfaces` - Configuration for host2 (VLAN 34, IP 10.34.34.102)
-- `host3_interfaces` - Configuration for host3 (VLAN 40, IP 10.40.40.103)
-- `host4_interfaces` - Configuration for host4 (VLAN 78, IP 10.78.78.104)
+- `dc-server1_interfaces` - Configuration for dc-server1 (VLAN 40, IP 10.40.40.101)
+- `dc-server2_interfaces` - Configuration for dc-server2 (VLAN 34, IP 10.34.34.102)
+- `dc-server3_interfaces` - Configuration for dc-server3 (VLAN 40, IP 10.40.40.103)
+- `dc-server4_interfaces` - Configuration for dc-server4 (VLAN 78, IP 10.78.78.104)
 
 ### Campus hosts
 
@@ -17,19 +17,19 @@ Campus hosts are **single-attached** to a Campus access switch (enterprise user 
 pattern — no LACP bond, no VLAN trunking on the host side). Each host sits in a single
 access VLAN that maps to VRF `gold`.
 
-- `campus-host1_interfaces` - Configuration for campus-host1 (VLAN 60 VRF gold 10.60.60.101/24, GW 10.60.60.1)
-- `campus-host2_interfaces` - Configuration for campus-host2 (VLAN 70 VRF gold 10.60.70.102/24, GW 10.60.70.1)
+- `campus-dc-server1_interfaces` - Configuration for campus-host1 (VLAN 60 VRF gold 10.60.60.101/24, GW 10.60.60.1)
+- `campus-dc-server2_interfaces` - Configuration for campus-host2 (VLAN 70 VRF gold 10.60.70.102/24, GW 10.60.70.1)
 
 ## Usage
 
 Each file is mounted to `/etc/network/interfaces` in its respective host container via ContainerLab's `binds` feature:
 
 ```yaml
-host1:
+dc-server1:
     kind: linux
     image: alpine:latest
     binds:
-        - hosts/host1_interfaces:/etc/network/interfaces
+        - hosts/dc-server1_interfaces:/etc/network/interfaces
 ```
 
 ## Format

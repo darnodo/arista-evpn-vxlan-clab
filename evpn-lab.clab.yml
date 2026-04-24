@@ -16,94 +16,94 @@ topology:
         # =====================================================
 
         # DC Spine Switches (AS 65000)
-        spine1:
+        dc-spine1:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.1
-            startup-config: configs/spine1.cfg
+            startup-config: configs/dc-spine1.cfg
 
-        spine2:
+        dc-spine2:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.2
-            startup-config: configs/spine2.cfg
+            startup-config: configs/dc-spine2.cfg
 
         # DC Leaf Switches - VTEP1 (AS 65001)
-        leaf1:
+        dc-leaf1:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.25
-            startup-config: configs/leaf1.cfg
+            startup-config: configs/dc-leaf1.cfg
 
-        leaf2:
+        dc-leaf2:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.50
-            startup-config: configs/leaf2.cfg
+            startup-config: configs/dc-leaf2.cfg
 
         # DC Leaf Switches - VTEP2 (AS 65002)
-        leaf3:
+        dc-leaf3:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.27
-            startup-config: configs/leaf3.cfg
+            startup-config: configs/dc-leaf3.cfg
 
-        leaf4:
+        dc-leaf4:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.28
-            startup-config: configs/leaf4.cfg
+            startup-config: configs/dc-leaf4.cfg
 
         # DC Leaf Switches - VTEP3 (AS 65003)
-        leaf5:
+        dc-leaf5:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.29
-            startup-config: configs/leaf5.cfg
+            startup-config: configs/dc-leaf5.cfg
 
-        leaf6:
+        dc-leaf6:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.30
-            startup-config: configs/leaf6.cfg
+            startup-config: configs/dc-leaf6.cfg
 
         # DC Leaf Switches - VTEP4 (AS 65004)
-        leaf7:
+        dc-leaf7:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.31
-            startup-config: configs/leaf7.cfg
+            startup-config: configs/dc-leaf7.cfg
 
-        leaf8:
+        dc-leaf8:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.32
-            startup-config: configs/leaf8.cfg
+            startup-config: configs/dc-leaf8.cfg
 
         # DC Border Leafs - MLAG pair (AS 65005)
-        border-leaf-dc1:
+        dc-border-leaf1:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.3
-            startup-config: configs/border-leaf-dc1.cfg
+            startup-config: configs/dc-border-leaf1.cfg
 
-        border-leaf-dc2:
+        dc-border-leaf2:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.4
-            startup-config: configs/border-leaf-dc2.cfg
+            startup-config: configs/dc-border-leaf2.cfg
 
         # DC Access Switches - L2 only
-        access1:
+        dc-access1:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.41
-            startup-config: configs/access1.cfg
+            startup-config: configs/dc-access1.cfg
 
-        access2:
+        dc-access2:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.42
-            startup-config: configs/access2.cfg
+            startup-config: configs/dc-access2.cfg
 
-        access3:
+        dc-access3:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.43
-            startup-config: configs/access3.cfg
+            startup-config: configs/dc-access3.cfg
 
-        access4:
+        dc-access4:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.44
-            startup-config: configs/access4.cfg
+            startup-config: configs/dc-access4.cfg
 
         # DC Host devices - dual-homed with LACP bonding
-        host1:
+        dc-server1:
             kind: linux
             mgmt-ipv4: 172.16.0.101
             image: ghcr.io/hellt/network-multitool
@@ -124,7 +124,7 @@ topology:
                 - ip link set bond0.40 up
                 - ip addr add 10.40.40.101/24 dev bond0.40
 
-        host2:
+        dc-server2:
             kind: linux
             mgmt-ipv4: 172.16.0.102
             image: ghcr.io/hellt/network-multitool
@@ -147,7 +147,7 @@ topology:
                 - ip route add 10.78.78.0/24 via 10.34.34.1
                 - ip route add 10.60.0.0/16 via 10.34.34.1
 
-        host3:
+        dc-server3:
             kind: linux
             mgmt-ipv4: 172.16.0.103
             image: ghcr.io/hellt/network-multitool
@@ -168,14 +168,14 @@ topology:
                 - ip link set bond0.40 up
                 - ip addr add 10.40.40.103/24 dev bond0.40
 
-        host4:
+        dc-server4:
             kind: linux
             mgmt-ipv4: 172.16.0.104
             image: ghcr.io/hellt/network-multitool
             cap-add:
                 - NET_ADMIN
             binds:
-                - hosts/host4_interfaces:/etc/network/interfaces
+                - hosts/dc-server4_interfaces:/etc/network/interfaces
             exec:
                 - ip link add bond0 type bond mode 802.3ad
                 - ip link set dev bond0 type bond xmit_hash_policy layer3+4
@@ -224,15 +224,15 @@ topology:
             startup-config: configs/campus-spine2.cfg
 
         # Campus Border Leafs - MLAG pair (AS 66005)
-        border-leaf-campus1:
+        campus-border-leaf1:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.22
-            startup-config: configs/border-leaf-campus1.cfg
+            startup-config: configs/campus-border-leaf1.cfg
 
-        border-leaf-campus2:
+        campus-border-leaf2:
             kind: arista_ceos
             mgmt-ipv4: 172.16.0.23
-            startup-config: configs/border-leaf-campus2.cfg
+            startup-config: configs/campus-border-leaf2.cfg
 
         # Campus Leafs - VTEP1 (AS 66001)
         campus-leaf1:
@@ -296,71 +296,71 @@ topology:
         # =====================================================
 
         # Spine1 to Leaf/Border-Leaf connections (underlay)
-        - endpoints: ["spine1:eth1", "leaf1:eth11"]
-        - endpoints: ["spine1:eth2", "leaf2:eth11"]
-        - endpoints: ["spine1:eth3", "leaf3:eth11"]
-        - endpoints: ["spine1:eth4", "leaf4:eth11"]
-        - endpoints: ["spine1:eth5", "leaf5:eth11"]
-        - endpoints: ["spine1:eth6", "leaf6:eth11"]
-        - endpoints: ["spine1:eth7", "leaf7:eth11"]
-        - endpoints: ["spine1:eth8", "leaf8:eth11"]
-        - endpoints: ["spine1:eth9", "border-leaf-dc1:eth11"]
-        - endpoints: ["spine1:eth10", "border-leaf-dc2:eth11"]
+        - endpoints: ["dc-spine1:eth1", "dc-leaf1:eth11"]
+        - endpoints: ["dc-spine1:eth2", "dc-leaf2:eth11"]
+        - endpoints: ["dc-spine1:eth3", "dc-leaf3:eth11"]
+        - endpoints: ["dc-spine1:eth4", "dc-leaf4:eth11"]
+        - endpoints: ["dc-spine1:eth5", "dc-leaf5:eth11"]
+        - endpoints: ["dc-spine1:eth6", "dc-leaf6:eth11"]
+        - endpoints: ["dc-spine1:eth7", "dc-leaf7:eth11"]
+        - endpoints: ["dc-spine1:eth8", "dc-leaf8:eth11"]
+        - endpoints: ["dc-spine1:eth9", "dc-border-leaf1:eth11"]
+        - endpoints: ["dc-spine1:eth10", "dc-border-leaf2:eth11"]
 
         # Spine2 to Leaf/Border-Leaf connections (underlay)
-        - endpoints: ["spine2:eth1", "leaf1:eth12"]
-        - endpoints: ["spine2:eth2", "leaf2:eth12"]
-        - endpoints: ["spine2:eth3", "leaf3:eth12"]
-        - endpoints: ["spine2:eth4", "leaf4:eth12"]
-        - endpoints: ["spine2:eth5", "leaf5:eth12"]
-        - endpoints: ["spine2:eth6", "leaf6:eth12"]
-        - endpoints: ["spine2:eth7", "leaf7:eth12"]
-        - endpoints: ["spine2:eth8", "leaf8:eth12"]
-        - endpoints: ["spine2:eth9", "border-leaf-dc1:eth12"]
-        - endpoints: ["spine2:eth10", "border-leaf-dc2:eth12"]
+        - endpoints: ["dc-spine2:eth1", "dc-leaf1:eth12"]
+        - endpoints: ["dc-spine2:eth2", "dc-leaf2:eth12"]
+        - endpoints: ["dc-spine2:eth3", "dc-leaf3:eth12"]
+        - endpoints: ["dc-spine2:eth4", "dc-leaf4:eth12"]
+        - endpoints: ["dc-spine2:eth5", "dc-leaf5:eth12"]
+        - endpoints: ["dc-spine2:eth6", "dc-leaf6:eth12"]
+        - endpoints: ["dc-spine2:eth7", "dc-leaf7:eth12"]
+        - endpoints: ["dc-spine2:eth8", "dc-leaf8:eth12"]
+        - endpoints: ["dc-spine2:eth9", "dc-border-leaf1:eth12"]
+        - endpoints: ["dc-spine2:eth10", "dc-border-leaf2:eth12"]
 
         # DC MLAG Peer Links (leaf pairs + border-leaf pair)
-        - endpoints: ["leaf1:eth10", "leaf2:eth10"]
-        - endpoints: ["leaf3:eth10", "leaf4:eth10"]
-        - endpoints: ["leaf5:eth10", "leaf6:eth10"]
-        - endpoints: ["leaf7:eth10", "leaf8:eth10"]
-        - endpoints: ["border-leaf-dc1:eth10", "border-leaf-dc2:eth10"]
+        - endpoints: ["dc-leaf1:eth10", "dc-leaf2:eth10"]
+        - endpoints: ["dc-leaf3:eth10", "dc-leaf4:eth10"]
+        - endpoints: ["dc-leaf5:eth10", "dc-leaf6:eth10"]
+        - endpoints: ["dc-leaf7:eth10", "dc-leaf8:eth10"]
+        - endpoints: ["dc-border-leaf1:eth10", "dc-border-leaf2:eth10"]
 
         # DC Access switch uplinks to leaf MLAG pairs (dual-homed via LACP)
-        - endpoints: ["leaf1:eth1", "access1:eth1"]
-        - endpoints: ["leaf2:eth1", "access1:eth2"]
-        - endpoints: ["leaf3:eth1", "access2:eth1"]
-        - endpoints: ["leaf4:eth1", "access2:eth2"]
-        - endpoints: ["leaf5:eth1", "access3:eth1"]
-        - endpoints: ["leaf6:eth1", "access3:eth2"]
-        - endpoints: ["leaf7:eth1", "access4:eth1"]
-        - endpoints: ["leaf8:eth1", "access4:eth2"]
+        - endpoints: ["dc-leaf1:eth1", "dc-access1:eth1"]
+        - endpoints: ["dc-leaf2:eth1", "dc-access1:eth2"]
+        - endpoints: ["dc-leaf3:eth1", "dc-access2:eth1"]
+        - endpoints: ["dc-leaf4:eth1", "dc-access2:eth2"]
+        - endpoints: ["dc-leaf5:eth1", "dc-access3:eth1"]
+        - endpoints: ["dc-leaf6:eth1", "dc-access3:eth2"]
+        - endpoints: ["dc-leaf7:eth1", "dc-access4:eth1"]
+        - endpoints: ["dc-leaf8:eth1", "dc-access4:eth2"]
 
         # DC Host connections to access switches (dual-homed via LACP)
-        - endpoints: ["access1:eth3", "host1:eth1"]
-        - endpoints: ["access1:eth4", "host1:eth2"]
-        - endpoints: ["access2:eth3", "host2:eth1"]
-        - endpoints: ["access2:eth4", "host2:eth2"]
-        - endpoints: ["access3:eth3", "host3:eth1"]
-        - endpoints: ["access3:eth4", "host3:eth2"]
-        - endpoints: ["access4:eth3", "host4:eth1"]
-        - endpoints: ["access4:eth4", "host4:eth2"]
+        - endpoints: ["dc-access1:eth3", "dc-server1:eth1"]
+        - endpoints: ["dc-access1:eth4", "dc-server1:eth2"]
+        - endpoints: ["dc-access2:eth3", "dc-server2:eth1"]
+        - endpoints: ["dc-access2:eth4", "dc-server2:eth2"]
+        - endpoints: ["dc-access3:eth3", "dc-server3:eth1"]
+        - endpoints: ["dc-access3:eth4", "dc-server3:eth2"]
+        - endpoints: ["dc-access4:eth3", "dc-server4:eth1"]
+        - endpoints: ["dc-access4:eth4", "dc-server4:eth2"]
 
         # =====================================================
         # CORE INTERCONNECT (DC Border Leafs <-> Core <-> Campus Border Leafs)
         # =====================================================
 
         # DC Border Leafs to Core routers (4 links)
-        - endpoints: ["border-leaf-dc1:eth13", "core1:eth1"]
-        - endpoints: ["border-leaf-dc1:eth14", "core2:eth1"]
-        - endpoints: ["border-leaf-dc2:eth13", "core1:eth2"]
-        - endpoints: ["border-leaf-dc2:eth14", "core2:eth2"]
+        - endpoints: ["dc-border-leaf1:eth13", "core1:eth1"]
+        - endpoints: ["dc-border-leaf1:eth14", "core2:eth1"]
+        - endpoints: ["dc-border-leaf2:eth13", "core1:eth2"]
+        - endpoints: ["dc-border-leaf2:eth14", "core2:eth2"]
 
         # Campus Border Leafs to Core routers (4 links)
-        - endpoints: ["border-leaf-campus1:eth13", "core1:eth3"]
-        - endpoints: ["border-leaf-campus1:eth14", "core2:eth3"]
-        - endpoints: ["border-leaf-campus2:eth13", "core1:eth4"]
-        - endpoints: ["border-leaf-campus2:eth14", "core2:eth4"]
+        - endpoints: ["campus-border-leaf1:eth13", "core1:eth3"]
+        - endpoints: ["campus-border-leaf1:eth14", "core2:eth3"]
+        - endpoints: ["campus-border-leaf2:eth13", "core1:eth4"]
+        - endpoints: ["campus-border-leaf2:eth14", "core2:eth4"]
 
         # Core routers interconnect
         - endpoints: ["core1:eth5", "core2:eth5"]
@@ -374,21 +374,21 @@ topology:
         - endpoints: ["campus-spine1:eth2", "campus-leaf2:eth11"]
         - endpoints: ["campus-spine1:eth3", "campus-leaf3:eth11"]
         - endpoints: ["campus-spine1:eth4", "campus-leaf4:eth11"]
-        - endpoints: ["campus-spine1:eth5", "border-leaf-campus1:eth11"]
-        - endpoints: ["campus-spine1:eth6", "border-leaf-campus2:eth11"]
+        - endpoints: ["campus-spine1:eth5", "campus-border-leaf1:eth11"]
+        - endpoints: ["campus-spine1:eth6", "campus-border-leaf2:eth11"]
 
         # Campus Spine2 to Leafs/Border-Leafs (underlay)
         - endpoints: ["campus-spine2:eth1", "campus-leaf1:eth12"]
         - endpoints: ["campus-spine2:eth2", "campus-leaf2:eth12"]
         - endpoints: ["campus-spine2:eth3", "campus-leaf3:eth12"]
         - endpoints: ["campus-spine2:eth4", "campus-leaf4:eth12"]
-        - endpoints: ["campus-spine2:eth5", "border-leaf-campus1:eth12"]
-        - endpoints: ["campus-spine2:eth6", "border-leaf-campus2:eth12"]
+        - endpoints: ["campus-spine2:eth5", "campus-border-leaf1:eth12"]
+        - endpoints: ["campus-spine2:eth6", "campus-border-leaf2:eth12"]
 
         # Campus MLAG Peer Links (leaf pairs + border-leaf pair)
         - endpoints: ["campus-leaf1:eth10", "campus-leaf2:eth10"]
         - endpoints: ["campus-leaf3:eth10", "campus-leaf4:eth10"]
-        - endpoints: ["border-leaf-campus1:eth10", "border-leaf-campus2:eth10"]
+        - endpoints: ["campus-border-leaf1:eth10", "campus-border-leaf2:eth10"]
 
         # Campus Access switch uplinks to leaf MLAG pairs (dual-homed via LACP)
         - endpoints: ["campus-leaf1:eth1", "campus-access1:eth1"]
