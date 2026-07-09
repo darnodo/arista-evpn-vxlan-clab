@@ -135,6 +135,7 @@ Host-facing ports:
 | dc-leaf3-8      | 172.16.0.27-32 | campus-host1        | 172.16.0.105     |
 | dc-access1-4    | 172.16.0.41-44 | campus-host2        | 172.16.0.106     |
 |                 |                | gnmic               | 172.16.0.70      |
+|                 |                | prometheus          | 172.16.0.71      |
 
 Gateway: `172.16.0.254`.
 
@@ -346,12 +347,39 @@ Subscriptions (see issue #44 for the path-selection rationale):
   non-numeric leaves, so the `state-to-int` event-processor maps them to `1`/`0`
 - Prometheus exporter: `http://clab-arista-evpn-fabric-gnmic:9273/metrics`
 
+A `prometheus` container node (`prom/prometheus`, `172.16.0.71:9090`) scrapes the
+gnmic exporter every `5s` and is deployed inside the topology (`clab deploy`/`clab
+destroy`, self-contained — see issue #45). Metric names are kept as-is; raw
+OpenConfig-flattened labels are relabeled to clean, joinable names:
+
+| Raw label                       | Clean label       |
+| -------------------------------- | ------------------ |
+| `source`                         | `device`           |
+| `interface_name`                 | `interface`        |
+| `neighbor_neighbor_address`      | `neighbor_address` |
+| `vlan_to_vni_vlan` / `entry_vlan` | `vlan`             |
+| `entry_mac_address`              | `mac_address`      |
+| `afi_safi_afi_safi_name`         | `afi_safi`         |
+
+`vni` is **not** available as a native label on any gnmic-exported metric — it
+only appears as the sample *value* of
+`interfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni`, keyed by
+`(device, interface, vlan)`. Per-VNI MAC counts require a PromQL join on `vlan`
+rather than a native `vni` label.
+
+- Config: `configs/prometheus/prometheus.yml`
+- This is separate from, and does not replace, the existing external Prometheus
+  instance — no cutover yet, both run in parallel pending validation
+
 ```bash
 # Validate gnmic is subscribed and streaming from all targets
 docker logs clab-arista-evpn-fabric-gnmic
 
 # Scrape the Prometheus exporter directly
 docker exec clab-arista-evpn-fabric-gnmic wget -qO- http://localhost:9273/metrics | head
+
+# Query the in-topology Prometheus instance
+curl -s 'http://172.16.0.71:9090/api/v1/query?query=system_memory_state_used' | jq
 ```
 
 ## 📁 Repository Structure
@@ -375,8 +403,10 @@ arista-evpn-vxlan-clab/
 │   ├── campus-leaf1.cfg … campus-leaf4.cfg
 │   ├── campus-border-leaf1.cfg, campus-border-leaf2.cfg
 │   ├── campus-access1.cfg, campus-access2.cfg
-│   └── gnmic/
-│       └── gnmic-config.yml
+│   ├── gnmic/
+│   │   └── gnmic-config.yml
+│   └── prometheus/
+│       └── prometheus.yml
 └── hosts/
     ├── README.md
     ├── dc-server1_interfaces … dc-server4_interfaces

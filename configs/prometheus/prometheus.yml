@@ -1,0 +1,82 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: gnmic
+    static_configs:
+      - targets: ["172.16.0.70:9273"]
+    metric_relabel_configs:
+      # device: raw label is "source" (gnmic subscription target)
+      - source_labels: [source]
+        target_label: device
+        regex: (.+)
+        replacement: $1
+        action: replace
+      - action: labeldrop
+        regex: source
+
+      # interface: raw label is already "interface_name" (OpenConfig key on the
+      # "interface" path element) — normalize to "interface" for consistency
+      - source_labels: [interface_name]
+        target_label: interface
+        regex: (.+)
+        replacement: $1
+        action: replace
+      - action: labeldrop
+        regex: interface_name
+
+      # BGP neighbor address: raw label is double-prefixed "neighbor_neighbor_address"
+      # (OpenConfig path flattening — key name matches the path element name),
+      # see issue #44
+      - source_labels: [neighbor_neighbor_address]
+        target_label: neighbor_address
+        regex: (.+)
+        replacement: $1
+        action: replace
+      - action: labeldrop
+        regex: neighbor_neighbor_address
+
+      # VLAN id: normalize the two raw spellings ("vlan_to_vni_vlan" on the
+      # VLAN-to-VNI mapping, "entry_vlan" on FDB entries) to a single "vlan" label
+      - source_labels: [vlan_to_vni_vlan]
+        target_label: vlan
+        regex: (.+)
+        replacement: $1
+        action: replace
+      - action: labeldrop
+        regex: vlan_to_vni_vlan
+      - source_labels: [entry_vlan]
+        target_label: vlan
+        regex: (.+)
+        replacement: $1
+        action: replace
+      - action: labeldrop
+        regex: entry_vlan
+
+      # NOTE: "vni" is NOT available as a label from any gnmic-exported metric.
+      # The VNI only appears as the sample *value* of
+      # interfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni,
+      # keyed by (device, interface, vlan). Relabeling can only rename existing
+      # labels, not promote a value to a label. Per-VNI MAC counts therefore
+      # require a PromQL join (vlan_to_vni_state_vni joined with the FDB
+      # entry count, grouped by vlan) rather than a native "vni" label — see
+      # issue #45 for the documented gap.
+
+      # MAC address on FDB entries: drop the "entry_" prefix for consistency
+      - source_labels: [entry_mac_address]
+        target_label: mac_address
+        regex: (.+)
+        replacement: $1
+        action: replace
+      - action: labeldrop
+        regex: entry_mac_address
+
+      # AFI/SAFI on BGP prefix counters: drop the flattened prefix
+      - source_labels: [afi_safi_afi_safi_name]
+        target_label: afi_safi
+        regex: (.+)
+        replacement: $1
+        action: replace
+      - action: labeldrop
+        regex: afi_safi_afi_safi_name
