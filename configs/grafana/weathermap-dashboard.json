@@ -24,43 +24,43 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "aflu2t514uf40a"
+          "uid": "cfrlusac89se8a"
         },
         "targets": [
           {
             "refId": "A",
-            "expr": "min by (device) (network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state{network_instance_name=\"default\", device=~\"campus\\-spine1|dc\\-spine1|dc\\-spine2|campus\\-spine2|campus\\-border\\-leaf1|dc\\-leaf1|campus\\-border\\-leaf2|dc\\-leaf4|dc\\-leaf3|dc\\-leaf5|dc\\-border\\-leaf1|dc\\-leaf6|dc\\-access1|dc\\-access2|dc\\-leaf8|dc\\-leaf7|dc\\-access4|dc\\-access3|dc\\-border\\-leaf2|dc\\-leaf2|campus\\-leaf1|campus\\-access1|campus\\-leaf2|campus\\-leaf3|campus\\-access2|campus\\-leaf4|core1|core2\"})",
+            "expr": "min by (device) (network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state{network_instance_name=\"default\", device=~\"campus-spine1|dc-spine1|dc-spine2|campus-spine2|campus-border-leaf1|dc-leaf1|campus-border-leaf2|dc-leaf4|dc-leaf3|dc-leaf5|dc-border-leaf1|dc-leaf6|dc-access1|dc-access2|dc-leaf8|dc-leaf7|dc-access4|dc-access3|dc-border-leaf2|dc-leaf2|campus-leaf1|campus-access1|campus-leaf2|campus-leaf3|campus-access2|campus-leaf4|core1|core2\"})",
             "legendFormat": "BGP {{device}}",
             "datasource": {
               "type": "prometheus",
-              "uid": "aflu2t514uf40a"
+              "uid": "cfrlusac89se8a"
             }
           },
           {
             "refId": "B",
-            "expr": "rate(interfaces_interface_state_counters_out_octets{device=~\"campus\\-spine1|dc\\-spine1|dc\\-spine2|campus\\-spine2|campus\\-border\\-leaf1|dc\\-leaf1|campus\\-border\\-leaf2|dc\\-leaf4|dc\\-leaf3|dc\\-leaf5|dc\\-border\\-leaf1|dc\\-leaf6|dc\\-access1|dc\\-access2|dc\\-leaf8|dc\\-leaf7|dc\\-access4|dc\\-access3|dc\\-border\\-leaf2|dc\\-leaf2|campus\\-leaf1|campus\\-access1|campus\\-leaf2|campus\\-leaf3|campus\\-access2|campus\\-leaf4|core1|core2\", interface=~\"Ethernet1|Ethernet10|Ethernet11|Ethernet12|Ethernet13|Ethernet14|Ethernet2|Ethernet3|Ethernet4|Ethernet5|Ethernet6|Ethernet7|Ethernet8|Ethernet9\"}[5m]) * 8",
+            "expr": "rate(interfaces_interface_state_counters_out_octets{device=~\"campus-spine1|dc-spine1|dc-spine2|campus-spine2|campus-border-leaf1|dc-leaf1|campus-border-leaf2|dc-leaf4|dc-leaf3|dc-leaf5|dc-border-leaf1|dc-leaf6|dc-access1|dc-access2|dc-leaf8|dc-leaf7|dc-access4|dc-access3|dc-border-leaf2|dc-leaf2|campus-leaf1|campus-access1|campus-leaf2|campus-leaf3|campus-access2|campus-leaf4|core1|core2\", interface=~\"Ethernet1|Ethernet10|Ethernet11|Ethernet12|Ethernet13|Ethernet14|Ethernet2|Ethernet3|Ethernet4|Ethernet5|Ethernet6|Ethernet7|Ethernet8|Ethernet9\"}[5m]) * 8",
             "legendFormat": "{{device}} {{interface}} tx",
             "datasource": {
               "type": "prometheus",
-              "uid": "aflu2t514uf40a"
+              "uid": "cfrlusac89se8a"
             }
           },
           {
             "refId": "C",
-            "expr": "rate(interfaces_interface_state_counters_in_octets{device=~\"campus\\-spine1|dc\\-spine1|dc\\-spine2|campus\\-spine2|campus\\-border\\-leaf1|dc\\-leaf1|campus\\-border\\-leaf2|dc\\-leaf4|dc\\-leaf3|dc\\-leaf5|dc\\-border\\-leaf1|dc\\-leaf6|dc\\-access1|dc\\-access2|dc\\-leaf8|dc\\-leaf7|dc\\-access4|dc\\-access3|dc\\-border\\-leaf2|dc\\-leaf2|campus\\-leaf1|campus\\-access1|campus\\-leaf2|campus\\-leaf3|campus\\-access2|campus\\-leaf4|core1|core2\", interface=~\"Ethernet1|Ethernet10|Ethernet11|Ethernet12|Ethernet13|Ethernet14|Ethernet2|Ethernet3|Ethernet4|Ethernet5|Ethernet6|Ethernet7|Ethernet8|Ethernet9\"}[5m]) * 8",
+            "expr": "rate(interfaces_interface_state_counters_in_octets{device=~\"campus-spine1|dc-spine1|dc-spine2|campus-spine2|campus-border-leaf1|dc-leaf1|campus-border-leaf2|dc-leaf4|dc-leaf3|dc-leaf5|dc-border-leaf1|dc-leaf6|dc-access1|dc-access2|dc-leaf8|dc-leaf7|dc-access4|dc-access3|dc-border-leaf2|dc-leaf2|campus-leaf1|campus-access1|campus-leaf2|campus-leaf3|campus-access2|campus-leaf4|core1|core2\", interface=~\"Ethernet1|Ethernet10|Ethernet11|Ethernet12|Ethernet13|Ethernet14|Ethernet2|Ethernet3|Ethernet4|Ethernet5|Ethernet6|Ethernet7|Ethernet8|Ethernet9\"}[5m]) * 8",
             "legendFormat": "{{device}} {{interface}} rx",
             "datasource": {
               "type": "prometheus",
-              "uid": "aflu2t514uf40a"
+              "uid": "cfrlusac89se8a"
             }
           },
           {
             "refId": "D",
-            "expr": "count by (device, vlan) (network_instances_network_instance_fdb_mac_table_entries_entry_vlan{device=~\"campus\\-leaf1|campus\\-leaf2|campus\\-leaf3|campus\\-leaf4|dc\\-leaf1|dc\\-leaf2|dc\\-leaf5|dc\\-leaf6\"})\n* on(device, vlan) group_left(vlan_to_vni_state_vni)\ninterfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni{device=~\"campus\\-leaf1|campus\\-leaf2|campus\\-leaf3|campus\\-leaf4|dc\\-leaf1|dc\\-leaf2|dc\\-leaf5|dc\\-leaf6\"}",
+            "expr": "count by (device, vlan) (network_instances_network_instance_fdb_mac_table_entries_entry_vlan{device=~\"campus-leaf1|campus-leaf2|campus-leaf3|campus-leaf4|dc-leaf1|dc-leaf2|dc-leaf5|dc-leaf6\"})\n* on(device, vlan) group_left(vlan_to_vni_state_vni)\ninterfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni{device=~\"campus-leaf1|campus-leaf2|campus-leaf3|campus-leaf4|dc-leaf1|dc-leaf2|dc-leaf5|dc-leaf6\"}",
             "legendFormat": "VNI {{device}} {{vlan}}",
             "datasource": {
               "type": "prometheus",
-              "uid": "aflu2t514uf40a"
+              "uid": "cfrlusac89se8a"
             }
           }
         ],

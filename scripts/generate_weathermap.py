@@ -149,6 +149,15 @@ def alias_interface(ipf_name):
     return f"{full}{rest}"
 
 
+def promql_escape(s):
+    """re.escape() escapes '-' as '\\-', which Python's own regex engine
+    accepts but PromQL's RE2-based engine rejects ("unknown escape sequence
+    U+002D '-'") -- and every hostname in this lab contains hyphens. '-' is
+    not a regex metacharacter outside a character class, so it's safe to
+    leave unescaped."""
+    return re.escape(s).replace("\\-", "-")
+
+
 # --------------------------------------------------------------------------
 # Topology processing
 # --------------------------------------------------------------------------
@@ -211,7 +220,7 @@ def dedupe_links(connectivity_matrix):
 
 def build_weathermap(devices, links, interface_speeds, positions, prometheus_url, mismatches):
     hostnames = [d["hostname"] for d in devices]
-    host_regex = "|".join(re.escape(h) for h in hostnames)
+    host_regex = "|".join(promql_escape(h) for h in hostnames)
 
     known_pairs = known_interface_pairs(prometheus_url)
     vtep_vlan_pairs = known_vtep_vlan_pairs(prometheus_url)
@@ -259,8 +268,8 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
     for link in links:
         a_gnmic_int = resolve_and_check(link["a_host"], link["a_int"], "side A")
         z_gnmic_int = resolve_and_check(link["z_host"], link["z_int"], "side Z")
-        interface_regex_parts.add(re.escape(a_gnmic_int))
-        interface_regex_parts.add(re.escape(z_gnmic_int))
+        interface_regex_parts.add(promql_escape(a_gnmic_int))
+        interface_regex_parts.add(promql_escape(z_gnmic_int))
 
         a_bw = interface_speeds.get((link["a_host"], link["a_int"]), DEFAULT_LINK_BANDWIDTH_BPS)
         z_bw = interface_speeds.get((link["z_host"], link["z_int"]), DEFAULT_LINK_BANDWIDTH_BPS)
@@ -311,7 +320,7 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
         },
     ]
     if vtep_hosts:
-        vtep_regex = "|".join(re.escape(h) for h in vtep_hosts)
+        vtep_regex = "|".join(promql_escape(h) for h in vtep_hosts)
         # Verbatim join from #44 "VXLAN (MAC count per VNI)", scoped to VTEP nodes.
         targets.append({
             "refId": "D",
