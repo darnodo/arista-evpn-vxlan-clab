@@ -20,8 +20,8 @@ Environment:
     GRAFANA_TOKEN     required with --provision
     GRAFANA_DATASOURCE_UID  Prometheus datasource UID in Grafana, required with --provision
     GRAFANA_DASHBOARD_UID  default "evpn-vxlan-fabric-weathermap"
-    GRAFANA_WEATHERMAP_PLUGIN_ID  default "allamiro-weathermap-panel" -- confirm
-        against the actually installed plugin id before provisioning.
+    GRAFANA_WEATHERMAP_PLUGIN_ID  default "tamirsuliman-weathermap-panel" -- override
+        if a different weathermap-ng fork/plugin id is installed.
 """
 import argparse
 import json
@@ -458,7 +458,7 @@ def main():
 
     dashboard_uid = env("GRAFANA_DASHBOARD_UID", "evpn-vxlan-fabric-weathermap")
     datasource_uid = env("GRAFANA_DATASOURCE_UID", "PROMETHEUS_DATASOURCE_UID_PLACEHOLDER")
-    plugin_id = env("GRAFANA_WEATHERMAP_PLUGIN_ID", "allamiro-weathermap-panel")
+    plugin_id = env("GRAFANA_WEATHERMAP_PLUGIN_ID", "tamirsuliman-weathermap-panel")
     dashboard_payload = build_dashboard(weathermap, targets, dashboard_uid, datasource_uid, plugin_id)
 
     os.makedirs(os.path.dirname(args.output) or ".", exist_ok=True)
