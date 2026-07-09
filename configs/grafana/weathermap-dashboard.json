@@ -1,0 +1,3301 @@
+{
+  "dashboard": {
+    "uid": "evpn-vxlan-fabric-weathermap",
+    "title": "EVPN/VXLAN Fabric Weathermap",
+    "tags": [
+      "evpn",
+      "vxlan",
+      "weathermap",
+      "auto-generated"
+    ],
+    "timezone": "browser",
+    "schemaVersion": 39,
+    "version": 0,
+    "panels": [
+      {
+        "id": 1,
+        "type": "tamirsuliman-weathermap-panel",
+        "title": "Fabric Weathermap",
+        "gridPos": {
+          "h": 24,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "aflu2t514uf40a"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "min by (device) (network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state{network_instance_name=\"default\", device=~\"campus\\-spine1|dc\\-spine1|dc\\-spine2|campus\\-spine2|campus\\-border\\-leaf1|dc\\-leaf1|campus\\-border\\-leaf2|dc\\-leaf4|dc\\-leaf3|dc\\-leaf5|dc\\-border\\-leaf1|dc\\-leaf6|dc\\-access1|dc\\-access2|dc\\-leaf8|dc\\-leaf7|dc\\-access4|dc\\-access3|dc\\-border\\-leaf2|dc\\-leaf2|campus\\-leaf1|campus\\-access1|campus\\-leaf2|campus\\-leaf3|campus\\-access2|campus\\-leaf4|core1|core2\"})",
+            "legendFormat": "BGP {{device}}",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "aflu2t514uf40a"
+            }
+          },
+          {
+            "refId": "B",
+            "expr": "rate(interfaces_interface_state_counters_out_octets{device=~\"campus\\-spine1|dc\\-spine1|dc\\-spine2|campus\\-spine2|campus\\-border\\-leaf1|dc\\-leaf1|campus\\-border\\-leaf2|dc\\-leaf4|dc\\-leaf3|dc\\-leaf5|dc\\-border\\-leaf1|dc\\-leaf6|dc\\-access1|dc\\-access2|dc\\-leaf8|dc\\-leaf7|dc\\-access4|dc\\-access3|dc\\-border\\-leaf2|dc\\-leaf2|campus\\-leaf1|campus\\-access1|campus\\-leaf2|campus\\-leaf3|campus\\-access2|campus\\-leaf4|core1|core2\", interface=~\"Ethernet1|Ethernet10|Ethernet11|Ethernet12|Ethernet13|Ethernet14|Ethernet2|Ethernet3|Ethernet4|Ethernet5|Ethernet6|Ethernet7|Ethernet8|Ethernet9\"}[5m]) * 8",
+            "legendFormat": "{{device}} {{interface}} tx",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "aflu2t514uf40a"
+            }
+          },
+          {
+            "refId": "C",
+            "expr": "rate(interfaces_interface_state_counters_in_octets{device=~\"campus\\-spine1|dc\\-spine1|dc\\-spine2|campus\\-spine2|campus\\-border\\-leaf1|dc\\-leaf1|campus\\-border\\-leaf2|dc\\-leaf4|dc\\-leaf3|dc\\-leaf5|dc\\-border\\-leaf1|dc\\-leaf6|dc\\-access1|dc\\-access2|dc\\-leaf8|dc\\-leaf7|dc\\-access4|dc\\-access3|dc\\-border\\-leaf2|dc\\-leaf2|campus\\-leaf1|campus\\-access1|campus\\-leaf2|campus\\-leaf3|campus\\-access2|campus\\-leaf4|core1|core2\", interface=~\"Ethernet1|Ethernet10|Ethernet11|Ethernet12|Ethernet13|Ethernet14|Ethernet2|Ethernet3|Ethernet4|Ethernet5|Ethernet6|Ethernet7|Ethernet8|Ethernet9\"}[5m]) * 8",
+            "legendFormat": "{{device}} {{interface}} rx",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "aflu2t514uf40a"
+            }
+          },
+          {
+            "refId": "D",
+            "expr": "count by (device, vlan) (network_instances_network_instance_fdb_mac_table_entries_entry_vlan{device=~\"campus\\-leaf1|campus\\-leaf2|campus\\-leaf3|campus\\-leaf4|dc\\-leaf1|dc\\-leaf2|dc\\-leaf5|dc\\-leaf6\"})\n* on(device, vlan) group_left(vlan_to_vni_state_vni)\ninterfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni{device=~\"campus\\-leaf1|campus\\-leaf2|campus\\-leaf3|campus\\-leaf4|dc\\-leaf1|dc\\-leaf2|dc\\-leaf5|dc\\-leaf6\"}",
+            "legendFormat": "VNI {{device}} {{vlan}}",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "aflu2t514uf40a"
+            }
+          }
+        ],
+        "options": {
+          "weathermap": {
+            "version": 14,
+            "id": "evpn-vxlan-fabric-weathermap",
+            "nodes": [
+              {
+                "id": "campus-spine1",
+                "label": "campus-spine1",
+                "position": [
+                  460,
+                  900
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-spine1",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-spine1",
+                "label": "dc-spine1",
+                "position": [
+                  460,
+                  300
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-spine1",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-spine2",
+                "label": "dc-spine2",
+                "position": [
+                  640,
+                  300
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-spine2",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "campus-spine2",
+                "label": "campus-spine2",
+                "position": [
+                  640,
+                  900
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-spine2",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "campus-border-leaf1",
+                "label": "campus-border-leaf1",
+                "position": [
+                  460,
+                  750
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-border-leaf1",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-leaf1",
+                "label": "dc-leaf1",
+                "position": [
+                  100,
+                  150
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-leaf1",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ],
+                "tooltipMetrics": [
+                  {
+                    "label": "VNI dc-leaf1 40",
+                    "query": "VNI dc-leaf1 40",
+                    "units": "MACs"
+                  }
+                ]
+              },
+              {
+                "id": "campus-border-leaf2",
+                "label": "campus-border-leaf2",
+                "position": [
+                  640,
+                  750
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-border-leaf2",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-leaf4",
+                "label": "dc-leaf4",
+                "position": [
+                  640,
+                  150
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-leaf4",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-leaf3",
+                "label": "dc-leaf3",
+                "position": [
+                  460,
+                  150
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-leaf3",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-leaf5",
+                "label": "dc-leaf5",
+                "position": [
+                  820,
+                  150
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-leaf5",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ],
+                "tooltipMetrics": [
+                  {
+                    "label": "VNI dc-leaf5 40",
+                    "query": "VNI dc-leaf5 40",
+                    "units": "MACs"
+                  }
+                ]
+              },
+              {
+                "id": "dc-border-leaf1",
+                "label": "dc-border-leaf1",
+                "position": [
+                  820,
+                  0
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-border-leaf1",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-leaf6",
+                "label": "dc-leaf6",
+                "position": [
+                  1000,
+                  150
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-leaf6",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ],
+                "tooltipMetrics": [
+                  {
+                    "label": "VNI dc-leaf6 40",
+                    "query": "VNI dc-leaf6 40",
+                    "units": "MACs"
+                  }
+                ]
+              },
+              {
+                "id": "dc-access1",
+                "label": "dc-access1",
+                "position": [
+                  100,
+                  0
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-access1",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-access2",
+                "label": "dc-access2",
+                "position": [
+                  280,
+                  0
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-access2",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-leaf8",
+                "label": "dc-leaf8",
+                "position": [
+                  280,
+                  300
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-leaf8",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-leaf7",
+                "label": "dc-leaf7",
+                "position": [
+                  100,
+                  300
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-leaf7",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-access4",
+                "label": "dc-access4",
+                "position": [
+                  640,
+                  0
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-access4",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-access3",
+                "label": "dc-access3",
+                "position": [
+                  460,
+                  0
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-access3",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-border-leaf2",
+                "label": "dc-border-leaf2",
+                "position": [
+                  1000,
+                  0
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-border-leaf2",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "dc-leaf2",
+                "label": "dc-leaf2",
+                "position": [
+                  280,
+                  150
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP dc-leaf2",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ],
+                "tooltipMetrics": [
+                  {
+                    "label": "VNI dc-leaf2 40",
+                    "query": "VNI dc-leaf2 40",
+                    "units": "MACs"
+                  }
+                ]
+              },
+              {
+                "id": "campus-leaf1",
+                "label": "campus-leaf1",
+                "position": [
+                  820,
+                  750
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-leaf1",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ],
+                "tooltipMetrics": [
+                  {
+                    "label": "VNI campus-leaf1 50",
+                    "query": "VNI campus-leaf1 50",
+                    "units": "MACs"
+                  }
+                ]
+              },
+              {
+                "id": "campus-access1",
+                "label": "campus-access1",
+                "position": [
+                  100,
+                  750
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-access1",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "campus-leaf2",
+                "label": "campus-leaf2",
+                "position": [
+                  1000,
+                  750
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-leaf2",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ],
+                "tooltipMetrics": [
+                  {
+                    "label": "VNI campus-leaf2 50",
+                    "query": "VNI campus-leaf2 50",
+                    "units": "MACs"
+                  }
+                ]
+              },
+              {
+                "id": "campus-leaf3",
+                "label": "campus-leaf3",
+                "position": [
+                  100,
+                  900
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-leaf3",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ],
+                "tooltipMetrics": [
+                  {
+                    "label": "VNI campus-leaf3 50",
+                    "query": "VNI campus-leaf3 50",
+                    "units": "MACs"
+                  }
+                ]
+              },
+              {
+                "id": "campus-access2",
+                "label": "campus-access2",
+                "position": [
+                  280,
+                  750
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-access2",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "campus-leaf4",
+                "label": "campus-leaf4",
+                "position": [
+                  280,
+                  900
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP campus-leaf4",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ],
+                "tooltipMetrics": [
+                  {
+                    "label": "VNI campus-leaf4 50",
+                    "query": "VNI campus-leaf4 50",
+                    "units": "MACs"
+                  }
+                ]
+              },
+              {
+                "id": "core1",
+                "label": "core1",
+                "position": [
+                  100,
+                  450
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP core1",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              },
+              {
+                "id": "core2",
+                "label": "core2",
+                "position": [
+                  280,
+                  450
+                ],
+                "isConnection": false,
+                "useConstantSpacing": false,
+                "compactVerticalLinks": false,
+                "padding": {
+                  "horizontal": 12,
+                  "vertical": 6
+                },
+                "colors": {
+                  "font": "#ffffff",
+                  "background": "#22252b",
+                  "border": "#5794F2",
+                  "statusDown": "#F2495C"
+                },
+                "nodeIcon": null,
+                "statusQuery": "BGP core2",
+                "nodeStatusColorTarget": "border",
+                "statusValueMappings": [
+                  {
+                    "value": 0,
+                    "color": "#F2495C"
+                  },
+                  {
+                    "value": 1,
+                    "color": "#73BF69"
+                  }
+                ]
+              }
+            ],
+            "links": [
+              {
+                "id": "campus-border-leaf2-Ethernet11--campus-spine1-Ethernet6",
+                "nodes": [
+                  {
+                    "id": "campus-border-leaf2"
+                  },
+                  {
+                    "id": "campus-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf2 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine1 Ethernet6 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf1-Ethernet11--campus-spine1-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "campus-leaf1"
+                  },
+                  {
+                    "id": "campus-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf1 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine1 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf2-Ethernet11--campus-spine1-Ethernet2",
+                "nodes": [
+                  {
+                    "id": "campus-leaf2"
+                  },
+                  {
+                    "id": "campus-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf2 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine1 Ethernet2 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf3-Ethernet11--campus-spine1-Ethernet3",
+                "nodes": [
+                  {
+                    "id": "campus-leaf3"
+                  },
+                  {
+                    "id": "campus-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf3 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine1 Ethernet3 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf4-Ethernet11--campus-spine1-Ethernet4",
+                "nodes": [
+                  {
+                    "id": "campus-leaf4"
+                  },
+                  {
+                    "id": "campus-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf4 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine1 Ethernet4 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf1-Ethernet11--dc-spine1-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-leaf1"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf1 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf4-Ethernet11--dc-spine1-Ethernet4",
+                "nodes": [
+                  {
+                    "id": "dc-leaf4"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf4 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet4 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf3-Ethernet11--dc-spine1-Ethernet3",
+                "nodes": [
+                  {
+                    "id": "dc-leaf3"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf3 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet3 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf5-Ethernet11--dc-spine1-Ethernet5",
+                "nodes": [
+                  {
+                    "id": "dc-leaf5"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf5 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet5 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-border-leaf1-Ethernet11--dc-spine1-Ethernet9",
+                "nodes": [
+                  {
+                    "id": "dc-border-leaf1"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf1 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet9 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf6-Ethernet11--dc-spine1-Ethernet6",
+                "nodes": [
+                  {
+                    "id": "dc-leaf6"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf6 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet6 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf7-Ethernet11--dc-spine1-Ethernet7",
+                "nodes": [
+                  {
+                    "id": "dc-leaf7"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf7 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet7 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-border-leaf2-Ethernet11--dc-spine1-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "dc-border-leaf2"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf2 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf2-Ethernet11--dc-spine1-Ethernet2",
+                "nodes": [
+                  {
+                    "id": "dc-leaf2"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf2 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet2 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf1-Ethernet12--campus-spine2-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "campus-leaf1"
+                  },
+                  {
+                    "id": "campus-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf1 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine2 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf2-Ethernet12--campus-spine2-Ethernet2",
+                "nodes": [
+                  {
+                    "id": "campus-leaf2"
+                  },
+                  {
+                    "id": "campus-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf2 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine2 Ethernet2 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-border-leaf1-Ethernet11--campus-spine1-Ethernet5",
+                "nodes": [
+                  {
+                    "id": "campus-border-leaf1"
+                  },
+                  {
+                    "id": "campus-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf1 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine1 Ethernet5 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-border-leaf1-Ethernet12--campus-spine2-Ethernet5",
+                "nodes": [
+                  {
+                    "id": "campus-border-leaf1"
+                  },
+                  {
+                    "id": "campus-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf1 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine2 Ethernet5 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-border-leaf1-Ethernet10--campus-border-leaf2-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "campus-border-leaf1"
+                  },
+                  {
+                    "id": "campus-border-leaf2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf1 Ethernet10 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf2 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-border-leaf1-Ethernet13--core1-Ethernet3",
+                "nodes": [
+                  {
+                    "id": "campus-border-leaf1"
+                  },
+                  {
+                    "id": "core1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf1 Ethernet13 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "core1 Ethernet3 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-border-leaf1-Ethernet14--core2-Ethernet3",
+                "nodes": [
+                  {
+                    "id": "campus-border-leaf1"
+                  },
+                  {
+                    "id": "core2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf1 Ethernet14 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "core2 Ethernet3 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf1-Ethernet12--dc-spine2-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-leaf1"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf1 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-access1-Ethernet1--dc-leaf1-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-access1"
+                  },
+                  {
+                    "id": "dc-leaf1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-access1 Ethernet1 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf1 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf1-Ethernet10--dc-leaf2-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "dc-leaf1"
+                  },
+                  {
+                    "id": "dc-leaf2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf1 Ethernet10 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf2 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-border-leaf2-Ethernet12--campus-spine2-Ethernet6",
+                "nodes": [
+                  {
+                    "id": "campus-border-leaf2"
+                  },
+                  {
+                    "id": "campus-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf2 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine2 Ethernet6 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-border-leaf2-Ethernet13--core1-Ethernet4",
+                "nodes": [
+                  {
+                    "id": "campus-border-leaf2"
+                  },
+                  {
+                    "id": "core1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf2 Ethernet13 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "core1 Ethernet4 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-border-leaf2-Ethernet14--core2-Ethernet4",
+                "nodes": [
+                  {
+                    "id": "campus-border-leaf2"
+                  },
+                  {
+                    "id": "core2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-border-leaf2 Ethernet14 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "core2 Ethernet4 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf4-Ethernet12--dc-spine2-Ethernet4",
+                "nodes": [
+                  {
+                    "id": "dc-leaf4"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf4 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet4 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf3-Ethernet10--dc-leaf4-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "dc-leaf3"
+                  },
+                  {
+                    "id": "dc-leaf4"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf3 Ethernet10 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf4 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf3-Ethernet12--dc-spine2-Ethernet3",
+                "nodes": [
+                  {
+                    "id": "dc-leaf3"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf3 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet3 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf5-Ethernet12--dc-spine2-Ethernet5",
+                "nodes": [
+                  {
+                    "id": "dc-leaf5"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf5 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet5 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf5-Ethernet10--dc-leaf6-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "dc-leaf5"
+                  },
+                  {
+                    "id": "dc-leaf6"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf5 Ethernet10 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf6 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-access3-Ethernet1--dc-leaf5-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-access3"
+                  },
+                  {
+                    "id": "dc-leaf5"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-access3 Ethernet1 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf5 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-border-leaf1-Ethernet12--dc-spine2-Ethernet9",
+                "nodes": [
+                  {
+                    "id": "dc-border-leaf1"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf1 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet9 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "core1-Ethernet1--dc-border-leaf1-Ethernet13",
+                "nodes": [
+                  {
+                    "id": "core1"
+                  },
+                  {
+                    "id": "dc-border-leaf1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "core1 Ethernet1 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf1 Ethernet13 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf6-Ethernet12--dc-spine2-Ethernet6",
+                "nodes": [
+                  {
+                    "id": "dc-leaf6"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf6 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet6 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-access1-Ethernet2--dc-leaf2-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-access1"
+                  },
+                  {
+                    "id": "dc-leaf2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-access1 Ethernet2 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf2 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-access2-Ethernet2--dc-leaf4-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-access2"
+                  },
+                  {
+                    "id": "dc-leaf4"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-access2 Ethernet2 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf4 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-access2-Ethernet1--dc-leaf3-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-access2"
+                  },
+                  {
+                    "id": "dc-leaf3"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-access2 Ethernet1 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf3 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf8-Ethernet11--dc-spine1-Ethernet8",
+                "nodes": [
+                  {
+                    "id": "dc-leaf8"
+                  },
+                  {
+                    "id": "dc-spine1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf8 Ethernet11 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine1 Ethernet8 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf8-Ethernet12--dc-spine2-Ethernet8",
+                "nodes": [
+                  {
+                    "id": "dc-leaf8"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf8 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet8 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf7-Ethernet10--dc-leaf8-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "dc-leaf7"
+                  },
+                  {
+                    "id": "dc-leaf8"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf7 Ethernet10 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf8 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-access4-Ethernet2--dc-leaf8-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-access4"
+                  },
+                  {
+                    "id": "dc-leaf8"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-access4 Ethernet2 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf8 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf7-Ethernet12--dc-spine2-Ethernet7",
+                "nodes": [
+                  {
+                    "id": "dc-leaf7"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf7 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet7 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-access4-Ethernet1--dc-leaf7-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-access4"
+                  },
+                  {
+                    "id": "dc-leaf7"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-access4 Ethernet1 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf7 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-access3-Ethernet2--dc-leaf6-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "dc-access3"
+                  },
+                  {
+                    "id": "dc-leaf6"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-access3 Ethernet2 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf6 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-border-leaf2-Ethernet12--dc-spine2-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "dc-border-leaf2"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf2 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-border-leaf1-Ethernet10--dc-border-leaf2-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "dc-border-leaf1"
+                  },
+                  {
+                    "id": "dc-border-leaf2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf1 Ethernet10 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf2 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "core1-Ethernet2--dc-border-leaf2-Ethernet13",
+                "nodes": [
+                  {
+                    "id": "core1"
+                  },
+                  {
+                    "id": "dc-border-leaf2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "core1 Ethernet2 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf2 Ethernet13 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "core2-Ethernet2--dc-border-leaf2-Ethernet14",
+                "nodes": [
+                  {
+                    "id": "core2"
+                  },
+                  {
+                    "id": "dc-border-leaf2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "core2 Ethernet2 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf2 Ethernet14 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "dc-leaf2-Ethernet12--dc-spine2-Ethernet2",
+                "nodes": [
+                  {
+                    "id": "dc-leaf2"
+                  },
+                  {
+                    "id": "dc-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-leaf2 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-spine2 Ethernet2 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-access1-Ethernet1--campus-leaf1-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "campus-access1"
+                  },
+                  {
+                    "id": "campus-leaf1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-access1 Ethernet1 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf1 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-access1-Ethernet2--campus-leaf2-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "campus-access1"
+                  },
+                  {
+                    "id": "campus-leaf2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-access1 Ethernet2 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf2 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf1-Ethernet10--campus-leaf2-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "campus-leaf1"
+                  },
+                  {
+                    "id": "campus-leaf2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf1 Ethernet10 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf2 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf3-Ethernet12--campus-spine2-Ethernet3",
+                "nodes": [
+                  {
+                    "id": "campus-leaf3"
+                  },
+                  {
+                    "id": "campus-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf3 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine2 Ethernet3 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-access2-Ethernet1--campus-leaf3-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "campus-access2"
+                  },
+                  {
+                    "id": "campus-leaf3"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-access2 Ethernet1 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf3 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf4-Ethernet12--campus-spine2-Ethernet4",
+                "nodes": [
+                  {
+                    "id": "campus-leaf4"
+                  },
+                  {
+                    "id": "campus-spine2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf4 Ethernet12 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-spine2 Ethernet4 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-leaf3-Ethernet10--campus-leaf4-Ethernet10",
+                "nodes": [
+                  {
+                    "id": "campus-leaf3"
+                  },
+                  {
+                    "id": "campus-leaf4"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf3 Ethernet10 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf4 Ethernet10 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "campus-access2-Ethernet2--campus-leaf4-Ethernet1",
+                "nodes": [
+                  {
+                    "id": "campus-access2"
+                  },
+                  {
+                    "id": "campus-leaf4"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-access2 Ethernet2 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "campus-leaf4 Ethernet1 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "core2-Ethernet1--dc-border-leaf1-Ethernet14",
+                "nodes": [
+                  {
+                    "id": "core2"
+                  },
+                  {
+                    "id": "dc-border-leaf1"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "core2 Ethernet1 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "dc-border-leaf1 Ethernet14 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              },
+              {
+                "id": "core1-Ethernet5--core2-Ethernet5",
+                "nodes": [
+                  {
+                    "id": "core1"
+                  },
+                  {
+                    "id": "core2"
+                  }
+                ],
+                "sides": {
+                  "A": {
+                    "bandwidth": 1000000000,
+                    "query": "core1 Ethernet5 tx",
+                    "labelOffset": 55,
+                    "anchor": "Right",
+                    "dashboardLink": ""
+                  },
+                  "Z": {
+                    "bandwidth": 1000000000,
+                    "query": "core2 Ethernet5 rx",
+                    "labelOffset": 55,
+                    "anchor": "Left",
+                    "dashboardLink": ""
+                  }
+                },
+                "units": "bps",
+                "arrows": {
+                  "width": 8,
+                  "height": 10,
+                  "offset": 2
+                },
+                "stroke": 5,
+                "showThroughputPercentage": false
+              }
+            ],
+            "scale": [
+              {
+                "percent": 0,
+                "color": "#5794F2"
+              },
+              {
+                "percent": 70,
+                "color": "#FA6400"
+              },
+              {
+                "percent": 90,
+                "color": "#C4162A"
+              }
+            ],
+            "settings": {
+              "panel": {
+                "backgroundColor": "#212124",
+                "panelSize": {
+                  "width": 1600,
+                  "height": 1000
+                },
+                "zoomScale": 0,
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "showTimestamp": true,
+                "grid": {
+                  "enabled": false,
+                  "size": 10,
+                  "guidesEnabled": false
+                }
+              },
+              "link": {
+                "spacing": {
+                  "horizontal": 10,
+                  "vertical": 5
+                },
+                "stroke": {
+                  "color": "#CCCCDC"
+                },
+                "label": {
+                  "background": "#FFFFFF",
+                  "border": "#000000",
+                  "font": "#000000"
+                },
+                "showAllWithPercentage": false,
+                "defaultUnits": "bps"
+              },
+              "tooltip": {
+                "fontSize": 10,
+                "textColor": "#CCCCDC",
+                "backgroundColor": "#1A1B1F",
+                "inboundColor": "#73BF69",
+                "outboundColor": "#5794F2",
+                "scaleToBandwidth": false
+              },
+              "fontSizing": {
+                "node": 12,
+                "link": 10
+              },
+              "scale": {
+                "position": {
+                  "x": 0,
+                  "y": 0
+                },
+                "size": {
+                  "width": 150,
+                  "height": 100
+                },
+                "title": "Utilization",
+                "fontSizing": {
+                  "title": 10,
+                  "threshold": 9
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "overwrite": true
+}

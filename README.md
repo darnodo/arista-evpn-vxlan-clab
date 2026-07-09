@@ -382,6 +382,45 @@ docker exec clab-arista-evpn-fabric-gnmic wget -qO- http://localhost:9273/metric
 curl -s 'http://172.16.0.71:9090/api/v1/query?query=system_memory_state_used' | jq
 ```
 
+### Weathermap panel generation (dashboard-as-code)
+
+`scripts/generate_weathermap.py` generates a [weathermap-ng](https://github.com/allamiro/grafana-network-weathermap-ng)
+panel from live IPFabric topology + gnmic/Prometheus metrics, and writes a full
+Grafana dashboard-as-code JSON to `configs/grafana/weathermap-dashboard.json`
+(committed to Gitea as the source of truth, same pattern as the retired Flow
+Panel YAML). See issue #48 for the schema research this is built against.
+
+```bash
+export IPFABRIC_URL=https://<ipfabric-instance>
+export IPFABRIC_TOKEN=<token>
+python3 scripts/generate_weathermap.py                 # writes the JSON only
+
+export GRAFANA_URL=https://<external-grafana-instance>
+export GRAFANA_TOKEN=<token>
+export GRAFANA_DATASOURCE_UID=<prometheus-datasource-uid-in-grafana>
+python3 scripts/generate_weathermap.py --provision      # also provisions via the Grafana API
+```
+
+- Re-run after any topology change (`evpn-lab.clab.yml`) to regenerate and re-provision.
+- Node/link topology comes from IPFabric (`/tables/inventory/devices`,
+  `/tables/interfaces/connectivity-matrix`); node positions are computed as a
+  simple site-grouped grid (dc/core/campus bands) since IPFabric has no
+  layout data.
+- IPFabric reports abbreviated interface names (`Et11`) while gnmic exposes
+  full OpenConfig names (`Ethernet11`); the script aliases known prefixes
+  (`Et`→`Ethernet`, `Po`→`Port-Channel`, `Lo`→`Loopback`, `Vl`→`Vlan`,
+  `Ma`→`Management`) and cross-checks the result against the live exporter,
+  logging (not silently dropping) any link whose aliased name has no matching
+  series — the actual fix for a real mismatch belongs in gnmic interface
+  aliasing (#43), not in this script.
+- `.100`/`.200` subinterface rows in the connectivity-matrix (802.1Q tags used
+  for the gold VRF stitching on Core) are excluded — they ride the same
+  physical port as their parent interface and gnmic only exports physical
+  interface counters.
+- The Grafana panel plugin id (`GRAFANA_WEATHERMAP_PLUGIN_ID`, default
+  `allamiro-weathermap-panel`) is a placeholder — confirm it against the
+  actually installed plugin before provisioning.
+
 ## 📁 Repository Structure
 
 ```
@@ -405,8 +444,12 @@ arista-evpn-vxlan-clab/
 │   ├── campus-access1.cfg, campus-access2.cfg
 │   ├── gnmic/
 │   │   └── gnmic-config.yml
-│   └── prometheus/
-│       └── prometheus.yml
+│   ├── prometheus/
+│   │   └── prometheus.yml
+│   └── grafana/
+│       └── weathermap-dashboard.json
+├── scripts/
+│   └── generate_weathermap.py
 └── hosts/
     ├── README.md
     ├── dc-server1_interfaces … dc-server4_interfaces
