@@ -50,6 +50,12 @@ GRID_SPACING_X = 180
 GRID_SPACING_Y = 150
 SITE_BAND_Y = {"dc": 0, "core": 450, "campus": 750}
 
+# tamirsuliman-weathermap-panel's numeric anchor enum (Center=0, Top=1,
+# Bottom=2, Left=3, Right=4) -- reverse-engineered from module.js, since
+# link.sides.*.anchor and node.anchors{} both index by this numeric value,
+# not by the anchor name string.
+ANCHOR = {"Center": 0, "Top": 1, "Bottom": 2, "Left": 3, "Right": 4}
+
 NODE_COLORS = {"font": "#ffffff", "background": "#22252b", "border": "#5794F2", "statusDown": "#F2495C"}
 STATUS_VALUE_MAPPINGS = [{"value": 0, "color": "#F2495C"}, {"value": 1, "color": "#73BF69"}]
 DEFAULT_LINK_BANDWIDTH_BPS = 10_000_000_000  # 10G fallback when IPFabric speed is missing
@@ -238,6 +244,14 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
         return gnmic_int
 
     # -- nodes --
+    # anchors{} tallies how many link-sides attach to each anchor position on
+    # this node; every link below uses Right for its A side and Left for its
+    # Z side, so that's what gets counted per node here.
+    anchor_counts = {host: {a: 0 for a in ANCHOR.values()} for host in (d["hostname"] for d in devices)}
+    for link in links:
+        anchor_counts[link["a_host"]][ANCHOR["Right"]] += 1
+        anchor_counts[link["z_host"]][ANCHOR["Left"]] += 1
+
     nodes = []
     for dev in devices:
         host = dev["hostname"]
@@ -254,6 +268,7 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
             "statusQuery": f"BGP {host}",
             "nodeStatusColorTarget": "border",
             "statusValueMappings": [dict(m) for m in STATUS_VALUE_MAPPINGS],
+            "anchors": {a: {"numLinks": anchor_counts[host][a], "numFilledLinks": 0} for a in ANCHOR.values()},
         }
         if host in vtep_hosts:
             node["tooltipMetrics"] = [
@@ -285,12 +300,12 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
                 "A": {
                     "bandwidth": a_bw,
                     "query": f"{link['a_host']} {a_gnmic_int} tx",
-                    "labelOffset": 55, "anchor": "Right", "dashboardLink": "",
+                    "labelOffset": 55, "anchor": ANCHOR["Right"], "dashboardLink": "",
                 },
                 "Z": {
                     "bandwidth": z_bw,
                     "query": f"{link['z_host']} {z_gnmic_int} rx",
-                    "labelOffset": 55, "anchor": "Left", "dashboardLink": "",
+                    "labelOffset": 55, "anchor": ANCHOR["Left"], "dashboardLink": "",
                 },
             },
             "units": "bps",

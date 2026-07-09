@@ -101,7 +101,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 6,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-spine1",
@@ -135,7 +157,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 10,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-spine2",
@@ -169,7 +213,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 10,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "campus-spine2",
@@ -203,7 +269,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 6,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "campus-border-leaf1",
@@ -237,7 +325,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 5,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-leaf1",
@@ -272,6 +382,28 @@
                     "color": "#73BF69"
                   }
                 ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 1,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  }
+                },
                 "tooltipMetrics": [
                   {
                     "label": "VNI dc-leaf1 40",
@@ -312,7 +444,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 1,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 4,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-leaf4",
@@ -346,7 +500,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-leaf3",
@@ -380,7 +556,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 1,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-leaf5",
@@ -415,6 +613,28 @@
                     "color": "#73BF69"
                   }
                 ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 1,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  }
+                },
                 "tooltipMetrics": [
                   {
                     "label": "VNI dc-leaf5 40",
@@ -455,7 +675,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-leaf6",
@@ -490,6 +732,28 @@
                     "color": "#73BF69"
                   }
                 ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                },
                 "tooltipMetrics": [
                   {
                     "label": "VNI dc-leaf6 40",
@@ -530,7 +794,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-access2",
@@ -564,7 +850,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-leaf8",
@@ -598,7 +906,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-leaf7",
@@ -632,7 +962,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 1,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-access4",
@@ -666,7 +1018,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-access3",
@@ -700,7 +1074,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-border-leaf2",
@@ -734,7 +1130,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "dc-leaf2",
@@ -769,6 +1187,28 @@
                     "color": "#73BF69"
                   }
                 ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                },
                 "tooltipMetrics": [
                   {
                     "label": "VNI dc-leaf2 40",
@@ -810,6 +1250,28 @@
                     "color": "#73BF69"
                   }
                 ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 1,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  }
+                },
                 "tooltipMetrics": [
                   {
                     "label": "VNI campus-leaf1 50",
@@ -850,7 +1312,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "campus-leaf2",
@@ -885,6 +1369,28 @@
                     "color": "#73BF69"
                   }
                 ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                },
                 "tooltipMetrics": [
                   {
                     "label": "VNI campus-leaf2 50",
@@ -926,6 +1432,28 @@
                     "color": "#73BF69"
                   }
                 ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 1,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  }
+                },
                 "tooltipMetrics": [
                   {
                     "label": "VNI campus-leaf3 50",
@@ -966,7 +1494,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "campus-leaf4",
@@ -1001,6 +1551,28 @@
                     "color": "#73BF69"
                   }
                 ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                },
                 "tooltipMetrics": [
                   {
                     "label": "VNI campus-leaf4 50",
@@ -1041,7 +1613,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  }
+                }
               },
               {
                 "id": "core2",
@@ -1075,7 +1669,29 @@
                     "value": 1,
                     "color": "#73BF69"
                   }
-                ]
+                ],
+                "anchors": {
+                  "0": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "1": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "2": {
+                    "numLinks": 0,
+                    "numFilledLinks": 0
+                  },
+                  "3": {
+                    "numLinks": 3,
+                    "numFilledLinks": 0
+                  },
+                  "4": {
+                    "numLinks": 2,
+                    "numFilledLinks": 0
+                  }
+                }
               }
             ],
             "links": [
@@ -1094,14 +1710,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf2 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine1 Ethernet6 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1129,14 +1745,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf1 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine1 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1164,14 +1780,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf2 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine1 Ethernet2 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1199,14 +1815,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf3 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine1 Ethernet3 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1234,14 +1850,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf4 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine1 Ethernet4 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1269,14 +1885,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf1 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1304,14 +1920,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf4 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet4 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1339,14 +1955,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf3 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet3 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1374,14 +1990,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf5 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet5 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1409,14 +2025,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf1 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet9 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1444,14 +2060,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf6 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet6 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1479,14 +2095,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf7 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet7 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1514,14 +2130,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf2 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1549,14 +2165,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf2 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet2 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1584,14 +2200,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf1 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine2 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1619,14 +2235,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf2 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine2 Ethernet2 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1654,14 +2270,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf1 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine1 Ethernet5 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1689,14 +2305,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf1 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine2 Ethernet5 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1724,14 +2340,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf1 Ethernet10 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf2 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1759,14 +2375,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf1 Ethernet13 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "core1 Ethernet3 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1794,14 +2410,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf1 Ethernet14 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "core2 Ethernet3 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1829,14 +2445,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf1 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1864,14 +2480,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-access1 Ethernet1 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf1 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1899,14 +2515,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf1 Ethernet10 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf2 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1934,14 +2550,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf2 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine2 Ethernet6 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -1969,14 +2585,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf2 Ethernet13 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "core1 Ethernet4 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2004,14 +2620,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-border-leaf2 Ethernet14 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "core2 Ethernet4 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2039,14 +2655,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf4 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet4 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2074,14 +2690,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf3 Ethernet10 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf4 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2109,14 +2725,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf3 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet3 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2144,14 +2760,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf5 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet5 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2179,14 +2795,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf5 Ethernet10 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf6 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2214,14 +2830,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-access3 Ethernet1 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf5 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2249,14 +2865,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf1 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet9 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2284,14 +2900,14 @@
                     "bandwidth": 1000000000,
                     "query": "core1 Ethernet1 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf1 Ethernet13 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2319,14 +2935,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf6 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet6 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2354,14 +2970,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-access1 Ethernet2 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf2 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2389,14 +3005,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-access2 Ethernet2 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf4 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2424,14 +3040,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-access2 Ethernet1 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf3 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2459,14 +3075,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf8 Ethernet11 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine1 Ethernet8 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2494,14 +3110,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf8 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet8 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2529,14 +3145,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf7 Ethernet10 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf8 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2564,14 +3180,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-access4 Ethernet2 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf8 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2599,14 +3215,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf7 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet7 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2634,14 +3250,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-access4 Ethernet1 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf7 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2669,14 +3285,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-access3 Ethernet2 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-leaf6 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2704,14 +3320,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf2 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2739,14 +3355,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf1 Ethernet10 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf2 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2774,14 +3390,14 @@
                     "bandwidth": 1000000000,
                     "query": "core1 Ethernet2 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf2 Ethernet13 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2809,14 +3425,14 @@
                     "bandwidth": 1000000000,
                     "query": "core2 Ethernet2 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf2 Ethernet14 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2844,14 +3460,14 @@
                     "bandwidth": 1000000000,
                     "query": "dc-leaf2 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-spine2 Ethernet2 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2879,14 +3495,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-access1 Ethernet1 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-leaf1 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2914,14 +3530,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-access1 Ethernet2 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-leaf2 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2949,14 +3565,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf1 Ethernet10 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-leaf2 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -2984,14 +3600,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf3 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine2 Ethernet3 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -3019,14 +3635,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-access2 Ethernet1 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-leaf3 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -3054,14 +3670,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf4 Ethernet12 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-spine2 Ethernet4 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -3089,14 +3705,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-leaf3 Ethernet10 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-leaf4 Ethernet10 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -3124,14 +3740,14 @@
                     "bandwidth": 1000000000,
                     "query": "campus-access2 Ethernet2 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "campus-leaf4 Ethernet1 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -3159,14 +3775,14 @@
                     "bandwidth": 1000000000,
                     "query": "core2 Ethernet1 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "dc-border-leaf1 Ethernet14 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
@@ -3194,14 +3810,14 @@
                     "bandwidth": 1000000000,
                     "query": "core1 Ethernet5 tx",
                     "labelOffset": 55,
-                    "anchor": "Right",
+                    "anchor": 4,
                     "dashboardLink": ""
                   },
                   "Z": {
                     "bandwidth": 1000000000,
                     "query": "core2 Ethernet5 rx",
                     "labelOffset": 55,
-                    "anchor": "Left",
+                    "anchor": 3,
                     "dashboardLink": ""
                   }
                 },
