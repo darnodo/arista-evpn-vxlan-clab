@@ -314,7 +314,21 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
             "position": positions[host],
             "isConnection": False,
             "useConstantSpacing": False,
-            "compactVerticalLinks": False,
+            # True (not the plugin default) so rendered node HEIGHT is
+            # constant, decoupled from per-node link count -- see #54. Ground
+            # truth confirmed against the installed plugin's real module.js
+            # (not the #48 schema doc, which doesn't cover this): height is
+            # `fontSize + 2*padding.vertical` when compactVerticalLinks is
+            # true, unconditionally; when false, it's the larger of that or
+            # a term proportional to max(anchors[Left].numLinks,
+            # anchors[Right].numLinks) -- exactly why campus-leaf1 (3 links)
+            # and campus-leaf2 (4 links) rendered at different heights.
+            # Width is unaffected either way: it's always recomputed from
+            # the label text at render time (no override field exists), and
+            # useConstantSpacing only pulls in Top/Bottom anchor link count,
+            # which this generator never uses (links always attach
+            # Right/Left -- see anchor_counts above).
+            "compactVerticalLinks": True,
             "padding": {"horizontal": 12, "vertical": 6},
             "colors": dict(NODE_COLORS),
             "nodeIcon": None,

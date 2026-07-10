@@ -117,12 +117,12 @@
                 "id": "campus-spine1",
                 "label": "campus-spine1",
                 "position": [
-                  2595,
-                  93
+                  1600,
+                  80
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -173,12 +173,12 @@
                 "id": "dc-spine1",
                 "label": "dc-spine1",
                 "position": [
-                  -793,
-                  31
+                  350,
+                  80
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -229,12 +229,12 @@
                 "id": "dc-spine2",
                 "label": "dc-spine2",
                 "position": [
-                  -275,
-                  27
+                  750,
+                  80
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -285,12 +285,12 @@
                 "id": "campus-spine2",
                 "label": "campus-spine2",
                 "position": [
-                  2147,
-                  58
+                  1850,
+                  80
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -341,12 +341,12 @@
                 "id": "campus-border-leaf1",
                 "label": "campus-border-leaf1",
                 "position": [
-                  1744,
-                  -152
+                  1450,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -397,12 +397,12 @@
                 "id": "dc-leaf1",
                 "label": "dc-leaf1",
                 "position": [
-                  100,
-                  900
+                  80,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -460,12 +460,12 @@
                 "id": "campus-border-leaf2",
                 "label": "campus-border-leaf2",
                 "position": [
-                  1407,
-                  -163
+                  1555,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -516,12 +516,12 @@
                 "id": "dc-leaf4",
                 "label": "dc-leaf4",
                 "position": [
-                  -687,
-                  538
+                  395,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -572,12 +572,12 @@
                 "id": "dc-leaf3",
                 "label": "dc-leaf3",
                 "position": [
-                  -920,
-                  540
+                  290,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -628,12 +628,12 @@
                 "id": "dc-leaf5",
                 "label": "dc-leaf5",
                 "position": [
-                  -226,
-                  525
+                  500,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -691,12 +691,12 @@
                 "id": "dc-border-leaf1",
                 "label": "dc-border-leaf1",
                 "position": [
-                  215,
-                  -169
+                  920,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -747,12 +747,12 @@
                 "id": "dc-leaf6",
                 "label": "dc-leaf6",
                 "position": [
-                  56,
-                  532
+                  605,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -810,12 +810,12 @@
                 "id": "dc-access1",
                 "label": "dc-access1",
                 "position": [
-                  -1432,
-                  773
+                  132,
+                  440
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -866,12 +866,12 @@
                 "id": "dc-access2",
                 "label": "dc-access2",
                 "position": [
-                  -803,
-                  719
+                  342,
+                  440
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -922,12 +922,12 @@
                 "id": "dc-leaf8",
                 "label": "dc-leaf8",
                 "position": [
-                  816,
-                  553
+                  815,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -978,12 +978,12 @@
                 "id": "dc-leaf7",
                 "label": "dc-leaf7",
                 "position": [
-                  430,
-                  530
+                  710,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1034,12 +1034,12 @@
                 "id": "dc-access4",
                 "label": "dc-access4",
                 "position": [
-                  644,
-                  707
+                  762,
+                  440
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1090,12 +1090,12 @@
                 "id": "dc-access3",
                 "label": "dc-access3",
                 "position": [
-                  -87,
-                  704
+                  552,
+                  440
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1146,12 +1146,12 @@
                 "id": "dc-border-leaf2",
                 "label": "dc-border-leaf2",
                 "position": [
-                  595,
-                  -172
+                  1025,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1202,12 +1202,12 @@
                 "id": "dc-leaf2",
                 "label": "dc-leaf2",
                 "position": [
-                  -1289,
-                  532
+                  185,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1265,12 +1265,12 @@
                 "id": "campus-leaf1",
                 "label": "campus-leaf1",
                 "position": [
-                  1925,
-                  520
+                  1660,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1328,12 +1328,12 @@
                 "id": "campus-access1",
                 "label": "campus-access1",
                 "position": [
-                  2061,
-                  720
+                  1712,
+                  440
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1384,12 +1384,12 @@
                 "id": "campus-leaf2",
                 "label": "campus-leaf2",
                 "position": [
-                  2161,
-                  520
+                  1765,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1447,12 +1447,12 @@
                 "id": "campus-leaf3",
                 "label": "campus-leaf3",
                 "position": [
-                  2585,
-                  510
+                  1870,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1510,12 +1510,12 @@
                 "id": "campus-access2",
                 "label": "campus-access2",
                 "position": [
-                  2955,
-                  521
+                  1922,
+                  440
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1566,12 +1566,12 @@
                 "id": "campus-leaf4",
                 "label": "campus-leaf4",
                 "position": [
-                  2812,
-                  731
+                  1975,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1629,12 +1629,12 @@
                 "id": "core1",
                 "label": "core1",
                 "position": [
-                  912,
-                  71
+                  1150,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
@@ -1685,12 +1685,12 @@
                 "id": "core2",
                 "label": "core2",
                 "position": [
-                  1251,
-                  90
+                  1280,
+                  260
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
-                "compactVerticalLinks": false,
+                "compactVerticalLinks": true,
                 "padding": {
                   "horizontal": 12,
                   "vertical": 6
