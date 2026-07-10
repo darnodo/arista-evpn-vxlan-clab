@@ -66,7 +66,7 @@
   <path class="arrow" d="M765,120 L765,210" stroke-dasharray="3,3"/>
 
   <!-- read-back for position preservation -->
-  <path class="arrow" d="M765,270 C 560,325 400,325 320,262" stroke-dasharray="3,3"/>
+  <path class="arrow" d="M765,270 C 620,330 490,300 420,275" stroke-dasharray="3,3"/>
   <text class="caption" x="545" y="325" text-anchor="middle">live node positions read back before each regeneration (see #53)</text>
 
 </svg>
