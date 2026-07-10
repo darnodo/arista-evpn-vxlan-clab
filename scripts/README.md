@@ -8,10 +8,10 @@ result to Grafana.
 
 ## Files
 
-| File | What it is | Edit it? |
-|---|---|---|
-| `configs/grafana/dashboard-base.json` | Hand-authored: BGP table, ports table, throughput graphs, `site`/`device` variables, layout. Has one reserved slot panel (`title: "__WEATHERMAP_SLOT__"`) where the weathermap gets spliced in. | Yes, directly |
-| `configs/grafana/weathermap-dashboard.json` | Generated build artifact — base + fresh weathermap panel, merged. What actually gets provisioned. | No — regenerate instead |
+| File                                        | What it is                                                                                                                                                                                      | Edit it?                |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `configs/grafana/dashboard-base.json`       | Hand-authored: BGP table, ports table, throughput graphs, `site`/`device` variables, layout. Has one reserved slot panel (`title: "__WEATHERMAP_SLOT__"`) where the weathermap gets spliced in. | Yes, directly           |
+| `configs/grafana/weathermap-dashboard.json` | Generated build artifact — base + fresh weathermap panel, merged. What actually gets provisioned.                                                                                               | No — regenerate instead |
 
 Why split like this: topology data (nodes/links) changes with the lab and
 should regenerate every time; the rest of the dashboard (table layout,
@@ -35,12 +35,12 @@ hook), so re-running is a manual step for now.
 
 ## Credentials
 
-| Value | Env var | Get it from the UI | Get it via API |
-|---|---|---|---|
-| IPFabric token | `IPFABRIC_TOKEN` | IPFabric → user menu → Settings → API Tokens → Add token | not possible, UI-only |
-| Grafana service account token | `GRAFANA_TOKEN` | Grafana → Administration → Service accounts → Add → give it **Editor** role → Add token | possible but multi-step (create account, then create token under it) — UI is simpler |
-| Prometheus datasource UID | `GRAFANA_DATASOURCE_UID` | Grafana → Connections → Data sources → open the one with gnmic data → UID is the last part of the URL | `curl -s -H "Authorization: Bearer $GRAFANA_TOKEN" "$GRAFANA_URL/api/datasources" \| jq '.[] \| {name,uid}'` |
-| Weathermap plugin ID | `GRAFANA_WEATHERMAP_PLUGIN_ID` (optional, only if not the default fork) | Grafana → Administration → Plugins → search "weathermap" → id is in the URL | — |
+| Value                         | Env var                                                                 | Get it from the UI                                                                                    | Get it via API                                                                                               |
+| ----------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| IPFabric token                | `IPFABRIC_TOKEN`                                                        | IPFabric → user menu → Settings → API Tokens → Add token                                              | not possible, UI-only                                                                                        |
+| Grafana service account token | `GRAFANA_TOKEN`                                                         | Grafana → Administration → Service accounts → Add → give it **Editor** role → Add token               | possible but multi-step (create account, then create token under it) — UI is simpler                         |
+| Prometheus datasource UID     | `GRAFANA_DATASOURCE_UID`                                                | Grafana → Connections → Data sources → open the one with gnmic data → UID is the last part of the URL | `curl -s -H "Authorization: Bearer $GRAFANA_TOKEN" "$GRAFANA_URL/api/datasources" \| jq '.[] \| {name,uid}'` |
+| Weathermap plugin ID          | `GRAFANA_WEATHERMAP_PLUGIN_ID` (optional, only if not the default fork) | Grafana → Administration → Plugins → search "weathermap" → id is in the URL                           | —                                                                                                            |
 
 ⚠️ The datasource must be the one that can actually see gnmic metrics —
 picking an unrelated Prometheus instance renders the panel with no data
@@ -71,28 +71,28 @@ curl -s -X POST -H "Authorization: Bearer $GRAFANA_TOKEN" -H "Content-Type: appl
 
 ## Troubleshooting
 
-| Symptom | Cause | Check |
-|---|---|---|
-| `Refusing to provision: set GRAFANA_DATASOURCE_UID...` | Env var unset | `echo $GRAFANA_DATASOURCE_UID` |
-| Panel renders with no data | Wrong datasource — can't see gnmic metrics | Explore → run `up` against it, confirm gnmic series come back |
-| `Base dashboard has no panel titled '__WEATHERMAP_SLOT__'` | Someone edited `dashboard-base.json` and renamed/removed that panel | Check panel `id: 1` still has that exact title |
-| Manually-moved node keeps resetting position | `GRAFANA_URL`/`GRAFANA_TOKEN` weren't set for that run | Look for `Fetching live node positions from ...` in the run output |
-| `HTTP 401/403` fetching live positions | Expired/bad Grafana token | Re-issue the service account token |
+| Symptom                                                    | Cause                                                               | Check                                                              |
+| ---------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `Refusing to provision: set GRAFANA_DATASOURCE_UID...`     | Env var unset                                                       | `echo $GRAFANA_DATASOURCE_UID`                                     |
+| Panel renders with no data                                 | Wrong datasource — can't see gnmic metrics                          | Explore → run `up` against it, confirm gnmic series come back      |
+| `Base dashboard has no panel titled '__WEATHERMAP_SLOT__'` | Someone edited `dashboard-base.json` and renamed/removed that panel | Check panel `id: 1` still has that exact title                     |
+| Manually-moved node keeps resetting position               | `GRAFANA_URL`/`GRAFANA_TOKEN` weren't set for that run              | Look for `Fetching live node positions from ...` in the run output |
+| `HTTP 401/403` fetching live positions                     | Expired/bad Grafana token                                           | Re-issue the service account token                                 |
 
 ## Environment variables
 
-| Variable | Required | Default |
-|---|---|---|
-| `IPFABRIC_URL` | yes | — |
-| `IPFABRIC_TOKEN` | yes | — |
-| `IPFABRIC_SNAPSHOT` | no | `$last` |
-| `PROMETHEUS_URL` | no | `http://172.16.0.71:9090` |
-| `GRAFANA_URL` | no* | — |
-| `GRAFANA_TOKEN` | no* | — |
-| `GRAFANA_DATASOURCE_UID` | with `--provision` | — |
-| `GRAFANA_DASHBOARD_UID` | no | `evpn-vxlan-fabric-weathermap` |
-| `GRAFANA_WEATHERMAP_PLUGIN_ID` | no | `tamirsuliman-weathermap-panel` |
-| `--base` (CLI flag) | no | `configs/grafana/dashboard-base.json` |
+| Variable                       | Required           | Default                               |
+| ------------------------------ | ------------------ | ------------------------------------- |
+| `IPFABRIC_URL`                 | yes                | —                                     |
+| `IPFABRIC_TOKEN`               | yes                | —                                     |
+| `IPFABRIC_SNAPSHOT`            | no                 | `$last`                               |
+| `PROMETHEUS_URL`               | no                 | `http://172.16.0.71:9090`             |
+| `GRAFANA_URL`                  | no*                | —                                     |
+| `GRAFANA_TOKEN`                | no*                | —                                     |
+| `GRAFANA_DATASOURCE_UID`       | with `--provision` | —                                     |
+| `GRAFANA_DASHBOARD_UID`        | no                 | `evpn-vxlan-fabric-weathermap`        |
+| `GRAFANA_WEATHERMAP_PLUGIN_ID` | no                 | `tamirsuliman-weathermap-panel`       |
+| `--base` (CLI flag)            | no                 | `configs/grafana/dashboard-base.json` |
 
 \* `GRAFANA_URL`/`GRAFANA_TOKEN` are required for `--provision`, and
 optional otherwise — if set on a plain (non-`--provision`) run, they're
@@ -107,13 +107,13 @@ default layout.
    `.100`/`.200` subinterface rows), dedupe the two directions IPFabric
    reports per link.
 3. Position each node:
-   - **New node** → layered default: Y-tier by role parsed from the
-     hostname (`spine → core → border-leaf → leaf → access`), X grouped
-     by site within the tier. A hostname that matches no role is logged
-     and dropped into a fallback tier, never silently misplaced (#53).
-   - **Known node** → whatever position is currently live in Grafana,
-     unchanged. This is why `GRAFANA_URL`/`GRAFANA_TOKEN` matter even on
-     a dry run (#53).
+    - **New node** → layered default: Y-tier by role parsed from the
+      hostname (`spine → core → border-leaf → leaf → access`), X grouped
+      by site within the tier. A hostname that matches no role is logged
+      and dropped into a fallback tier, never silently misplaced (#53).
+    - **Known node** → whatever position is currently live in Grafana,
+      unchanged. This is why `GRAFANA_URL`/`GRAFANA_TOKEN` matter even on
+      a dry run (#53).
 4. Build the panel's PromQL `targets`: node status, link tx/rx, VXLAN
    MAC/VNI tooltip — each with an explicit `legendFormat`.
 5. Build `nodes[]`/`links[]`, including the plugin's `anchors` tally
