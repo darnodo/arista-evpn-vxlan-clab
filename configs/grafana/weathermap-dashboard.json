@@ -4222,7 +4222,7 @@
               "type": "prometheus",
               "uid": "cfrlusac89se8a"
             },
-            "expr": "sum by (site) (rate(interfaces_interface_state_counters_in_octets{site=~\"$site\"}[5m]) * 8)",
+            "expr": "sum by (site) (rate(interfaces_interface_state_counters_in_octets{site=~\"$site\", interface!~\"Management.*\"}[5m]) * 8)",
             "legendFormat": "{{site}} in"
           },
           {
@@ -4231,7 +4231,7 @@
               "type": "prometheus",
               "uid": "cfrlusac89se8a"
             },
-            "expr": "-sum by (site) (rate(interfaces_interface_state_counters_out_octets{site=~\"$site\"}[5m]) * 8)",
+            "expr": "-sum by (site) (rate(interfaces_interface_state_counters_out_octets{site=~\"$site\", interface!~\"Management.*\"}[5m]) * 8)",
             "legendFormat": "{{site}} out"
           }
         ]

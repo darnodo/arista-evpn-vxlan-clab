@@ -571,14 +571,17 @@ def build_throughput_panel(panel_id, datasource_uid, grid_y):
             {
                 "refId": "A",
                 "datasource": ds,
-                "expr": 'sum by (site) (rate(interfaces_interface_state_counters_in_octets{site=~"$site"}[5m]) * 8)',
+                # Management0 excluded -- gNMI telemetry traffic on the OOB
+                # port otherwise swamps fabric traffic and skews in/out
+                # wildly asymmetric, see #51.
+                "expr": 'sum by (site) (rate(interfaces_interface_state_counters_in_octets{site=~"$site", interface!~"Management.*"}[5m]) * 8)',
                 "legendFormat": "{{site}} in",
             },
             {
                 "refId": "B",
                 "datasource": ds,
                 # negated so in/out render as a signed graph (in above zero, out below)
-                "expr": '-sum by (site) (rate(interfaces_interface_state_counters_out_octets{site=~"$site"}[5m]) * 8)',
+                "expr": '-sum by (site) (rate(interfaces_interface_state_counters_out_octets{site=~"$site", interface!~"Management.*"}[5m]) * 8)',
                 "legendFormat": "{{site}} out",
             },
         ],
