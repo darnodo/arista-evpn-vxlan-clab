@@ -130,6 +130,6 @@ default layout.
 ## Known gaps
 
 - **VXLAN MAC-per-VNI tooltip**: the `vlan` join key doesn't match on live
-  data for any VTEP node — likely an Arista internal-vs-front-panel VLAN
+  data for any VTEP node, likely an Arista internal-vs-front-panel VLAN
   translation gap. Only affects that one decorative tooltip metric, not
   node/link status or traffic coloring. Tracked in #44.
