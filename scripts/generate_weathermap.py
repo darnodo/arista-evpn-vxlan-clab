@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
-"""Generate a weathermap-ng panel config from IPFabric topology + gnmic/Prometheus
-metrics, and optionally provision it into a Grafana dashboard.
+"""Generate a weathermap-ng PANEL (only) from IPFabric topology + gnmic/Prometheus
+metrics, merge it into a manually-authored dashboard base, and optionally
+provision the result into Grafana.
+
+Scope (see #52): this script knows only about the weathermap panel --
+targets (node status / link tx / link rx / VXLAN tooltip queries) and
+options.weathermap (nodes/links/scale/settings). It has no knowledge of the
+BGP sessions table, ports/interfaces table, or throughput panels -- those
+live in the manually-authored `configs/grafana/dashboard-base.json` and are
+not touched by this script.
 
 Data sources (see gitea issues #44, #47, #48):
   - IPFabric REST API: device inventory + connectivity-matrix (topology)
@@ -8,8 +16,13 @@ Data sources (see gitea issues #44, #47, #48):
     values, used both to validate the IPFabric->gnmic interface-name mapping
     and to resolve which VTEPs/VLANs actually have VXLAN data.
 
+Merge: the weathermap panel is generated fresh from live data on every run
+(no diffing), then spliced into the base dashboard's reserved slot (the panel
+titled "__WEATHERMAP_SLOT__"), keeping that slot's gridPos so the manually
+authored layout is never repositioned by the generator. See #52.
+
 Usage:
-    python3 scripts/generate_weathermap.py [--output PATH] [--provision]
+    python3 scripts/generate_weathermap.py [--base PATH] [--output PATH] [--provision]
 
 Environment:
     IPFABRIC_URL        e.g. https://ipfabric.example.com
@@ -396,226 +409,66 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
 
 
 # --------------------------------------------------------------------------
-# Grafana provisioning
+# Weathermap panel (only) -- see #52, scope narrowed from full-dashboard
 # --------------------------------------------------------------------------
 
-def build_templating(datasource_uid):
-    ds = {"type": "prometheus", "uid": datasource_uid}
+WEATHERMAP_SLOT_TITLE = "__WEATHERMAP_SLOT__"
+
+
+def build_weathermap_panel(weathermap, targets, datasource_uid, plugin_id):
+    """The weathermap panel's own content: type/datasource/targets/options.
+    Deliberately has no gridPos/id/title of its own -- those come from
+    whatever slot it's merged into (see merge_weathermap_into_base)."""
     return {
-        "list": [
-            {
-                "name": "site",
-                "type": "query",
-                "datasource": ds,
-                "query": {"query": "label_values(interfaces_interface_state_oper_status, site)", "refId": "site"},
-                "refresh": 2,
-                "sort": 1,
-                "multi": True,
-                "includeAll": True,
-                "current": {"text": "All", "value": "$__all"},
-            },
-            {
-                "name": "device",
-                "type": "query",
-                "datasource": ds,
-                # chained: only devices belonging to the selected site(s)
-                "query": {
-                    "query": 'label_values(interfaces_interface_state_oper_status{site=~"$site"}, device)',
-                    "refId": "device",
-                },
-                "refresh": 2,
-                "sort": 1,
-                "multi": True,
-                "includeAll": True,
-                "current": {"text": "All", "value": "$__all"},
-            },
-        ]
-    }
-
-
-def build_bgp_table_panel(panel_id, datasource_uid, grid_y):
-    ds = {"type": "prometheus", "uid": datasource_uid}
-    return {
-        "id": panel_id,
-        "type": "table",
-        "title": "BGP Sessions",
-        "gridPos": {"h": 10, "w": 12, "x": 0, "y": grid_y},
-        "datasource": ds,
-        "targets": [
-            {
-                "refId": "A",
-                "datasource": ds,
-                "instant": True,
-                "format": "table",
-                "expr": (
-                    'network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state'
-                    '{device=~"$device"}'
-                ),
-            }
-        ],
-        "transformations": [
-            {
-                "id": "organize",
-                "options": {
-                    "excludeByName": {
-                        "Time": True, "__name__": True, "instance": True, "job": True,
-                        "protocol_identifier": True, "protocol_name": True, "subscription_name": True,
-                    },
-                    "renameByName": {
-                        "device": "Device",
-                        "neighbor_address": "Neighbor Address",
-                        "network_instance_name": "VRF",
-                        "Value": "State",
-                    },
-                },
-            }
-        ],
-        "fieldConfig": {
-            "defaults": {
-                "mappings": [
-                    {"type": "value", "options": {"0": {"text": "Down", "color": "red"}, "1": {"text": "Up", "color": "green"}}}
-                ],
-                "custom": {"cellOptions": {"type": "color-background"}},
-            },
-            "overrides": [
-                {"matcher": {"id": "byName", "options": "State"}, "properties": [
-                    {"id": "custom.cellOptions", "value": {"type": "color-background"}},
-                    {"id": "mappings", "value": [
-                        {"type": "value", "options": {"0": {"text": "Down", "color": "red"}, "1": {"text": "Up", "color": "green"}}}
-                    ]},
-                ]}
-            ],
-        },
-    }
-
-
-def build_ports_table_panel(panel_id, datasource_uid, grid_y):
-    ds = {"type": "prometheus", "uid": datasource_uid}
-    return {
-        "id": panel_id,
-        "type": "table",
-        "title": "Ports / Interfaces",
-        "gridPos": {"h": 10, "w": 12, "x": 12, "y": grid_y},
-        "datasource": ds,
-        "targets": [
-            {
-                "refId": "A",
-                "datasource": ds,
-                "instant": True,
-                "format": "table",
-                "expr": 'interfaces_interface_state_oper_status{device=~"$device"}',
-            },
-            {
-                "refId": "B",
-                "datasource": ds,
-                "instant": True,
-                "format": "table",
-                "expr": 'rate(interfaces_interface_state_counters_in_octets{device=~"$device"}[5m]) * 8',
-            },
-            {
-                "refId": "C",
-                "datasource": ds,
-                "instant": True,
-                "format": "table",
-                "expr": 'rate(interfaces_interface_state_counters_out_octets{device=~"$device"}[5m]) * 8',
-            },
-        ],
-        # Grafana-side merge (not a PromQL join) -- see #44/#48 VXLAN join
-        # failure; joining on (device, interface) in PromQL across these
-        # three metric families is fragile, merging the three table results
-        # in Grafana on shared field values is not.
-        "transformations": [
-            {"id": "merge", "options": {}},
-            {
-                "id": "organize",
-                "options": {
-                    "excludeByName": {
-                        "Time": True, "__name__": True, "instance": True, "job": True, "subscription_name": True,
-                    },
-                    "renameByName": {
-                        "device": "Device",
-                        "interface": "Interface",
-                        "Value #A": "Status",
-                        "Value #B": "In (bps)",
-                        "Value #C": "Out (bps)",
-                    },
-                },
-            },
-        ],
-        "fieldConfig": {
-            "defaults": {},
-            "overrides": [
-                {"matcher": {"id": "byName", "options": "Status"}, "properties": [
-                    {"id": "custom.cellOptions", "value": {"type": "color-background"}},
-                    {"id": "mappings", "value": [
-                        {"type": "value", "options": {"0": {"text": "Down", "color": "red"}, "1": {"text": "Up", "color": "green"}}}
-                    ]},
-                ]},
-                {"matcher": {"id": "byName", "options": "In (bps)"}, "properties": [{"id": "unit", "value": "bps"}]},
-                {"matcher": {"id": "byName", "options": "Out (bps)"}, "properties": [{"id": "unit", "value": "bps"}]},
-            ],
-        },
-    }
-
-
-def build_throughput_panel(panel_id, datasource_uid, grid_y):
-    ds = {"type": "prometheus", "uid": datasource_uid}
-    return {
-        "id": panel_id,
-        "type": "timeseries",
-        "title": "Throughput per Site",
-        "gridPos": {"h": 10, "w": 24, "x": 0, "y": grid_y},
-        "datasource": ds,
-        "fieldConfig": {"defaults": {"unit": "bps"}, "overrides": []},
-        "targets": [
-            {
-                "refId": "A",
-                "datasource": ds,
-                # Management0 excluded -- gNMI telemetry traffic on the OOB
-                # port otherwise swamps fabric traffic and skews in/out
-                # wildly asymmetric, see #51.
-                "expr": 'sum by (site) (rate(interfaces_interface_state_counters_in_octets{site=~"$site", interface!~"Management.*"}[5m]) * 8)',
-                "legendFormat": "{{site}} in",
-            },
-            {
-                "refId": "B",
-                "datasource": ds,
-                # negated so in/out render as a signed graph (in above zero, out below)
-                "expr": '-sum by (site) (rate(interfaces_interface_state_counters_out_octets{site=~"$site", interface!~"Management.*"}[5m]) * 8)',
-                "legendFormat": "{{site}} out",
-            },
-        ],
-    }
-
-
-def build_dashboard(weathermap, targets, dashboard_uid, datasource_uid, plugin_id):
-    weathermap_panel = {
-        "id": 1,
         "type": plugin_id,
-        "title": "Fabric Weathermap",
-        "gridPos": {"h": 24, "w": 24, "x": 0, "y": 0},
         "datasource": {"type": "prometheus", "uid": datasource_uid},
         "targets": [dict(t, datasource={"type": "prometheus", "uid": datasource_uid}) for t in targets],
         "options": {"weathermap": weathermap},
     }
-    return {
-        "dashboard": {
-            "uid": dashboard_uid,
-            "title": "EVPN/VXLAN Fabric Weathermap",
-            "tags": ["evpn", "vxlan", "weathermap", "auto-generated"],
-            "timezone": "browser",
-            "schemaVersion": 39,
-            "version": 0,
-            "templating": build_templating(datasource_uid),
-            "panels": [
-                weathermap_panel,
-                build_bgp_table_panel(2, datasource_uid, 24),
-                build_ports_table_panel(3, datasource_uid, 24),
-                build_throughput_panel(4, datasource_uid, 34),
-            ],
-        },
-        "overwrite": True,
-    }
+
+
+# --------------------------------------------------------------------------
+# Manual base dashboard + merge (see #52)
+# --------------------------------------------------------------------------
+
+def load_base_dashboard(path):
+    with open(path) as f:
+        return json.load(f)
+
+
+def substitute_placeholders(obj, replacements):
+    """Recursively replace exact-match string placeholders (e.g. the
+    datasource UID token) anywhere in the manually-authored base JSON."""
+    if isinstance(obj, dict):
+        return {k: substitute_placeholders(v, replacements) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [substitute_placeholders(v, replacements) for v in obj]
+    if isinstance(obj, str) and obj in replacements:
+        return replacements[obj]
+    return obj
+
+
+def merge_weathermap_into_base(base_dashboard, weathermap_panel, dashboard_uid):
+    """Splice the freshly generated weathermap panel into the base
+    dashboard's reserved slot (matched by title), keeping the slot's
+    gridPos/id -- layout stays manual, the generator never repositions it."""
+    dashboard = dict(base_dashboard)
+    dashboard["uid"] = dashboard_uid
+    panels = []
+    found = False
+    for panel in dashboard.get("panels", []):
+        if panel.get("title") == WEATHERMAP_SLOT_TITLE:
+            found = True
+            merged = dict(panel)
+            merged.update(weathermap_panel)
+            merged["title"] = "Fabric Weathermap"
+            panels.append(merged)
+        else:
+            panels.append(panel)
+    if not found:
+        sys.exit(f"Base dashboard has no panel titled {WEATHERMAP_SLOT_TITLE!r} -- nowhere to merge the weathermap panel")
+    dashboard["panels"] = panels
+    return dashboard
 
 
 def provision_to_grafana(grafana_url, api_token, dashboard_payload):
@@ -636,10 +489,12 @@ def provision_to_grafana(grafana_url, api_token, dashboard_payload):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--base", default="configs/grafana/dashboard-base.json",
+                         help="manually-authored dashboard base JSON (everything but the weathermap panel)")
     parser.add_argument("--output", default="configs/grafana/weathermap-dashboard.json",
-                         help="where to write the generated dashboard-as-code JSON")
+                         help="where to write the merged dashboard-as-code JSON (build artifact)")
     parser.add_argument("--provision", action="store_true",
-                         help="also POST the dashboard to the Grafana API (requires GRAFANA_* env vars)")
+                         help="also POST the merged dashboard to the Grafana API (requires GRAFANA_* env vars)")
     args = parser.parse_args()
 
     ipfabric_url = env("IPFABRIC_URL", required=True)
@@ -674,13 +529,20 @@ def main():
     dashboard_uid = env("GRAFANA_DASHBOARD_UID", "evpn-vxlan-fabric-weathermap")
     datasource_uid = env("GRAFANA_DATASOURCE_UID", "PROMETHEUS_DATASOURCE_UID_PLACEHOLDER")
     plugin_id = env("GRAFANA_WEATHERMAP_PLUGIN_ID", "tamirsuliman-weathermap-panel")
-    dashboard_payload = build_dashboard(weathermap, targets, dashboard_uid, datasource_uid, plugin_id)
+    weathermap_panel = build_weathermap_panel(weathermap, targets, datasource_uid, plugin_id)
+
+    print(f"Loading manual dashboard base ({args.base})...")
+    base_dashboard = load_base_dashboard(args.base)
+    base_dashboard = substitute_placeholders(base_dashboard, {"__DATASOURCE_UID__": datasource_uid})
+    dashboard = merge_weathermap_into_base(base_dashboard, weathermap_panel, dashboard_uid)
+    dashboard_payload = {"dashboard": dashboard, "overwrite": True}
 
     os.makedirs(os.path.dirname(args.output) or ".", exist_ok=True)
     with open(args.output, "w") as f:
         json.dump(dashboard_payload, f, indent=2)
         f.write("\n")
-    print(f"Wrote {args.output} ({len(weathermap['nodes'])} nodes, {len(weathermap['links'])} links)")
+    print(f"Wrote {args.output} ({len(weathermap['nodes'])} nodes, {len(weathermap['links'])} links, "
+          f"{len(dashboard['panels'])} panels total)")
 
     if args.provision:
         grafana_url = env("GRAFANA_URL", required=True)
