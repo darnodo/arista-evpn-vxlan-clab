@@ -100,7 +100,7 @@
           },
           {
             "refId": "D",
-            "expr": "count by (device, vlan) (network_instances_network_instance_fdb_mac_table_entries_entry_vlan{device=~\"campus-leaf1|campus-leaf2|campus-leaf3|campus-leaf4|dc-leaf1|dc-leaf2|dc-leaf5|dc-leaf6\"})\n* on(device, vlan) group_left(vlan_to_vni_state_vni)\ninterfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni{device=~\"campus-leaf1|campus-leaf2|campus-leaf3|campus-leaf4|dc-leaf1|dc-leaf2|dc-leaf5|dc-leaf6\"}",
+            "expr": "count by (device, vlan) (network_instances_network_instance_fdb_mac_table_entries_entry_vlan{device=~\"campus-leaf1|campus-leaf2|campus-leaf3|campus-leaf4|dc-leaf1|dc-leaf2|dc-leaf5|dc-leaf6\"})\n* on(device, vlan) group_left(vlan_to_vni_state_vni)\nmax by (device, vlan) (interfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni{device=~\"campus-leaf1|campus-leaf2|campus-leaf3|campus-leaf4|dc-leaf1|dc-leaf2|dc-leaf5|dc-leaf6\"})",
             "legendFormat": "VNI {{device}} {{vlan}}",
             "datasource": {
               "type": "prometheus",

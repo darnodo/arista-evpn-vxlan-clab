@@ -352,12 +352,18 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
     if vtep_hosts:
         vtep_regex = "|".join(promql_escape(h) for h in vtep_hosts)
         # Verbatim join from #44 "VXLAN (MAC count per VNI)", scoped to VTEP nodes.
+        # RHS is wrapped in max by (device, vlan) so the join key is always
+        # unique -- a Prometheus restart or relabel change otherwise leaves
+        # the pre-restart (frozen) and post-restart series briefly coexisting
+        # within the 5m staleness window, both matching the same (device,
+        # vlan) group, which trips PromQL's "many-to-many matching not
+        # allowed" error. See #50.
         targets.append({
             "refId": "D",
             "expr": (
                 f'count by (device, vlan) (network_instances_network_instance_fdb_mac_table_entries_entry_vlan{{device=~"{vtep_regex}"}})\n'
                 f'* on(device, vlan) group_left(vlan_to_vni_state_vni)\n'
-                f'interfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni{{device=~"{vtep_regex}"}}'
+                f'max by (device, vlan) (interfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni{{device=~"{vtep_regex}"}})'
             ),
             "legendFormat": "VNI {{device}} {{vlan}}",
         })
