@@ -62,8 +62,8 @@ alongside it.
 | `IPFABRIC_TOKEN` | yes | — | Inventory/Snapshots read access. Sent as `X-API-Token`, not `Authorization: Bearer` — IPFabric's REST API does not use bearer auth. |
 | `IPFABRIC_SNAPSHOT` | no | `$last` | |
 | `PROMETHEUS_URL` | no | `http://172.16.0.71:9090` | The **in-topology** Prometheus (see #45), used at generation time to validate the IPFabric→gnmic interface alias and to discover live VTEP/VLAN pairs. This does not have to be the same instance Grafana queries at render time — see below. |
-| `GRAFANA_URL` | with `--provision` | — | |
-| `GRAFANA_TOKEN` | with `--provision` | — | Grafana Service Account token, sent as `Authorization: Bearer`. |
+| `GRAFANA_URL` | no (see #53) | — | Required for `--provision`. Also used, if set, to fetch the currently-provisioned dashboard and preserve any manually drag-and-drop-repositioned node positions — see step 3 below. Without it, every node gets the layered default position, even ones a human previously repositioned in the UI. |
+| `GRAFANA_TOKEN` | no (see #53) | — | Grafana Service Account token, sent as `Authorization: Bearer`. Same conditions as `GRAFANA_URL` above. |
 | `GRAFANA_DATASOURCE_UID` | with `--provision` | — | UID of the Prometheus datasource in Grafana that will actually back the panel. **This must be a datasource that can see the gnmic metrics** — an unrelated/external Prometheus instance with no gnmic data will make the panel render with no values (this happened once, see #48). |
 | `GRAFANA_DASHBOARD_UID` | no | `evpn-vxlan-fabric-weathermap` | |
 | `GRAFANA_WEATHERMAP_PLUGIN_ID` | no | `tamirsuliman-weathermap-panel` | The installed weathermap-ng plugin id. Override if a different fork is installed — plugin ids don't always match the upstream repo name (the schema research in #48 was done against the `allamiro` fork's source; what's actually installed here is a different fork with a stricter/different runtime schema — see the `ANCHOR` handling in the script). |
@@ -77,8 +77,28 @@ alongside it.
    they ride the same physical port as their parent interface and gnmic only
    exports physical interface counters), and dedupes the two directions
    IPFabric reports for each physical link into one.
-3. Computes node positions as a simple site-grouped grid (dc/core/campus
-   bands) — IPFabric has no layout data.
+3. Computes node positions (see #53):
+   - **Default layered layout**, for nodes with no known position yet: role
+     is parsed from the hostname naming convention (`*-spine*`→spine,
+     `core*`→core, `*-border-leaf*`→border-leaf, `*-leaf*`→leaf,
+     `*-access*`→access — same trust level as the `site` parsing used for
+     the Prometheus relabel, not IPFabric-derived), giving Y-tiers top to
+     bottom `spine → core → border-leaf → leaf → access`. X position is
+     grouped/columned by site within each tier, so e.g. dc leafs and campus
+     leafs land in the same row but different column bands. A hostname
+     matching no role pattern is logged (not silently placed in the wrong
+     tier) and put in a fallback tier below `access`.
+   - **Live-position preservation**: position is edited by drag-and-drop
+     directly in the Grafana UI, not in the git-committed base file — a
+     deliberate exception to the "file is the only source of truth" rule
+     from #52, because that's simply not where this field is edited. Before
+     computing the default layout above, the script fetches the currently
+     provisioned dashboard's weathermap panel (if `GRAFANA_URL`/`GRAFANA_TOKEN`
+     are set) and reuses each existing node's live position as-is. Only
+     genuinely new nodes (not in that live map — first-ever run, or a fresh
+     device added to the topology) get the layered default. A device removed
+     from the topology simply has no entry in this run's node/link output at
+     all, so no orphaned position or dangling link reference is possible.
 4. Builds the panel's `targets`: one PromQL query per metric family (BGP
    status, interface tx, interface rx, VXLAN MAC/VNI), each with an explicit
    `legendFormat` so the resolved display name is predictable.

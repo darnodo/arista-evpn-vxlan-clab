@@ -61,7 +61,25 @@ SITE_ORDER = ["dc", "core", "campus"]
 GRID_COLUMNS = 6
 GRID_SPACING_X = 180
 GRID_SPACING_Y = 150
-SITE_BAND_Y = {"dc": 0, "core": 450, "campus": 750}
+
+# Layered default layout (see #53): device role is parsed from the hostname
+# naming convention, same trust level as the `site` parsing already in place
+# for the Prometheus relabel (#49) -- not IPFabric-derived, not configurable.
+# Checked in this order so e.g. "campus-border-leaf1" matches border-leaf
+# before the more general leaf pattern.
+ROLE_PATTERNS = [
+    ("spine", re.compile(r"-spine")),
+    ("core", re.compile(r"^core")),
+    ("border-leaf", re.compile(r"-border-leaf")),
+    ("leaf", re.compile(r"-leaf")),
+    ("access", re.compile(r"-access")),
+]
+ROLE_TIER_ORDER = ["spine", "core", "border-leaf", "leaf", "access"]
+TIER_SPACING_Y = 300
+# Per-site X band start, wide enough that the largest role/site group (8 dc
+# leafs) doesn't spill into the next site's band at GRID_COLUMNS=6.
+SITE_X_OFFSET = {"dc": 100, "core": 1300, "campus": 1600}
+UNMATCHED_ROLE_TIER_Y = len(ROLE_TIER_ORDER) * TIER_SPACING_Y + 300
 
 # tamirsuliman-weathermap-panel's numeric anchor enum (Center=0, Top=1,
 # Bottom=2, Left=3, Right=4) -- reverse-engineered from module.js, since
@@ -181,27 +199,49 @@ def promql_escape(s):
 # Topology processing
 # --------------------------------------------------------------------------
 
-def build_layout(devices):
-    by_site = {}
+def parse_role(hostname):
+    """Device role from the hostname naming convention -- see ROLE_PATTERNS.
+    Returns None if nothing matches (logged by the caller, not silently
+    defaulted into the wrong tier)."""
+    for role, pattern in ROLE_PATTERNS:
+        if pattern.search(hostname):
+            return role
+    return None
+
+
+def build_layout(devices, mismatches):
+    """Default layered layout for nodes with no live (Grafana-drag-and-drop)
+    position yet -- see #53. Y-tier by role (spine top, access bottom), X
+    grouped/columned by site within each tier so same-role devices from
+    different sites don't overlap."""
+    groups = {}  # (role, site) -> [hostname, ...]
+    unmatched = []
     for dev in devices:
-        by_site.setdefault(dev["siteName"], []).append(dev["hostname"])
+        host, site = dev["hostname"], dev["siteName"]
+        role = parse_role(host)
+        if role is None:
+            unmatched.append(host)
+            continue
+        groups.setdefault((role, site), []).append(host)
 
     positions = {}
-    for site in SITE_ORDER:
-        band_y = SITE_BAND_Y.get(site, 0)
-        for idx, host in enumerate(sorted(by_site.get(site, []))):
-            col, row = idx % GRID_COLUMNS, idx // GRID_COLUMNS
-            positions[host] = [100 + col * GRID_SPACING_X, band_y + row * GRID_SPACING_Y]
+    for role_idx, role in enumerate(ROLE_TIER_ORDER):
+        tier_y = role_idx * TIER_SPACING_Y
+        for site in SITE_ORDER:
+            x_offset = SITE_X_OFFSET.get(site, max(SITE_X_OFFSET.values()) + 300)
+            for idx, host in enumerate(sorted(groups.get((role, site), []))):
+                col, row = idx % GRID_COLUMNS, idx // GRID_COLUMNS
+                positions[host] = [x_offset + col * GRID_SPACING_X, tier_y + row * GRID_SPACING_Y]
 
-    # Any site not in SITE_ORDER (shouldn't happen given the naming convention,
-    # but don't silently drop nodes if it does) gets stacked below everything else.
-    extra_band_y = max(SITE_BAND_Y.values()) + 300
-    for site, hosts in by_site.items():
-        if site in SITE_ORDER:
-            continue
-        for idx, host in enumerate(sorted(hosts)):
+    if unmatched:
+        mismatches.append(
+            f"{len(unmatched)} hostname(s) matched no role pattern (spine/core/border-leaf/leaf/access), "
+            f"placed in a fallback tier instead of guessing: {', '.join(sorted(unmatched))}"
+        )
+        for idx, host in enumerate(sorted(unmatched)):
             col, row = idx % GRID_COLUMNS, idx // GRID_COLUMNS
-            positions[host] = [100 + col * GRID_SPACING_X, extra_band_y + row * GRID_SPACING_Y]
+            positions[host] = [100 + col * GRID_SPACING_X, UNMATCHED_ROLE_TIER_Y + row * GRID_SPACING_Y]
+
     return positions
 
 
@@ -413,6 +453,7 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
 # --------------------------------------------------------------------------
 
 WEATHERMAP_SLOT_TITLE = "__WEATHERMAP_SLOT__"
+WEATHERMAP_PANEL_TITLE = "Fabric Weathermap"  # what the slot is renamed to on merge
 
 
 def build_weathermap_panel(weathermap, targets, datasource_uid, plugin_id):
@@ -461,7 +502,7 @@ def merge_weathermap_into_base(base_dashboard, weathermap_panel, dashboard_uid):
             found = True
             merged = dict(panel)
             merged.update(weathermap_panel)
-            merged["title"] = "Fabric Weathermap"
+            merged["title"] = WEATHERMAP_PANEL_TITLE
             panels.append(merged)
         else:
             panels.append(panel)
@@ -469,6 +510,39 @@ def merge_weathermap_into_base(base_dashboard, weathermap_panel, dashboard_uid):
         sys.exit(f"Base dashboard has no panel titled {WEATHERMAP_SLOT_TITLE!r} -- nowhere to merge the weathermap panel")
     dashboard["panels"] = panels
     return dashboard
+
+
+def fetch_live_node_positions(grafana_url, api_token, dashboard_uid):
+    """Node positions as currently provisioned in Grafana, keyed by node id
+    -- see #53. Position is edited live via drag-and-drop in the Grafana UI,
+    not in the git-committed base file, so it's the one weathermap field that
+    must be sourced from live Grafana state rather than regenerated or read
+    from the manual base -- a manual repositioning must survive every rerun.
+
+    Returns {} if the dashboard doesn't exist yet (first-ever run) or has no
+    weathermap panel yet -- everything falls back to the default layered
+    layout in that case. Any other HTTP error is treated as a real
+    misconfiguration (e.g. a bad token) and raised, rather than silently
+    treated as "no dashboard" -- that would risk quietly discarding every
+    manual position on a run that should have failed loudly instead."""
+    req = urllib.request.Request(
+        f"{grafana_url.rstrip('/')}/api/dashboards/uid/{dashboard_uid}",
+        headers={"Authorization": f"Bearer {api_token}"},
+        method="GET",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            payload = json.load(resp)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return {}
+        sys.exit(f"Fetching live dashboard for position preservation failed: HTTP {e.code} {e.read().decode()}")
+
+    for panel in payload.get("dashboard", {}).get("panels", []):
+        if panel.get("title") == WEATHERMAP_PANEL_TITLE:
+            nodes = panel.get("options", {}).get("weathermap", {}).get("nodes", [])
+            return {n["id"]: n["position"] for n in nodes if "position" in n}
+    return {}
 
 
 def provision_to_grafana(grafana_url, api_token, dashboard_payload):
@@ -501,6 +575,11 @@ def main():
     ipfabric_token = env("IPFABRIC_TOKEN", required=True)
     snapshot = env("IPFABRIC_SNAPSHOT", "$last")
     prometheus_url = env("PROMETHEUS_URL", "http://172.16.0.71:9090")
+    dashboard_uid = env("GRAFANA_DASHBOARD_UID", "evpn-vxlan-fabric-weathermap")
+    datasource_uid = env("GRAFANA_DATASOURCE_UID", "PROMETHEUS_DATASOURCE_UID_PLACEHOLDER")
+    plugin_id = env("GRAFANA_WEATHERMAP_PLUGIN_ID", "tamirsuliman-weathermap-panel")
+    grafana_url = env("GRAFANA_URL")
+    grafana_token = env("GRAFANA_TOKEN")
 
     print(f"Fetching devices from IPFabric ({ipfabric_url}, snapshot={snapshot})...")
     devices = fetch_devices(ipfabric_url, ipfabric_token, snapshot)
@@ -514,21 +593,33 @@ def main():
     print("Fetching interface speeds...")
     interface_speeds = fetch_interface_speeds(ipfabric_url, ipfabric_token, snapshot)
 
-    positions = build_layout(devices)
-
     mismatches = []
+    default_positions = build_layout(devices, mismatches)
+
+    # Position specifically is edited live in the Grafana UI (drag-and-drop),
+    # not in the git-committed base file -- see #53. Reuse whatever's live
+    # for nodes that already exist there; only brand-new nodes get the
+    # layered default. Iterating over default_positions (this run's device
+    # set) rather than the live map means a removed device's stale live
+    # position is simply never looked up again, no orphaned entry survives.
+    if grafana_url and grafana_token:
+        print(f"Fetching live node positions from {grafana_url} (preserve manual repositioning)...")
+        live_positions = fetch_live_node_positions(grafana_url, grafana_token, dashboard_uid)
+        print(f"  {len(live_positions)} node(s) with an existing live position")
+    else:
+        print("GRAFANA_URL/GRAFANA_TOKEN not set -- skipping live position fetch, using layered default for all nodes", file=sys.stderr)
+        live_positions = {}
+    positions = {host: live_positions.get(host, default) for host, default in default_positions.items()}
+
     print(f"Cross-checking interface names against live exporter ({prometheus_url})...")
     weathermap, targets = build_weathermap(devices, links, interface_speeds, positions, prometheus_url, mismatches)
 
     if mismatches:
-        print(f"\n{len(mismatches)} interface-name / bandwidth mismatch(es) found (link kept, not dropped):", file=sys.stderr)
+        print(f"\n{len(mismatches)} mismatch(es) found (link/position kept, not dropped):", file=sys.stderr)
         for m in mismatches:
             print(f"  - {m}", file=sys.stderr)
         print(file=sys.stderr)
 
-    dashboard_uid = env("GRAFANA_DASHBOARD_UID", "evpn-vxlan-fabric-weathermap")
-    datasource_uid = env("GRAFANA_DATASOURCE_UID", "PROMETHEUS_DATASOURCE_UID_PLACEHOLDER")
-    plugin_id = env("GRAFANA_WEATHERMAP_PLUGIN_ID", "tamirsuliman-weathermap-panel")
     weathermap_panel = build_weathermap_panel(weathermap, targets, datasource_uid, plugin_id)
 
     print(f"Loading manual dashboard base ({args.base})...")
@@ -545,8 +636,8 @@ def main():
           f"{len(dashboard['panels'])} panels total)")
 
     if args.provision:
-        grafana_url = env("GRAFANA_URL", required=True)
-        grafana_token = env("GRAFANA_TOKEN", required=True)
+        if not (grafana_url and grafana_token):
+            sys.exit("Refusing to provision: GRAFANA_URL and GRAFANA_TOKEN must both be set")
         if datasource_uid == "PROMETHEUS_DATASOURCE_UID_PLACEHOLDER":
             sys.exit("Refusing to provision: set GRAFANA_DATASOURCE_UID to the real Prometheus datasource UID first")
         print(f"Provisioning dashboard '{dashboard_uid}' to {grafana_url}...")
