@@ -265,7 +265,7 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
             "padding": {"horizontal": 12, "vertical": 6},
             "colors": dict(NODE_COLORS),
             "nodeIcon": None,
-            "statusQuery": f"BGP {host}",
+            "statusQuery": f"STATUS {host}",
             "nodeStatusColorTarget": "border",
             "statusValueMappings": [dict(m) for m in STATUS_VALUE_MAPPINGS],
             "anchors": {a: {"numLinks": anchor_counts[host][a], "numFilledLinks": 0} for a in ANCHOR.values()},
@@ -317,11 +317,26 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
     interface_regex = "|".join(sorted(interface_regex_parts))
 
     # -- targets (one query per metric family, per task spec) --
+    #
+    # Node status (refId A): a device is "up" only if at least one interface
+    # is up AND every BGP session is up, if it has any -- see #49. The old
+    # "BGP {{device}}" query sourced raw per-neighbor session-state series,
+    # so a device with multiple neighbors collided on one legend string and
+    # only one arbitrarily won. `min by (device)` picks the *worst* session
+    # (0 beats 1), and devices with zero BGP sessions (access switches) are
+    # not penalized: the `or` fallback substitutes a constant 1 for any
+    # device present in device-up but absent from the BGP series entirely.
+    device_up = f'min by (device) (interfaces_interface_state_oper_status{{device=~"{host_regex}"}})'
+    bgp_worst = (
+        f'min by (device) (network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state'
+        f'{{network_instance_name="default", device=~"{host_regex}"}})'
+    )
+    bgp_ok_or_not_applicable = f'({bgp_worst} or ({device_up} * 0 + 1))'
     targets = [
         {
             "refId": "A",
-            "expr": f'min by (device) (network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state{{network_instance_name="default", device=~"{host_regex}"}})',
-            "legendFormat": "BGP {{device}}",
+            "expr": f'{device_up} * {bgp_ok_or_not_applicable}',
+            "legendFormat": "STATUS {{device}}",
         },
         {
             "refId": "B",
@@ -378,7 +393,202 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
 # Grafana provisioning
 # --------------------------------------------------------------------------
 
+def build_templating(datasource_uid):
+    ds = {"type": "prometheus", "uid": datasource_uid}
+    return {
+        "list": [
+            {
+                "name": "site",
+                "type": "query",
+                "datasource": ds,
+                "query": {"query": "label_values(interfaces_interface_state_oper_status, site)", "refId": "site"},
+                "refresh": 2,
+                "sort": 1,
+                "multi": True,
+                "includeAll": True,
+                "current": {"text": "All", "value": "$__all"},
+            },
+            {
+                "name": "device",
+                "type": "query",
+                "datasource": ds,
+                # chained: only devices belonging to the selected site(s)
+                "query": {
+                    "query": 'label_values(interfaces_interface_state_oper_status{site=~"$site"}, device)',
+                    "refId": "device",
+                },
+                "refresh": 2,
+                "sort": 1,
+                "multi": True,
+                "includeAll": True,
+                "current": {"text": "All", "value": "$__all"},
+            },
+        ]
+    }
+
+
+def build_bgp_table_panel(panel_id, datasource_uid, grid_y):
+    ds = {"type": "prometheus", "uid": datasource_uid}
+    return {
+        "id": panel_id,
+        "type": "table",
+        "title": "BGP Sessions",
+        "gridPos": {"h": 10, "w": 12, "x": 0, "y": grid_y},
+        "datasource": ds,
+        "targets": [
+            {
+                "refId": "A",
+                "datasource": ds,
+                "instant": True,
+                "format": "table",
+                "expr": (
+                    'network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state'
+                    '{device=~"$device"}'
+                ),
+            }
+        ],
+        "transformations": [
+            {
+                "id": "organize",
+                "options": {
+                    "excludeByName": {
+                        "Time": True, "__name__": True, "instance": True, "job": True,
+                        "protocol_identifier": True, "protocol_name": True, "subscription_name": True,
+                    },
+                    "renameByName": {
+                        "device": "Device",
+                        "neighbor_address": "Neighbor Address",
+                        "network_instance_name": "VRF",
+                        "Value": "State",
+                    },
+                },
+            }
+        ],
+        "fieldConfig": {
+            "defaults": {
+                "mappings": [
+                    {"type": "value", "options": {"0": {"text": "Down", "color": "red"}, "1": {"text": "Up", "color": "green"}}}
+                ],
+                "custom": {"cellOptions": {"type": "color-background"}},
+            },
+            "overrides": [
+                {"matcher": {"id": "byName", "options": "State"}, "properties": [
+                    {"id": "custom.cellOptions", "value": {"type": "color-background"}},
+                    {"id": "mappings", "value": [
+                        {"type": "value", "options": {"0": {"text": "Down", "color": "red"}, "1": {"text": "Up", "color": "green"}}}
+                    ]},
+                ]}
+            ],
+        },
+    }
+
+
+def build_ports_table_panel(panel_id, datasource_uid, grid_y):
+    ds = {"type": "prometheus", "uid": datasource_uid}
+    return {
+        "id": panel_id,
+        "type": "table",
+        "title": "Ports / Interfaces",
+        "gridPos": {"h": 10, "w": 12, "x": 12, "y": grid_y},
+        "datasource": ds,
+        "targets": [
+            {
+                "refId": "A",
+                "datasource": ds,
+                "instant": True,
+                "format": "table",
+                "expr": 'interfaces_interface_state_oper_status{device=~"$device"}',
+            },
+            {
+                "refId": "B",
+                "datasource": ds,
+                "instant": True,
+                "format": "table",
+                "expr": 'rate(interfaces_interface_state_counters_in_octets{device=~"$device"}[5m]) * 8',
+            },
+            {
+                "refId": "C",
+                "datasource": ds,
+                "instant": True,
+                "format": "table",
+                "expr": 'rate(interfaces_interface_state_counters_out_octets{device=~"$device"}[5m]) * 8',
+            },
+        ],
+        # Grafana-side merge (not a PromQL join) -- see #44/#48 VXLAN join
+        # failure; joining on (device, interface) in PromQL across these
+        # three metric families is fragile, merging the three table results
+        # in Grafana on shared field values is not.
+        "transformations": [
+            {"id": "merge", "options": {}},
+            {
+                "id": "organize",
+                "options": {
+                    "excludeByName": {
+                        "Time": True, "__name__": True, "instance": True, "job": True, "subscription_name": True,
+                    },
+                    "renameByName": {
+                        "device": "Device",
+                        "interface": "Interface",
+                        "Value #A": "Status",
+                        "Value #B": "In (bps)",
+                        "Value #C": "Out (bps)",
+                    },
+                },
+            },
+        ],
+        "fieldConfig": {
+            "defaults": {},
+            "overrides": [
+                {"matcher": {"id": "byName", "options": "Status"}, "properties": [
+                    {"id": "custom.cellOptions", "value": {"type": "color-background"}},
+                    {"id": "mappings", "value": [
+                        {"type": "value", "options": {"0": {"text": "Down", "color": "red"}, "1": {"text": "Up", "color": "green"}}}
+                    ]},
+                ]},
+                {"matcher": {"id": "byName", "options": "In (bps)"}, "properties": [{"id": "unit", "value": "bps"}]},
+                {"matcher": {"id": "byName", "options": "Out (bps)"}, "properties": [{"id": "unit", "value": "bps"}]},
+            ],
+        },
+    }
+
+
+def build_throughput_panel(panel_id, datasource_uid, grid_y):
+    ds = {"type": "prometheus", "uid": datasource_uid}
+    return {
+        "id": panel_id,
+        "type": "timeseries",
+        "title": "Throughput per Site",
+        "gridPos": {"h": 10, "w": 24, "x": 0, "y": grid_y},
+        "datasource": ds,
+        "fieldConfig": {"defaults": {"unit": "bps"}, "overrides": []},
+        "targets": [
+            {
+                "refId": "A",
+                "datasource": ds,
+                "expr": 'sum by (site) (rate(interfaces_interface_state_counters_in_octets{site=~"$site"}[5m]) * 8)',
+                "legendFormat": "{{site}} in",
+            },
+            {
+                "refId": "B",
+                "datasource": ds,
+                # negated so in/out render as a signed graph (in above zero, out below)
+                "expr": '-sum by (site) (rate(interfaces_interface_state_counters_out_octets{site=~"$site"}[5m]) * 8)',
+                "legendFormat": "{{site}} out",
+            },
+        ],
+    }
+
+
 def build_dashboard(weathermap, targets, dashboard_uid, datasource_uid, plugin_id):
+    weathermap_panel = {
+        "id": 1,
+        "type": plugin_id,
+        "title": "Fabric Weathermap",
+        "gridPos": {"h": 24, "w": 24, "x": 0, "y": 0},
+        "datasource": {"type": "prometheus", "uid": datasource_uid},
+        "targets": [dict(t, datasource={"type": "prometheus", "uid": datasource_uid}) for t in targets],
+        "options": {"weathermap": weathermap},
+    }
     return {
         "dashboard": {
             "uid": dashboard_uid,
@@ -387,16 +597,12 @@ def build_dashboard(weathermap, targets, dashboard_uid, datasource_uid, plugin_i
             "timezone": "browser",
             "schemaVersion": 39,
             "version": 0,
+            "templating": build_templating(datasource_uid),
             "panels": [
-                {
-                    "id": 1,
-                    "type": plugin_id,
-                    "title": "Fabric Weathermap",
-                    "gridPos": {"h": 24, "w": 24, "x": 0, "y": 0},
-                    "datasource": {"type": "prometheus", "uid": datasource_uid},
-                    "targets": [dict(t, datasource={"type": "prometheus", "uid": datasource_uid}) for t in targets],
-                    "options": {"weathermap": weathermap},
-                }
+                weathermap_panel,
+                build_bgp_table_panel(2, datasource_uid, 24),
+                build_ports_table_panel(3, datasource_uid, 24),
+                build_throughput_panel(4, datasource_uid, 34),
             ],
         },
         "overwrite": True,

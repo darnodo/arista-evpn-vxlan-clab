@@ -16,6 +16,16 @@ scrape_configs:
       - action: labeldrop
         regex: source
 
+      # site: not exported by gnmic -- derived from the hostname naming
+      # convention (see CLAUDE.md: dc-*/campus-*/core* regex used for
+      # IPFabric site separation) here instead of repeating label_replace()
+      # in every dashboard query, see issue #49
+      - source_labels: [device]
+        target_label: site
+        regex: (campus|core|dc)-?.*
+        replacement: $1
+        action: replace
+
       # interface: raw label is already "interface_name" (OpenConfig key on the
       # "interface" path element) — normalize to "interface" for consistency
       - source_labels: [interface_name]

@@ -11,6 +11,50 @@
     "timezone": "browser",
     "schemaVersion": 39,
     "version": 0,
+    "templating": {
+      "list": [
+        {
+          "name": "site",
+          "type": "query",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "cfrlusac89se8a"
+          },
+          "query": {
+            "query": "label_values(interfaces_interface_state_oper_status, site)",
+            "refId": "site"
+          },
+          "refresh": 2,
+          "sort": 1,
+          "multi": true,
+          "includeAll": true,
+          "current": {
+            "text": "All",
+            "value": "$__all"
+          }
+        },
+        {
+          "name": "device",
+          "type": "query",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "cfrlusac89se8a"
+          },
+          "query": {
+            "query": "label_values(interfaces_interface_state_oper_status{site=~\"$site\"}, device)",
+            "refId": "device"
+          },
+          "refresh": 2,
+          "sort": 1,
+          "multi": true,
+          "includeAll": true,
+          "current": {
+            "text": "All",
+            "value": "$__all"
+          }
+        }
+      ]
+    },
     "panels": [
       {
         "id": 1,
@@ -29,8 +73,8 @@
         "targets": [
           {
             "refId": "A",
-            "expr": "min by (device) (network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state{network_instance_name=\"default\", device=~\"campus-spine1|dc-spine1|dc-spine2|campus-spine2|campus-border-leaf1|dc-leaf1|campus-border-leaf2|dc-leaf4|dc-leaf3|dc-leaf5|dc-border-leaf1|dc-leaf6|dc-access1|dc-access2|dc-leaf8|dc-leaf7|dc-access4|dc-access3|dc-border-leaf2|dc-leaf2|campus-leaf1|campus-access1|campus-leaf2|campus-leaf3|campus-access2|campus-leaf4|core1|core2\"})",
-            "legendFormat": "BGP {{device}}",
+            "expr": "min by (device) (interfaces_interface_state_oper_status{device=~\"campus-spine1|dc-spine1|dc-spine2|campus-spine2|campus-border-leaf1|dc-leaf1|campus-border-leaf2|dc-leaf4|dc-leaf3|dc-leaf5|dc-border-leaf1|dc-leaf6|dc-access1|dc-access2|dc-leaf8|dc-leaf7|dc-access4|dc-access3|dc-border-leaf2|dc-leaf2|campus-leaf1|campus-access1|campus-leaf2|campus-leaf3|campus-access2|campus-leaf4|core1|core2\"}) * (min by (device) (network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state{network_instance_name=\"default\", device=~\"campus-spine1|dc-spine1|dc-spine2|campus-spine2|campus-border-leaf1|dc-leaf1|campus-border-leaf2|dc-leaf4|dc-leaf3|dc-leaf5|dc-border-leaf1|dc-leaf6|dc-access1|dc-access2|dc-leaf8|dc-leaf7|dc-access4|dc-access3|dc-border-leaf2|dc-leaf2|campus-leaf1|campus-access1|campus-leaf2|campus-leaf3|campus-access2|campus-leaf4|core1|core2\"}) or (min by (device) (interfaces_interface_state_oper_status{device=~\"campus-spine1|dc-spine1|dc-spine2|campus-spine2|campus-border-leaf1|dc-leaf1|campus-border-leaf2|dc-leaf4|dc-leaf3|dc-leaf5|dc-border-leaf1|dc-leaf6|dc-access1|dc-access2|dc-leaf8|dc-leaf7|dc-access4|dc-access3|dc-border-leaf2|dc-leaf2|campus-leaf1|campus-access1|campus-leaf2|campus-leaf3|campus-access2|campus-leaf4|core1|core2\"}) * 0 + 1))",
+            "legendFormat": "STATUS {{device}}",
             "datasource": {
               "type": "prometheus",
               "uid": "cfrlusac89se8a"
@@ -90,7 +134,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-spine1",
+                "statusQuery": "STATUS campus-spine1",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -146,7 +190,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-spine1",
+                "statusQuery": "STATUS dc-spine1",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -202,7 +246,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-spine2",
+                "statusQuery": "STATUS dc-spine2",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -258,7 +302,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-spine2",
+                "statusQuery": "STATUS campus-spine2",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -314,7 +358,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-border-leaf1",
+                "statusQuery": "STATUS campus-border-leaf1",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -370,7 +414,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-leaf1",
+                "statusQuery": "STATUS dc-leaf1",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -433,7 +477,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-border-leaf2",
+                "statusQuery": "STATUS campus-border-leaf2",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -489,7 +533,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-leaf4",
+                "statusQuery": "STATUS dc-leaf4",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -545,7 +589,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-leaf3",
+                "statusQuery": "STATUS dc-leaf3",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -601,7 +645,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-leaf5",
+                "statusQuery": "STATUS dc-leaf5",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -664,7 +708,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-border-leaf1",
+                "statusQuery": "STATUS dc-border-leaf1",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -720,7 +764,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-leaf6",
+                "statusQuery": "STATUS dc-leaf6",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -783,7 +827,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-access1",
+                "statusQuery": "STATUS dc-access1",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -839,7 +883,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-access2",
+                "statusQuery": "STATUS dc-access2",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -895,7 +939,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-leaf8",
+                "statusQuery": "STATUS dc-leaf8",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -951,7 +995,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-leaf7",
+                "statusQuery": "STATUS dc-leaf7",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1007,7 +1051,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-access4",
+                "statusQuery": "STATUS dc-access4",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1063,7 +1107,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-access3",
+                "statusQuery": "STATUS dc-access3",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1119,7 +1163,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-border-leaf2",
+                "statusQuery": "STATUS dc-border-leaf2",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1175,7 +1219,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP dc-leaf2",
+                "statusQuery": "STATUS dc-leaf2",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1238,7 +1282,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-leaf1",
+                "statusQuery": "STATUS campus-leaf1",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1301,7 +1345,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-access1",
+                "statusQuery": "STATUS campus-access1",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1357,7 +1401,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-leaf2",
+                "statusQuery": "STATUS campus-leaf2",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1420,7 +1464,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-leaf3",
+                "statusQuery": "STATUS campus-leaf3",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1483,7 +1527,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-access2",
+                "statusQuery": "STATUS campus-access2",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1539,7 +1583,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP campus-leaf4",
+                "statusQuery": "STATUS campus-leaf4",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1602,7 +1646,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP core1",
+                "statusQuery": "STATUS core1",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -1658,7 +1702,7 @@
                   "statusDown": "#F2495C"
                 },
                 "nodeIcon": null,
-                "statusQuery": "BGP core2",
+                "statusQuery": "STATUS core2",
                 "nodeStatusColorTarget": "border",
                 "statusValueMappings": [
                   {
@@ -3910,6 +3954,287 @@
             }
           }
         }
+      },
+      {
+        "id": 2,
+        "type": "table",
+        "title": "BGP Sessions",
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 0,
+          "y": 24
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "cfrlusac89se8a"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "cfrlusac89se8a"
+            },
+            "instant": true,
+            "format": "table",
+            "expr": "network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state{device=~\"$device\"}"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "__name__": true,
+                "instance": true,
+                "job": true,
+                "protocol_identifier": true,
+                "protocol_name": true,
+                "subscription_name": true
+              },
+              "renameByName": {
+                "device": "Device",
+                "neighbor_address": "Neighbor Address",
+                "network_instance_name": "VRF",
+                "Value": "State"
+              }
+            }
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {
+                "type": "value",
+                "options": {
+                  "0": {
+                    "text": "Down",
+                    "color": "red"
+                  },
+                  "1": {
+                    "text": "Up",
+                    "color": "green"
+                  }
+                }
+              }
+            ],
+            "custom": {
+              "cellOptions": {
+                "type": "color-background"
+              }
+            }
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "State"
+              },
+              "properties": [
+                {
+                  "id": "custom.cellOptions",
+                  "value": {
+                    "type": "color-background"
+                  }
+                },
+                {
+                  "id": "mappings",
+                  "value": [
+                    {
+                      "type": "value",
+                      "options": {
+                        "0": {
+                          "text": "Down",
+                          "color": "red"
+                        },
+                        "1": {
+                          "text": "Up",
+                          "color": "green"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 3,
+        "type": "table",
+        "title": "Ports / Interfaces",
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 12,
+          "y": 24
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "cfrlusac89se8a"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "cfrlusac89se8a"
+            },
+            "instant": true,
+            "format": "table",
+            "expr": "interfaces_interface_state_oper_status{device=~\"$device\"}"
+          },
+          {
+            "refId": "B",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "cfrlusac89se8a"
+            },
+            "instant": true,
+            "format": "table",
+            "expr": "rate(interfaces_interface_state_counters_in_octets{device=~\"$device\"}[5m]) * 8"
+          },
+          {
+            "refId": "C",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "cfrlusac89se8a"
+            },
+            "instant": true,
+            "format": "table",
+            "expr": "rate(interfaces_interface_state_counters_out_octets{device=~\"$device\"}[5m]) * 8"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "merge",
+            "options": {}
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "__name__": true,
+                "instance": true,
+                "job": true,
+                "subscription_name": true
+              },
+              "renameByName": {
+                "device": "Device",
+                "interface": "Interface",
+                "Value #A": "Status",
+                "Value #B": "In (bps)",
+                "Value #C": "Out (bps)"
+              }
+            }
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Status"
+              },
+              "properties": [
+                {
+                  "id": "custom.cellOptions",
+                  "value": {
+                    "type": "color-background"
+                  }
+                },
+                {
+                  "id": "mappings",
+                  "value": [
+                    {
+                      "type": "value",
+                      "options": {
+                        "0": {
+                          "text": "Down",
+                          "color": "red"
+                        },
+                        "1": {
+                          "text": "Up",
+                          "color": "green"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "In (bps)"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "bps"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Out (bps)"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "bps"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 4,
+        "type": "timeseries",
+        "title": "Throughput per Site",
+        "gridPos": {
+          "h": 10,
+          "w": 24,
+          "x": 0,
+          "y": 34
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "cfrlusac89se8a"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "bps"
+          },
+          "overrides": []
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "cfrlusac89se8a"
+            },
+            "expr": "sum by (site) (rate(interfaces_interface_state_counters_in_octets{site=~\"$site\"}[5m]) * 8)",
+            "legendFormat": "{{site}} in"
+          },
+          {
+            "refId": "B",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "cfrlusac89se8a"
+            },
+            "expr": "-sum by (site) (rate(interfaces_interface_state_counters_out_octets{site=~\"$site\"}[5m]) * 8)",
+            "legendFormat": "{{site}} out"
+          }
+        ]
       }
     ]
   },

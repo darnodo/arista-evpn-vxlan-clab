@@ -367,6 +367,11 @@ only appears as the sample *value* of
 `(device, interface, vlan)`. Per-VNI MAC counts require a PromQL join on `vlan`
 rather than a native `vni` label.
 
+`site` (`dc`/`campus`/`core`) is also not gnmic-exported. It's added as a
+Prometheus `metric_relabel_configs` rule deriving it from `device` via the
+`<area>-<role><n>` naming convention regex (see #49), rather than repeating
+`label_replace()` in every dashboard query.
+
 - Config: `configs/prometheus/prometheus.yml`
 - This is separate from, and does not replace, the existing external Prometheus
   instance — no cutover yet, both run in parallel pending validation
