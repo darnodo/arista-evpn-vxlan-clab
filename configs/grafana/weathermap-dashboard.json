@@ -118,7 +118,7 @@
                 "label": "campus-spine1",
                 "position": [
                   1600,
-                  80
+                  0
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -173,8 +173,8 @@
                 "id": "dc-spine1",
                 "label": "dc-spine1",
                 "position": [
-                  350,
-                  80
+                  100,
+                  0
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -229,8 +229,8 @@
                 "id": "dc-spine2",
                 "label": "dc-spine2",
                 "position": [
-                  750,
-                  80
+                  280,
+                  0
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -285,8 +285,8 @@
                 "id": "campus-spine2",
                 "label": "campus-spine2",
                 "position": [
-                  1850,
-                  80
+                  1780,
+                  0
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -341,8 +341,8 @@
                 "id": "campus-border-leaf1",
                 "label": "campus-border-leaf1",
                 "position": [
-                  1450,
-                  260
+                  1600,
+                  600
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -397,8 +397,8 @@
                 "id": "dc-leaf1",
                 "label": "dc-leaf1",
                 "position": [
-                  80,
-                  260
+                  100,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -460,8 +460,8 @@
                 "id": "campus-border-leaf2",
                 "label": "campus-border-leaf2",
                 "position": [
-                  1555,
-                  260
+                  1780,
+                  600
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -516,8 +516,8 @@
                 "id": "dc-leaf4",
                 "label": "dc-leaf4",
                 "position": [
-                  395,
-                  260
+                  640,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -572,8 +572,8 @@
                 "id": "dc-leaf3",
                 "label": "dc-leaf3",
                 "position": [
-                  290,
-                  260
+                  460,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -628,8 +628,8 @@
                 "id": "dc-leaf5",
                 "label": "dc-leaf5",
                 "position": [
-                  500,
-                  260
+                  820,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -691,8 +691,8 @@
                 "id": "dc-border-leaf1",
                 "label": "dc-border-leaf1",
                 "position": [
-                  920,
-                  260
+                  100,
+                  600
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -747,8 +747,8 @@
                 "id": "dc-leaf6",
                 "label": "dc-leaf6",
                 "position": [
-                  605,
-                  260
+                  1000,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -810,8 +810,8 @@
                 "id": "dc-access1",
                 "label": "dc-access1",
                 "position": [
-                  132,
-                  440
+                  100,
+                  1200
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -866,8 +866,8 @@
                 "id": "dc-access2",
                 "label": "dc-access2",
                 "position": [
-                  342,
-                  440
+                  280,
+                  1200
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -922,8 +922,8 @@
                 "id": "dc-leaf8",
                 "label": "dc-leaf8",
                 "position": [
-                  815,
-                  260
+                  280,
+                  1050
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -978,8 +978,8 @@
                 "id": "dc-leaf7",
                 "label": "dc-leaf7",
                 "position": [
-                  710,
-                  260
+                  100,
+                  1050
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1034,8 +1034,8 @@
                 "id": "dc-access4",
                 "label": "dc-access4",
                 "position": [
-                  762,
-                  440
+                  640,
+                  1200
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1090,8 +1090,8 @@
                 "id": "dc-access3",
                 "label": "dc-access3",
                 "position": [
-                  552,
-                  440
+                  460,
+                  1200
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1146,8 +1146,8 @@
                 "id": "dc-border-leaf2",
                 "label": "dc-border-leaf2",
                 "position": [
-                  1025,
-                  260
+                  280,
+                  600
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1202,8 +1202,8 @@
                 "id": "dc-leaf2",
                 "label": "dc-leaf2",
                 "position": [
-                  185,
-                  260
+                  280,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1265,8 +1265,8 @@
                 "id": "campus-leaf1",
                 "label": "campus-leaf1",
                 "position": [
-                  1660,
-                  260
+                  1600,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1328,8 +1328,8 @@
                 "id": "campus-access1",
                 "label": "campus-access1",
                 "position": [
-                  1712,
-                  440
+                  1600,
+                  1200
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1384,8 +1384,8 @@
                 "id": "campus-leaf2",
                 "label": "campus-leaf2",
                 "position": [
-                  1765,
-                  260
+                  1780,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1447,8 +1447,8 @@
                 "id": "campus-leaf3",
                 "label": "campus-leaf3",
                 "position": [
-                  1870,
-                  260
+                  1960,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1510,8 +1510,8 @@
                 "id": "campus-access2",
                 "label": "campus-access2",
                 "position": [
-                  1922,
-                  440
+                  1780,
+                  1200
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1566,8 +1566,8 @@
                 "id": "campus-leaf4",
                 "label": "campus-leaf4",
                 "position": [
-                  1975,
-                  260
+                  2140,
+                  900
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1629,8 +1629,8 @@
                 "id": "core1",
                 "label": "core1",
                 "position": [
-                  1150,
-                  260
+                  1300,
+                  300
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
@@ -1685,8 +1685,8 @@
                 "id": "core2",
                 "label": "core2",
                 "position": [
-                  1280,
-                  260
+                  1480,
+                  300
                 ],
                 "isConnection": false,
                 "useConstantSpacing": false,
