@@ -114,8 +114,9 @@ default layout.
     - **Known node** → whatever position is currently live in Grafana,
       unchanged. This is why `GRAFANA_URL`/`GRAFANA_TOKEN` matter even on
       a dry run (#53).
-4. Build the panel's PromQL `targets`: node status, link tx/rx, VXLAN
-   MAC/VNI tooltip — each with an explicit `legendFormat`.
+4. Build the panel's PromQL `targets`: node status, per-side link tx (each
+   side its own egress counter, so both directions are represented — #57),
+   VXLAN MAC/VNI tooltip — each with an explicit `legendFormat`.
 5. Build `nodes[]`/`links[]`, including the plugin's `anchors` tally
    (link count per side) — required by the installed plugin fork even
    though the schema doc says it's optional (#48).
@@ -152,8 +153,9 @@ empty until someone manually generates traffic (see #55).
 
 - Starts `iperf3 -s` on the DC gold-VRF servers: `dc-server2`
   (10.34.34.102), `dc-server4` (10.78.78.104).
-- Runs `iperf3 -c` from the paired campus gold-VRF hosts: `campus-host1`
-  → dc-server2, `campus-host2` → dc-server4 — exercising the full
+- Runs `iperf3 -c -R` from the paired campus gold-VRF hosts, reversing the
+  stream so the DC server pushes to the campus consumer: `dc-server2` →
+  `campus-host1`, `dc-server4` → `campus-host2` — exercising the full
   DC→Core→Campus stitched EVPN Type-5 path end to end.
 - Redraws a terminal dashboard every second for the run duration: server
   list, and live Mbits/sec per client session parsed from `iperf3 -i 1`
