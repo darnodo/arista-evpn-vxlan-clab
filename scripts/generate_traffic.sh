@@ -46,7 +46,10 @@ echo "Starting iperf3 clients for ${DURATION}s..."
 for pair in "${PAIRS[@]}"; do
     IFS=':' read -r server server_ip client <<<"$pair"
     logfile="${WORKDIR}/${client}.log"
-    docker exec "${LAB_PREFIX}-${client}" iperf3 -c "$server_ip" -p "$PORT" \
+    # -R: DC hosts the service, campus is the consumer -- data should flow
+    # server -> client (download), not client -> server, to match how a
+    # real DC-hosted service/campus-consumer pair behaves.
+    docker exec "${LAB_PREFIX}-${client}" iperf3 -c "$server_ip" -p "$PORT" -R \
         -t "$DURATION" -i 1 --forceflush -f m >"$logfile" 2>&1 &
     CLIENT_PIDS+=("$!")
 done
@@ -68,7 +71,7 @@ for ((elapsed = 0; elapsed <= DURATION; elapsed++)); do
         last_line="$(grep -E 'Mbits/sec' "$logfile" 2>/dev/null | tail -1 || true)"
         bw="$(sed -E 's/.*[[:space:]]([0-9.]+ Mbits\/sec).*/\1/' <<<"$last_line")"
         [[ -z "$last_line" ]] && bw="waiting..."
-        printf "  %-13s -> %-13s : %s\n" "$client" "$server" "$bw"
+        printf "  %-13s -> %-13s : %s\n" "$server" "$client" "$bw"
     done
     sleep 1
 done
@@ -81,5 +84,5 @@ for pair in "${PAIRS[@]}"; do
     IFS=':' read -r server _ client <<<"$pair"
     logfile="${WORKDIR}/${client}.log"
     summary="$(grep -E 'receiver' "$logfile" 2>/dev/null || true)"
-    echo "  ${client} -> ${server}: ${summary:-no data}"
+    echo "  ${server} -> ${client}: ${summary:-no data}"
 done
