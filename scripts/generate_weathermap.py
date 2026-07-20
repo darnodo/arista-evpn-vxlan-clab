@@ -4,7 +4,7 @@ metrics, merge it into a manually-authored dashboard base, and optionally
 provision the result into Grafana.
 
 Scope (see #52): this script knows only about the weathermap panel --
-targets (node status / link tx / link rx / VXLAN tooltip queries) and
+targets (node status / link tx per side / VXLAN tooltip queries) and
 options.weathermap (nodes/links/scale/settings). It has no knowledge of the
 BGP sessions table, ports/interfaces table, or throughput panels -- those
 live in the manually-authored `configs/grafana/dashboard-base.json` and are
@@ -363,6 +363,12 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
         link_defs.append({
             "id": f"{link['a_host']}-{a_gnmic_int}--{link['z_host']}-{z_gnmic_int}",
             "nodes": [{"id": link["a_host"]}, {"id": link["z_host"]}],
+            # Each side's query is that side's own tx (egress) counter, not the
+            # far end's rx -- see #57. a_host tx and z_host rx both describe the
+            # *same* A->Z flow measured from opposite ends (the a_host->z_host
+            # direction, counted twice), leaving the Z->A direction never
+            # queried by either side. Using each node's own tx gives two
+            # independent, opposite-direction measurements instead.
             "sides": {
                 "A": {
                     "bandwidth": a_bw,
@@ -371,7 +377,7 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
                 },
                 "Z": {
                     "bandwidth": z_bw,
-                    "query": f"{link['z_host']} {z_gnmic_int} rx",
+                    "query": f"{link['z_host']} {z_gnmic_int} tx",
                     "labelOffset": 55, "anchor": ANCHOR["Left"], "dashboardLink": "",
                 },
             },
@@ -409,11 +415,6 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
             "refId": "B",
             "expr": f'rate(interfaces_interface_state_counters_out_octets{{device=~"{host_regex}", interface=~"{interface_regex}"}}[5m]) * 8',
             "legendFormat": "{{device}} {{interface}} tx",
-        },
-        {
-            "refId": "C",
-            "expr": f'rate(interfaces_interface_state_counters_in_octets{{device=~"{host_regex}", interface=~"{interface_regex}"}}[5m]) * 8',
-            "legendFormat": "{{device}} {{interface}} rx",
         },
     ]
     if vtep_hosts:
