@@ -1,0 +1,11 @@
+export GRAFANA_URL=""
+export GRAFANA_TOKEN=""
+export GRAFANA_DATASOURCE_UID=""
+export IPFABRIC_URL=""
+export IPFABRIC_TOKEN=""
+
+# Optional -- see scripts/README.md for defaults and when to override
+# export IPFABRIC_SNAPSHOT="$last"
+# export PROMETHEUS_URL="http://172.16.0.71:9090"
+# export GRAFANA_DASHBOARD_UID="evpn-vxlan-fabric-weathermap"
+# export GRAFANA_WEATHERMAP_PLUGIN_ID="tamirsuliman-weathermap-panel"

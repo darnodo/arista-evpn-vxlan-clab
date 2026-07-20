@@ -290,6 +290,25 @@ topology:
             exec:
                 - ifup eth1
 
+        # =====================================================
+        # TELEMETRY
+        # =====================================================
+
+        gnmic:
+            kind: linux
+            mgmt-ipv4: 172.16.0.70
+            image: ghcr.io/openconfig/gnmic:0.46.0
+            binds:
+                - configs/gnmic/gnmic-config.yml:/gnmic-config.yml:ro
+            cmd: --config /gnmic-config.yml --log subscribe
+
+        prometheus:
+            kind: linux
+            mgmt-ipv4: 172.16.0.71
+            image: prom/prometheus:v2.55.1
+            binds:
+                - configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
     links:
         # =====================================================
         # DATACENTER FABRIC LINKS

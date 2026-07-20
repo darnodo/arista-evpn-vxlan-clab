@@ -1,0 +1,135 @@
+username: admin
+password: admin
+port: 6030
+timeout: 10s
+
+common_eos_subscriptions: &common_eos_subs
+  insecure: true
+  subscriptions:
+    - eos-interfaces
+    - eos-bgp
+    - eos-system
+
+vtep_eos_subscriptions: &vtep_eos_subs
+  insecure: true
+  subscriptions:
+    - eos-interfaces
+    - eos-bgp
+    - eos-system
+    - eos-vxlan
+
+targets:
+  # DC fabric
+  dc-spine1: *common_eos_subs
+  dc-spine2: *common_eos_subs
+  dc-leaf1: *vtep_eos_subs
+  dc-leaf2: *vtep_eos_subs
+  dc-leaf3: *vtep_eos_subs
+  dc-leaf4: *vtep_eos_subs
+  dc-leaf5: *vtep_eos_subs
+  dc-leaf6: *vtep_eos_subs
+  dc-leaf7: *vtep_eos_subs
+  dc-leaf8: *vtep_eos_subs
+  dc-border-leaf1: *vtep_eos_subs
+  dc-border-leaf2: *vtep_eos_subs
+  dc-access1: *common_eos_subs
+  dc-access2: *common_eos_subs
+  dc-access3: *common_eos_subs
+  dc-access4: *common_eos_subs
+
+  # Core
+  core1: *common_eos_subs
+  core2: *common_eos_subs
+
+  # Campus fabric
+  campus-spine1: *common_eos_subs
+  campus-spine2: *common_eos_subs
+  campus-border-leaf1: *vtep_eos_subs
+  campus-border-leaf2: *vtep_eos_subs
+  campus-leaf1: *vtep_eos_subs
+  campus-leaf2: *vtep_eos_subs
+  campus-leaf3: *vtep_eos_subs
+  campus-leaf4: *vtep_eos_subs
+  campus-access1: *common_eos_subs
+  campus-access2: *common_eos_subs
+
+subscriptions:
+  eos-interfaces:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+    paths:
+      - /interfaces/interface/state/oper-status
+      - /interfaces/interface/state/counters
+  eos-bgp:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+    paths:
+      - /network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state
+      - /network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes
+  eos-system:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+    paths:
+      - /system/cpus/cpu/state
+      - /system/memory/state
+  eos-vxlan:
+    mode: stream
+    stream-mode: sample
+    sample-interval: 10s
+    paths:
+      # VLAN-to-VNI mapping (join key for MAC-count-per-VNI in Prometheus)
+      - /interfaces/interface[name=Vxlan1]/arista-exp-eos-vxlan:arista-vxlan/vlan-to-vnis/vlan-to-vni
+      # MAC table entries, tagged by VLAN — joined with the mapping above to get per-VNI counts
+      - /network-instances/network-instance/fdb/mac-table/entries/entry
+
+outputs:
+  prom-output:
+    type: prometheus
+    listen: :9273
+    event-processors:
+      - state-to-int
+
+# oper-status and BGP session-state are string enums; the Prometheus output
+# silently drops non-numeric values, so they're mapped to 1 (up/established) / 0 (anything else)
+processors:
+  state-to-int:
+    event-strings:
+      value-names:
+        - ".*oper-status$"
+        - ".*session-state$"
+      transforms:
+        - replace:
+            apply-on: "value"
+            old: "UP"
+            new: "1"
+        - replace:
+            apply-on: "value"
+            old: "ESTABLISHED"
+            new: "1"
+        - replace:
+            apply-on: "value"
+            old: "DOWN"
+            new: "0"
+        - replace:
+            apply-on: "value"
+            old: "IDLE"
+            new: "0"
+        - replace:
+            apply-on: "value"
+            old: "CONNECT"
+            new: "0"
+        - replace:
+            apply-on: "value"
+            old: "ACTIVE"
+            new: "0"
+        - replace:
+            apply-on: "value"
+            old: "OPENSENT"
+            new: "0"
+        - replace:
+            apply-on: "value"
+            old: "OPENCONFIRM"
+            new: "0"

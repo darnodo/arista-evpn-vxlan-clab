@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <style>
+    .box { stroke-width: 1.5; rx: 6; }
+    .input { fill: #e8f0fe; stroke: #4285f4; }
+    .manual { fill: #fef7e0; stroke: #f9ab00; }
+    .script { fill: #e6f4ea; stroke: #34a853; }
+    .output { fill: #f3e8fd; stroke: #a142f4; }
+    .grafana { fill: #fce8e6; stroke: #ea4335; }
+    .label { font-size: 13px; fill: #202124; }
+    .sublabel { font-size: 10px; fill: #5f6368; }
+    .arrow { stroke: #555; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+    .caption { font-size: 11px; fill: #5f6368; font-style: italic; }
+  </style>
+
+  <!-- inputs -->
+  <rect class="box input" x="20" y="30" width="150" height="50"/>
+  <text class="label" x="95" y="50" text-anchor="middle">IPFabric</text>
+  <text class="sublabel" x="95" y="66" text-anchor="middle">topology, inventory</text>
+
+  <rect class="box input" x="20" y="100" width="150" height="50"/>
+  <text class="label" x="95" y="120" text-anchor="middle">Prometheus</text>
+  <text class="sublabel" x="95" y="136" text-anchor="middle">gnmic metrics, live labels</text>
+
+  <!-- generator script -->
+  <rect class="box script" x="220" y="55" width="200" height="70"/>
+  <text class="label" x="320" y="82" text-anchor="middle" font-size="11.5">generate_weathermap.py</text>
+  <text class="sublabel" x="320" y="98" text-anchor="middle">weathermap panel only</text>
+  <text class="sublabel" x="320" y="112" text-anchor="middle">targets + options.weathermap</text>
+
+  <path class="arrow" d="M170,55 L220,80"/>
+  <path class="arrow" d="M170,125 L220,100"/>
+
+  <!-- manual base -->
+  <rect class="box manual" x="220" y="220" width="200" height="70"/>
+  <text class="label" x="320" y="247" text-anchor="middle">dashboard-base.json</text>
+  <text class="sublabel" x="320" y="263" text-anchor="middle">hand-authored, committed</text>
+  <text class="sublabel" x="320" y="277" text-anchor="middle">BGP/ports/throughput/vars</text>
+
+  <!-- merge -->
+  <rect class="box script" x="470" y="130" width="160" height="60"/>
+  <text class="label" x="550" y="155" text-anchor="middle">merge</text>
+  <text class="sublabel" x="550" y="171" text-anchor="middle" font-size="8.5">splices into __WEATHERMAP_SLOT__</text>
+
+  <path class="arrow" d="M420,90 L470,145"/>
+  <path class="arrow" d="M420,255 L470,175"/>
+
+  <!-- output artifact -->
+  <rect class="box output" x="660" y="60" width="210" height="60"/>
+  <text class="label" x="765" y="85" text-anchor="middle" font-size="11.5">weathermap-dashboard.json</text>
+  <text class="sublabel" x="765" y="101" text-anchor="middle">generated build artifact</text>
+
+  <path class="arrow" d="M630,150 L765,120"/>
+
+  <!-- grafana -->
+  <rect class="box grafana" x="660" y="210" width="210" height="60"/>
+  <text class="label" x="765" y="235" text-anchor="middle">Grafana</text>
+  <text class="sublabel" x="765" y="251" text-anchor="middle" font-size="9">--provision (POST /api/dashboards/db)</text>
+
+  <path class="arrow" d="M630,175 L765,210"/>
+  <path class="arrow" d="M765,120 L765,210" stroke-dasharray="3,3"/>
+
+  <!-- read-back for position preservation -->
+  <path class="arrow" d="M765,270 C 620,330 490,300 420,275" stroke-dasharray="3,3"/>
+  <text class="caption" x="545" y="325" text-anchor="middle">live node positions read back before each regeneration (see #53)</text>
+
+</svg>

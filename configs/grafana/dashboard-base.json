@@ -1,0 +1,197 @@
+{
+  "uid": "evpn-vxlan-fabric-weathermap",
+  "title": "EVPN/VXLAN Fabric Weathermap",
+  "tags": ["evpn", "vxlan", "weathermap", "auto-generated"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 0,
+  "templating": {
+    "list": [
+      {
+        "name": "site",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+        "query": { "query": "label_values(interfaces_interface_state_oper_status, site)", "refId": "site" },
+        "refresh": 2,
+        "sort": 1,
+        "multi": true,
+        "includeAll": true,
+        "current": { "text": "All", "value": "$__all" }
+      },
+      {
+        "name": "device",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+        "query": {
+          "query": "label_values(interfaces_interface_state_oper_status{site=~\"$site\"}, device)",
+          "refId": "device"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "multi": true,
+        "includeAll": true,
+        "current": { "text": "All", "value": "$__all" }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "__WEATHERMAP_SLOT__",
+      "gridPos": { "h": 24, "w": 24, "x": 0, "y": 0 }
+    },
+    {
+      "id": 2,
+      "type": "table",
+      "title": "BGP Sessions",
+      "gridPos": { "h": 10, "w": 12, "x": 0, "y": 24 },
+      "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+          "instant": true,
+          "format": "table",
+          "expr": "network_instances_network_instance_protocols_protocol_bgp_neighbors_neighbor_state_session_state{device=~\"$device\"}"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "instance": true,
+              "job": true,
+              "protocol_identifier": true,
+              "protocol_name": true,
+              "subscription_name": true
+            },
+            "renameByName": {
+              "device": "Device",
+              "neighbor_address": "Neighbor Address",
+              "network_instance_name": "VRF",
+              "Value": "State"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "Down", "color": "red" }, "1": { "text": "Up", "color": "green" } } }
+          ],
+          "custom": { "cellOptions": { "type": "color-background" } }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "State" },
+            "properties": [
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } },
+              {
+                "id": "mappings",
+                "value": [
+                  { "type": "value", "options": { "0": { "text": "Down", "color": "red" }, "1": { "text": "Up", "color": "green" } } }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "type": "table",
+      "title": "Ports / Interfaces",
+      "gridPos": { "h": 10, "w": 12, "x": 12, "y": 24 },
+      "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+          "instant": true,
+          "format": "table",
+          "expr": "interfaces_interface_state_oper_status{device=~\"$device\"}"
+        },
+        {
+          "refId": "B",
+          "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+          "instant": true,
+          "format": "table",
+          "expr": "rate(interfaces_interface_state_counters_in_octets{device=~\"$device\"}[5m]) * 8"
+        },
+        {
+          "refId": "C",
+          "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+          "instant": true,
+          "format": "table",
+          "expr": "rate(interfaces_interface_state_counters_out_octets{device=~\"$device\"}[5m]) * 8"
+        }
+      ],
+      "transformations": [
+        { "id": "merge", "options": {} },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "instance": true,
+              "job": true,
+              "subscription_name": true
+            },
+            "renameByName": {
+              "device": "Device",
+              "interface": "Interface",
+              "Value #A": "Status",
+              "Value #B": "In (bps)",
+              "Value #C": "Out (bps)"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "Status" },
+            "properties": [
+              { "id": "custom.cellOptions", "value": { "type": "color-background" } },
+              {
+                "id": "mappings",
+                "value": [
+                  { "type": "value", "options": { "0": { "text": "Down", "color": "red" }, "1": { "text": "Up", "color": "green" } } }
+                ]
+              }
+            ]
+          },
+          { "matcher": { "id": "byName", "options": "In (bps)" }, "properties": [{ "id": "unit", "value": "bps" }] },
+          { "matcher": { "id": "byName", "options": "Out (bps)" }, "properties": [{ "id": "unit", "value": "bps" }] }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "Throughput per Site",
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 34 },
+      "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+      "fieldConfig": { "defaults": { "unit": "bps" }, "overrides": [] },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+          "expr": "sum by (site) (rate(interfaces_interface_state_counters_in_octets{site=~\"$site\", interface!~\"Management.*\"}[5m]) * 8)",
+          "legendFormat": "{{site}} in"
+        },
+        {
+          "refId": "B",
+          "datasource": { "type": "prometheus", "uid": "__DATASOURCE_UID__" },
+          "expr": "-sum by (site) (rate(interfaces_interface_state_counters_out_octets{site=~\"$site\", interface!~\"Management.*\"}[5m]) * 8)",
+          "legendFormat": "{{site}} out"
+        }
+      ]
+    }
+  ]
+}
