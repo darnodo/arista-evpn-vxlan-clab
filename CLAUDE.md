@@ -12,7 +12,7 @@ interconnected zones:
 A `gold` VRF is stretched end-to-end between DC and Campus through the Core (EVPN
 Type-5, stitched over eBGP IPv4 on the Core).
 
-Source of truth repo: `https://gitea.arnodo.fr/Damien/arista-evpn-vxlan-clab`
+Source of truth repo: `https://github.com/darnodo/arista-evpn-vxlan-clab`
 
 ## Naming convention
 
@@ -36,11 +36,11 @@ Source of truth repo: `https://gitea.arnodo.fr/Damien/arista-evpn-vxlan-clab`
 - **Containerlab** for topology orchestration
 - **cEOS** (containerized Arista EOS) as the network OS
 - **IPFabric** for network assurance and site separation
-- **Gitea** (self-hosted, `gitea.arnodo.fr`) as the source of truth
+- **GitHub** as the source of truth
 
 ## GitOps workflow — mandatory rule
 
-**Every action on this project must be tracked by a Gitea issue.**
+**Every action on this project must be tracked by a GitHub issue.**
 
 - Before starting any work (config change, topology addition, documentation, etc.),
   confirm an **issue exists** and reference it in commits (`Refs #<n>` or `Closes #<n>`).
@@ -72,7 +72,7 @@ Source of truth repo: `https://gitea.arnodo.fr/Damien/arista-evpn-vxlan-clab`
 
 ## Default behavior for Claude
 
-1. Before any action, identify the corresponding Gitea issue (or create one first)
+1. Before any action, identify the corresponding GitHub issue (or create one first)
 2. Stay within the scope of the issue being worked on — don't drift to other topics
 3. Strictly follow the `<area>-<role><n>` naming convention
 4. Never introduce hardcoded TODO/FIXME in repo files — always go through an issue
