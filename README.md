@@ -4,16 +4,16 @@ An extended Arista BGP EVPN-VXLAN multi-fabric lab using ContainerLab and cEOS. 
 
 ## 🎯 Overview
 
-| Zone   | Devices                                                                             |
-| ------ | ----------------------------------------------------------------------------------- |
-| DC     | 2 spines, 8 leafs (4 MLAG VTEPs), 2 border leafs (MLAG), 4 access switches, 4 hosts |
-| Core   | 2 core routers (iBGP AS 65500, OSPF underlay with BLs, eBGP to DC & Campus BLs)     |
-| Campus | 2 spines, 4 leafs (2 MLAG VTEPs), 2 border leafs (MLAG), 2 access switches, 2 hosts |
+| Zone   | Devices                                                                                |
+| ------ | -------------------------------------------------------------------------------------- |
+| DC     | 2 spines, 8 leafs (4 MLAG VTEPs), 2 border leafs (MLAG), 4 access switches, 4 hosts    |
+| Core   | 2 core routers (iBGP AS 65500, OSPF between core1/core2 only, eBGP to DC & Campus BLs) |
+| Campus | 2 spines, 4 leafs (2 MLAG VTEPs), 2 border leafs (MLAG), 2 access switches, 2 hosts    |
 
 Key design choices:
 
 - **eBGP** in both fabrics (underlay + EVPN overlay) between spines and leafs / border leafs.
-- **OSPF area 0 + eBGP multi-hop** between each Border Leaf pair and both Core routers (over dot1q subinterfaces: `.100` = default VRF underlay, `.200` = VRF `gold`).
+- **eBGP** (no IGP) between each Border Leaf pair and both Core routers, over directly-connected `/31`s on dot1q subinterfaces (`.100` = default VRF underlay, `.200` = VRF `gold`). OSPF area 0 is scoped to the `core1` ↔ `core2` link only, to keep Loopback0 reachable for the loopback-sourced iBGP session between the cores.
 - **MLAG** everywhere there is dual-homing at the fabric layers (leaf pairs, border-leaf pairs, access → leafs, and DC host → access).
 - **Host attachment pattern**:
     - **DC hosts** (servers) are **dual-homed via LACP** to an access switch — typical DC
@@ -221,11 +221,11 @@ Gateway: `172.16.0.254`.
 | ---- | ------ | -------- | --------------------------------------------------- |
 | gold | 100001 | 1:100001 | DC VTEP2/VTEP4/DC-BL + Campus VTEP1/VTEP2/Campus-BL |
 
-VRF `gold` is announced over EVPN Type-5 (IP prefix) inside each fabric, and **stitched by the Core** via eBGP IPv4 unicast in VRF gold (over the `.200` dot1q subinterfaces). L3 VNI `100001` is re-used end-to-end for symmetry; RT `1:100001` is consistent across both fabrics.
+VRF `gold` is announced over EVPN Type-5 (IP prefix) inside each fabric, and **stitched by the Core** via eBGP IPv4 unicast in VRF gold (over the `.200` dot1q subinterfaces). L3 VNI `100001` is re-used end-to-end for symmetry; RT `1:100001` is consistent across both fabrics. The Option A handoff requires one subinterface and one BGP session per VRF, so it does not scale past a handful of VRFs.
 
 ### Route Distinguisher Convention
 
-- Leafs / BLs: `rd <Loopback0>:1` for VRF gold; `rd <AS>:<L2_VNI>` per L2 VLAN (e.g. `65001:110040`, `66002:110050`).
+- Leafs / BLs: `rd <Loopback0>:1` for VRF gold; `rd <Loopback0>:<vlan_id>` per L2 VLAN (e.g. `10.0.250.11:40`, `10.1.250.13:50`) — unique per device, so no RD is duplicated across an MLAG pair.
 - Cores: `rd <Loopback0>:100001` for VRF gold (transit only — no EVPN, IPv4 unicast with `redistribute connected`).
 
 ## 🔀 Control Plane Summary
@@ -235,11 +235,11 @@ VRF `gold` is announced over EVPN Type-5 (IP prefix) inside each fabric, and **s
 | DC spine ↔ leaf/BL underlay       | eBGP IPv4 (AS 65000 ↔ 650xx)         | `maximum-paths 4 ecmp 64`            |
 | DC spine ↔ leaf/BL overlay        | eBGP EVPN via Loopback0, multi-hop 3 | Spines reflect via `ebgp peer-group` |
 | DC MLAG pair iBGP                 | iBGP over VLAN 4091 SVI              | `next-hop-self`                      |
-| DC-BL ↔ Core (default)            | OSPF area 0 + eBGP AS 65005 ↔ 65500  | on `.100` dot1q subinterface         |
+| DC-BL ↔ Core (default)            | eBGP AS 65005 ↔ 65500                | on `.100` dot1q subinterface, no IGP |
 | DC-BL ↔ Core (VRF gold)           | eBGP AS 65005 ↔ 65500                | on `.200` dot1q subinterface         |
 | Core1 ↔ Core2 (default)           | OSPF area 0 + iBGP AS 65500          | via Loopback0                        |
 | Core1 ↔ Core2 (VRF gold)          | iBGP AS 65500                        | VRF-aware over `.200` subinterface   |
-| Campus-BL ↔ Core (default / gold) | OSPF + eBGP AS 66005 ↔ 65500         | same pattern as DC-BL                |
+| Campus-BL ↔ Core (default / gold) | eBGP AS 66005 ↔ 65500                | same pattern as DC-BL, no IGP        |
 | Campus spine ↔ leaf/BL underlay   | eBGP IPv4 (AS 66000 ↔ 660xx)         |                                      |
 | Campus spine ↔ leaf/BL overlay    | eBGP EVPN via Loopback0, multi-hop 3 |                                      |
 | Campus MLAG pair iBGP             | iBGP over VLAN 4091 SVI              |                                      |
