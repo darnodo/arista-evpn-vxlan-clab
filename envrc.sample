@@ -3,6 +3,8 @@ export GRAFANA_TOKEN=""
 export GRAFANA_DATASOURCE_UID=""
 export IPFABRIC_URL=""
 export IPFABRIC_TOKEN=""
+export GITHUB_HOST=""
+export GITHUB_PERSONAL_ACCESS_TOKEN=""
 
 # Optional -- see scripts/README.md for defaults and when to override
 # export IPFABRIC_SNAPSHOT="$last"
