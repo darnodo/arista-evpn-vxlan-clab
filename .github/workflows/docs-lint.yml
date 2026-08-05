@@ -1,0 +1,56 @@
+name: docs-lint
+
+on:
+  push:
+    paths:
+      - "docs/**"
+      - "evpn-lab.clab.yml"
+      - ".github/workflows/docs-lint.yml"
+  pull_request:
+    paths:
+      - "docs/**"
+      - "evpn-lab.clab.yml"
+      - ".github/workflows/docs-lint.yml"
+
+jobs:
+  node-names:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check docs/ node references against evpn-lab.clab.yml
+        run: |
+          set -euo pipefail
+
+          # Node names declared under topology.nodes in evpn-lab.clab.yml (8-space indent keys)
+          NODES=$(sed -n '/^    nodes:/,/^    links:/p' evpn-lab.clab.yml \
+            | grep -E '^        [a-zA-Z0-9_-]+:$' \
+            | sed -E 's/^ {8}([a-zA-Z0-9_-]+):$/\1/')
+
+          # Node-shaped references in docs/: container names (clab-arista-evpn-fabric-<node>)
+          # and backtick-quoted `dc-*`/`campus-*`/`core<n>` hostnames
+          REFERENCED=$(grep -rhoE '(clab-arista-evpn-fabric-[a-zA-Z0-9-]+|`(dc|campus)-[a-zA-Z0-9-]+`|`core[0-9]`)' docs/ \
+            | sed -E 's/^clab-arista-evpn-fabric-//; s/^`//; s/`$//' \
+            | sort -u)
+
+          FAIL=0
+          while IFS= read -r name; do
+            [ -z "$name" ] && continue
+            if ! grep -qxF "$name" <<< "$NODES"; then
+              echo "::error::docs/ references unknown node '$name' (not found in evpn-lab.clab.yml)"
+              FAIL=1
+            fi
+          done <<< "$REFERENCED"
+
+          exit $FAIL
+
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check relative links in docs/
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          folder-path: "docs"
+          config-file: ".github/workflows/markdown-link-check.json"
