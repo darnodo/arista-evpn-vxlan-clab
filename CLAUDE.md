@@ -6,7 +6,8 @@ Arista **EVPN/VXLAN** network lab built on Containerlab + cEOS, simulating three
 interconnected zones:
 
 - **DC** (Data Center): 2 spines, 8 leafs (4 MLAG/VTEP pairs), 2 MLAG border leafs, 4 access switches, 4 hosts
-- **Core**: 2 L3 transit routers (iBGP AS 65500, OSPF underlay)
+- **Core**: 2 L3 transit routers (iBGP AS 65500 over Loopback0, OSPF scoped to the
+  core1↔core2 link only, eBGP to DC and Campus border leafs)
 - **Campus**: 2 spines, 4 leafs (2 MLAG/VTEP pairs), 2 MLAG border leafs, 2 access switches, 2 hosts
 
 A `gold` VRF is stretched end-to-end between DC and Campus through the Core (EVPN
