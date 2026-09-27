@@ -430,6 +430,13 @@
         "x": 2560,
         "y": 680
       }
+    },
+    {
+      "id": "prometheus",
+      "position": {
+        "x": 60,
+        "y": 0
+      }
     }
   ],
   "edgeAnnotations": [],
