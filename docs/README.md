@@ -18,3 +18,4 @@
 - [gnmic](observability/gnmic.md) — gNMI subscriptions
 - [Prometheus](observability/prometheus.md) — scrape config, label relabeling
 - [Weathermap](observability/weathermap.md) — dashboard-as-code panel generation
+- [SNMP](observability/snmp.md) — SNMPv3 read-only access, shared lab credentials
