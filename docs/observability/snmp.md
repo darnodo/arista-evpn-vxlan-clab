@@ -10,16 +10,16 @@ Main consumer: Zabbix LLDP neighbour discovery (`LLDP-MIB`).
 
 ## Credentials
 
-| Parameter        | Value          | `envrc.sample` var |
-| ---------------- | -------------- | ------------------ |
-| Version          | `v3`           | —                  |
-| Security level   | `authPriv`     | —                  |
-| User             | `snmp-ro`      | `SNMP_USER`        |
-| Auth protocol    | `SHA-256`      | `SNMP_AUTH_PROTO`  |
-| Auth passphrase  | `evpnlab-auth` | `SNMP_AUTH_PASS`   |
-| Priv protocol    | `AES-128`      | `SNMP_PRIV_PROTO`  |
-| Priv passphrase  | `evpnlab-priv` | `SNMP_PRIV_PASS`   |
-| Context          | none           | —                  |
+| Parameter       | Value          | `envrc.sample` var |
+| --------------- | -------------- | ------------------ |
+| Version         | `v3`           | —                  |
+| Security level  | `authPriv`     | —                  |
+| User            | `snmp-ro`      | `SNMP_USER`        |
+| Auth protocol   | `SHA-256`      | `SNMP_AUTH_PROTO`  |
+| Auth passphrase | `evpnlab-auth` | `SNMP_AUTH_PASS`   |
+| Priv protocol   | `AES-128`      | `SNMP_PRIV_PROTO`  |
+| Priv passphrase | `evpnlab-priv` | `SNMP_PRIV_PASS`   |
+| Context         | none           | —                  |
 
 ## EOS configuration
 
@@ -31,10 +31,10 @@ snmp-server group lab-ro v3 priv read all
 snmp-server user snmp-ro lab-ro v3 auth sha256 evpnlab-auth priv aes evpnlab-priv
 ```
 
-| Object | Role                                                        |
-| ------ | ----------------------------------------------------------- |
-| `all`  | view covering the whole `iso` tree (incl. `LLDP-MIB`)       |
-| `lab-ro` | v3 group, `priv` required, read-only on view `all`        |
+| Object    | Role                                                                                   |
+| --------- | -------------------------------------------------------------------------------------- |
+| `all`     | view covering the whole `iso` tree (incl. `LLDP-MIB`)                                  |
+| `lab-ro`  | v3 group, `priv` required, read-only on view `all`                                     |
 | `snmp-ro` | v3 user; EOS stores it localized (`localized <engineID>` + hashes) in `running-config` |
 
 - EngineID is auto-generated per node from its chassis ID — unique across the 28 nodes, not
@@ -65,13 +65,13 @@ snmpget $A 172.16.0.25 1.3.6.1.6.3.10.2.1.1.0
 
 Expected `lldpRemSysName` count per role:
 
-| Role                          | Neighbours |
-| ----------------------------- | ---------- |
-| `dc-spine*`                   | 10         |
-| `campus-spine*`               | 6          |
-| `core*`, `*-border-leaf*`     | 5          |
-| `dc-leaf*`, `campus-leaf*`    | 4          |
-| `dc-access*`, `campus-access*` | 2         |
+| Role                           | Neighbours |
+| ------------------------------ | ---------- |
+| `dc-spine*`                    | 10         |
+| `campus-spine*`                | 6          |
+| `core*`, `*-border-leaf*`      | 5          |
+| `dc-leaf*`, `campus-leaf*`     | 4          |
+| `dc-access*`, `campus-access*` | 2          |
 
 On the switch:
 
@@ -82,12 +82,12 @@ docker exec -it clab-arista-evpn-fabric-dc-leaf1 Cli -p 15 -c "show snmp"   # pa
 
 ## Zabbix host settings
 
-| Field                          | Value                        |
-| ------------------------------ | ---------------------------- |
+| Field                          | Value                         |
+| ------------------------------ | ----------------------------- |
 | Interface                      | SNMP, `mgmt-ipv4`, port `161` |
-| SNMP version                   | `SNMPv3`                     |
-| Security name                  | `snmp-ro`                    |
-| Security level                 | `authPriv`                   |
-| Authentication protocol / pass | `SHA256` / `evpnlab-auth`    |
-| Privacy protocol / pass        | `AES128` / `evpnlab-priv`    |
-| Context name                   | empty                        |
+| SNMP version                   | `SNMPv3`                      |
+| Security name                  | `snmp-ro`                     |
+| Security level                 | `authPriv`                    |
+| Authentication protocol / pass | `SHA256` / `evpnlab-auth`     |
+| Privacy protocol / pass        | `AES128` / `evpnlab-priv`     |
+| Context name                   | empty                         |
