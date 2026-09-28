@@ -6,6 +6,13 @@ export IPFABRIC_TOKEN=""
 export GITHUB_HOST=""
 export GITHUB_PERSONAL_ACCESS_TOKEN=""
 
+# SNMPv3 read-only on all cEOS nodes -- shared lab values, not secret (docs/observability/snmp.md)
+export SNMP_USER="snmp-ro"
+export SNMP_AUTH_PROTO="SHA-256"
+export SNMP_AUTH_PASS="evpnlab-auth"
+export SNMP_PRIV_PROTO="AES"
+export SNMP_PRIV_PASS="evpnlab-priv"
+
 # Optional -- see scripts/README.md for defaults and when to override
 # export IPFABRIC_SNAPSHOT="$last"
 # export PROMETHEUS_URL="http://172.16.0.71:9090"

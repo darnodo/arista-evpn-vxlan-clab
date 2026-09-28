@@ -226,6 +226,15 @@ curl -s 'http://172.16.0.71:9090/api/v1/targets' | jq '.data.activeTargets[].hea
 
 <!-- CAPTURE: curl -s 'http://172.16.0.71:9090/api/v1/targets' | jq -->
 
+SNMPv3 answers on every node (credentials and per-role LLDP neighbour counts:
+[SNMP](../observability/snmp.md)):
+
+```bash
+docker run --rm --network evpn-mgmt alpine:3 sh -c 'apk add -q net-snmp-tools && \
+  snmpwalk -v3 -l authPriv -u snmp-ro -a SHA-256 -A evpnlab-auth -x AES -X evpnlab-priv \
+  172.16.0.25 1.0.8802.1.1.2.1.4.1.1.9'
+```
+
 ## VLAN 50 (Campus, infrastructure only)
 
 VLAN 50 is a Campus-local L2 VXLAN stretched between `campus-leaf1`/`campus-leaf2`
