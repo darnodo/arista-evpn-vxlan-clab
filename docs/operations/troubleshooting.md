@@ -324,6 +324,16 @@ show bgp evpn summary
 Check `neighbor evpn activate` under `address-family evpn`, `update-source Loopback0`,
 `ebgp-multihop 3`, and `send-community extended`.
 
+### SNMPv3 `connection refused` (UDP 161)
+
+```bash
+show snmp            # "SNMP agent disabled: ... no users are configured"
+show snmp user       # empty
+```
+
+`snmp-server user` dropped at boot: missing `snmp-server engineID local` before it in the
+startup-config. See [SNMP — EOS configuration](../observability/snmp.md#eos-configuration).
+
 ## Additional Resources
 
 - [Arista EVPN Design Guide](https://www.arista.com/en/solutions/design-guides)

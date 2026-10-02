@@ -26,6 +26,7 @@ Main consumer: Zabbix LLDP neighbour discovery (`LLDP-MIB`).
 Identical block on every node, right after `management api gnmi`:
 
 ```
+snmp-server engineID local 8000757101<mgmt-ipv4 hex>
 snmp-server view all iso included
 snmp-server group lab-ro v3 priv read all
 snmp-server user snmp-ro lab-ro v3 auth sha256 evpnlab-auth priv aes evpnlab-priv
@@ -33,12 +34,15 @@ snmp-server user snmp-ro lab-ro v3 auth sha256 evpnlab-auth priv aes evpnlab-pri
 
 | Object    | Role                                                                                   |
 | --------- | -------------------------------------------------------------------------------------- |
+| engineID  | pinned per node: `80007571` (Arista PEN 30065) + `01` (IPv4) + `Management0` IP in hex |
 | `all`     | view covering the whole `iso` tree (incl. `LLDP-MIB`)                                  |
 | `lab-ro`  | v3 group, `priv` required, read-only on view `all`                                     |
 | `snmp-ro` | v3 user; EOS stores it localized (`localized <engineID>` + hashes) in `running-config` |
 
-- EngineID is auto-generated per node from its chassis ID — unique across the 28 nodes, not
-  pinned in the configs
+- EngineID must be pinned **before** the user line: without it, EOS drops the plaintext
+  `snmp-server user` at startup-config load (engineID not yet available) → agent disabled,
+  `ICMP port unreachable` on UDP 161 (`connection refused` client-side)
+- Example: `172.16.0.61` → `8000757101ac10003d`
 - No write access, no traps, no v1/v2c community
 
 ## Validation
