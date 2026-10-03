@@ -51,14 +51,18 @@ config block on every Arista `cEOS` node (28 nodes). Main consumers: the lab its
 | RADIUS key               | `campus-access1-2`, `clients.conf`        | `evpnlab-radius`                         |
 | User `admin`             | TACACS+ and local                         | `admin` (pre-existing, not prefixed)     |
 | User `netops` (read-only) | TACACS+ and local                        | `evpnlab-netops`                         |
-| User `automation`        | TACACS+ and local, local SSH key          | `evpnlab-automation`                     |
+| User `automation`        | TACACS+ and local, local SSH key          | `evpnlab-automation`, key `configs/ssh/automation_ed25519` |
 | 802.1X user `campus-user1` | FreeRADIUS, `campus-host1` supplicant   | `evpnlab-user1`                          |
 | MAB `campus-host2`       | FreeRADIUS                                | MAC `aa:c1:ab:60:02:01` (user = password) |
 | Grafana `admin`          | `evpn-lab.clab.yml`                       | `evpnlab-grafana`                        |
 
-The `automation` SSH key is a lab public key (comment `automation@evpn-lab`), its
-private key is not in the repo. To log in with a key, replace the `ssh-key` line with
-your own public key.
+The `automation` key pair is committed in `configs/ssh/` (lab key, comment
+`automation@evpn-lab`). Git does not keep file modes, restrict the private key before use:
+
+```bash
+chmod 600 configs/ssh/automation_ed25519
+ssh -i configs/ssh/automation_ed25519 automation@clab-arista-evpn-fabric-dc-leaf1
+```
 
 ## EOS configuration
 
