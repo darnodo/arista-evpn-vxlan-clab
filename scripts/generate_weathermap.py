@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a weathermap-ng PANEL (only) from IPFabric topology + gnmic/Prometheus
+"""Generate a weathermap-ng PANEL (only) from the containerlab topology + gnmic/Prometheus
 metrics, merge it into a manually-authored dashboard base, and optionally
 provision the result into Grafana.
 
@@ -10,10 +10,11 @@ BGP sessions table, ports/interfaces table, or throughput panels -- those
 live in the manually-authored `configs/grafana/dashboard-base.json` and are
 not touched by this script.
 
-Data sources (see gitea issues #44, #47, #48):
-  - IPFabric REST API: device inventory + connectivity-matrix (topology)
+Data sources (see gitea issues #44, #47, #48, and #15):
+  - containerlab topology-data.json (written by `containerlab deploy`): cEOS
+    nodes and cEOS-to-cEOS links. Replaces IPFabric, no longer available.
   - Prometheus (gnmic exporter, configs/prometheus/prometheus.yml): live label
-    values, used both to validate the IPFabric->gnmic interface-name mapping
+    values, used both to validate the topology->gnmic interface-name mapping
     and to resolve which VTEPs/VLANs actually have VXLAN data.
 
 Merge: the weathermap panel is generated fresh from live data on every run
@@ -22,16 +23,17 @@ titled "__WEATHERMAP_SLOT__"), keeping that slot's gridPos so the manually
 authored layout is never repositioned by the generator. See #52.
 
 Usage:
-    python3 scripts/generate_weathermap.py [--base PATH] [--output PATH] [--provision]
+    python3 scripts/generate_weathermap.py [--topology PATH] [--base PATH] [--output PATH] [--provision]
+
+The output is a plain dashboard JSON, provisioned from file by the in-lab
+Grafana (configs/grafana/dashboards/). --provision also pushes it via the API.
 
 Environment:
-    IPFABRIC_URL        e.g. https://ipfabric.example.com
-    IPFABRIC_TOKEN       API token (Inventory/Snapshots read access)
-    IPFABRIC_SNAPSHOT    snapshot id, default "$last"
     PROMETHEUS_URL       default http://172.16.0.71:9090 (in-topology instance)
     GRAFANA_URL           required with --provision
     GRAFANA_TOKEN     required with --provision
-    GRAFANA_DATASOURCE_UID  Prometheus datasource UID in Grafana, required with --provision
+    GRAFANA_DATASOURCE_UID  Prometheus datasource UID in Grafana, default "prometheus"
+        (UID provisioned in the in-lab Grafana)
     GRAFANA_DASHBOARD_UID  default "evpn-vxlan-fabric-weathermap"
     GRAFANA_WEATHERMAP_PLUGIN_ID  default "tamirsuliman-weathermap-panel" -- override
         if a different weathermap-ng fork/plugin id is installed.
@@ -47,7 +49,7 @@ import urllib.parse
 
 WEATHERMAP_SCHEMA_VERSION = 14
 
-# IPFabric abbreviated interface prefixes -> gnmic/OpenConfig full names.
+# Abbreviated interface prefixes (topology "EtN") -> gnmic/OpenConfig full names.
 # Longest-prefix-first so e.g. "Ma" doesn't shadow a hypothetical multi-letter clash.
 INTERFACE_PREFIX_ALIASES = {
     "Et": "Ethernet",
@@ -64,7 +66,7 @@ GRID_SPACING_Y = 150
 
 # Layered default layout (see #53): device role is parsed from the hostname
 # naming convention, same trust level as the `site` parsing already in place
-# for the Prometheus relabel (#49) -- not IPFabric-derived, not configurable.
+# for the Prometheus relabel (#49) -- not topology-derived, not configurable.
 # Checked in this order so e.g. "campus-border-leaf1" matches border-leaf
 # before the more general leaf pattern.
 ROLE_PATTERNS = [
@@ -89,7 +91,9 @@ ANCHOR = {"Center": 0, "Top": 1, "Bottom": 2, "Left": 3, "Right": 4}
 
 NODE_COLORS = {"font": "#ffffff", "background": "#22252b", "border": "#5794F2", "statusDown": "#F2495C"}
 STATUS_VALUE_MAPPINGS = [{"value": 0, "color": "#F2495C"}, {"value": 1, "color": "#73BF69"}]
-DEFAULT_LINK_BANDWIDTH_BPS = 10_000_000_000  # 10G fallback when IPFabric speed is missing
+# Every cEOS port in the lab reports 1G (`show interfaces` BW 1000000 kbit),
+# containerlab has no per-link speed to read.
+LINK_BANDWIDTH_BPS = 1_000_000_000
 
 
 def env(name, default=None, required=False):
@@ -100,48 +104,34 @@ def env(name, default=None, required=False):
 
 
 # --------------------------------------------------------------------------
-# IPFabric
+# containerlab topology (see #15)
 # --------------------------------------------------------------------------
 
-def ipfabric_request(base_url, token, path, body):
-    req = urllib.request.Request(
-        f"{base_url.rstrip('/')}/api{path}",
-        data=json.dumps(body).encode(),
-        headers={"X-API-Token": token, "Content-Type": "application/json"},
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.load(resp)["data"]
+def load_clab_topology(path):
+    """cEOS nodes and cEOS-to-cEOS links from containerlab's topology-data.json.
+    Links are returned in the connectivity-matrix row shape dedupe_links()
+    expects, with containerlab "ethN" renamed to the cEOS short name "EtN".
+    Links to Linux nodes (hosts, services) are dropped: no gnmic counters there."""
+    if not os.path.exists(path):
+        sys.exit(f"{path} not found: deploy the lab first (containerlab deploy -t evpn-lab.clab.yml)")
+    with open(path) as f:
+        topo = json.load(f)
 
+    ceos = {name for name, node in topo["nodes"].items() if node["kind"] == "arista_ceos"}
+    devices = []
+    for host in sorted(ceos):
+        site = re.match(r"(campus|core|dc)", host)
+        devices.append({"hostname": host, "siteName": site.group(1) if site else "unknown"})
 
-def fetch_devices(base_url, token, snapshot):
-    return ipfabric_request(
-        base_url, token, "/tables/inventory/devices",
-        {"columns": ["hostname", "siteName", "vendor", "model", "sn"], "snapshot": snapshot,
-         "pagination": {"limit": 1000, "start": 0}},
-    )
-
-
-def fetch_connectivity_matrix(base_url, token, snapshot):
-    return ipfabric_request(
-        base_url, token, "/tables/interfaces/connectivity-matrix",
-        {"columns": ["localHost", "localInt", "remoteHost", "remoteInt", "protocol"], "snapshot": snapshot,
-         "pagination": {"limit": 5000, "start": 0}},
-    )
-
-
-def fetch_interface_speeds(base_url, token, snapshot):
-    rows = ipfabric_request(
-        base_url, token, "/tables/inventory/interfaces",
-        {"columns": ["hostname", "intName", "speed"], "snapshot": snapshot,
-         "pagination": {"limit": 5000, "start": 0}},
-    )
-    speeds = {}
-    for row in rows:
-        speed = row.get("speed")
-        if speed:
-            speeds[(row["hostname"], row["intName"])] = int(speed)
-    return speeds
+    rows = []
+    for link in topo["links"]:
+        a, z = link["endpoints"]["a"], link["endpoints"]["z"]
+        if a["node"] in ceos and z["node"] in ceos:
+            rows.append({
+                "localHost": a["node"], "localInt": re.sub(r"^eth", "Et", a["interface"]),
+                "remoteHost": z["node"], "remoteInt": re.sub(r"^eth", "Et", z["interface"]),
+            })
+    return devices, rows
 
 
 # --------------------------------------------------------------------------
@@ -159,7 +149,7 @@ def prom_query(prometheus_url, promql):
 
 def known_interface_pairs(prometheus_url):
     """(device, interface) pairs that actually exist in the gnmic exporter,
-    used to validate the IPFabric->gnmic interface alias before trusting it."""
+    used to validate the topology->gnmic interface alias before trusting it."""
     results = prom_query(prometheus_url, "interfaces_interface_state_oper_status")
     return {(m["metric"]["device"], m["metric"]["interface"]) for m in results}
 
@@ -172,17 +162,17 @@ def known_vtep_vlan_pairs(prometheus_url):
 
 
 # --------------------------------------------------------------------------
-# Interface aliasing (IPFabric abbreviated name -> gnmic full name)
+# Interface aliasing (topology abbreviated name -> gnmic full name)
 # --------------------------------------------------------------------------
 
-def alias_interface(ipf_name):
-    match = re.match(r"^([A-Za-z]+)(\d.*)$", ipf_name)
+def alias_interface(short_name):
+    match = re.match(r"^([A-Za-z]+)(\d.*)$", short_name)
     if not match:
-        return ipf_name
+        return short_name
     prefix, rest = match.groups()
     full = INTERFACE_PREFIX_ALIASES.get(prefix)
     if full is None:
-        return ipf_name
+        return short_name
     return f"{full}{rest}"
 
 
@@ -277,7 +267,7 @@ def dedupe_links(connectivity_matrix):
 # Weathermap assembly
 # --------------------------------------------------------------------------
 
-def build_weathermap(devices, links, interface_speeds, positions, prometheus_url, mismatches):
+def build_weathermap(devices, links, positions, prometheus_url, mismatches):
     hostnames = [d["hostname"] for d in devices]
     host_regex = "|".join(promql_escape(h) for h in hostnames)
 
@@ -285,13 +275,13 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
     vtep_vlan_pairs = known_vtep_vlan_pairs(prometheus_url)
     vtep_hosts = sorted({dev for dev, _ in vtep_vlan_pairs})
 
-    def resolve_and_check(host, ipf_int, side_label):
-        gnmic_int = alias_interface(ipf_int)
+    def resolve_and_check(host, topo_int, side_label):
+        gnmic_int = alias_interface(topo_int)
         if (host, gnmic_int) not in known_pairs:
             mismatches.append(
-                f"{host} {ipf_int} -> {gnmic_int} ({side_label}): no matching series in "
+                f"{host} {topo_int} -> {gnmic_int} ({side_label}): no matching series in "
                 f"interfaces_interface_state_oper_status -- link will reference a query that "
-                f"resolves to no data until the gnmic/IPFabric interface names are aligned "
+                f"resolves to no data until the gnmic/topology interface names are aligned "
                 f"(see #47/#48 interface aliasing fallback)"
             )
         return gnmic_int
@@ -353,13 +343,6 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
         interface_regex_parts.add(promql_escape(a_gnmic_int))
         interface_regex_parts.add(promql_escape(z_gnmic_int))
 
-        a_bw = interface_speeds.get((link["a_host"], link["a_int"]), DEFAULT_LINK_BANDWIDTH_BPS)
-        z_bw = interface_speeds.get((link["z_host"], link["z_int"]), DEFAULT_LINK_BANDWIDTH_BPS)
-        if (link["a_host"], link["a_int"]) not in interface_speeds:
-            mismatches.append(f"{link['a_host']} {link['a_int']}: no IPFabric speed, defaulting bandwidth to {DEFAULT_LINK_BANDWIDTH_BPS}")
-        if (link["z_host"], link["z_int"]) not in interface_speeds:
-            mismatches.append(f"{link['z_host']} {link['z_int']}: no IPFabric speed, defaulting bandwidth to {DEFAULT_LINK_BANDWIDTH_BPS}")
-
         link_defs.append({
             "id": f"{link['a_host']}-{a_gnmic_int}--{link['z_host']}-{z_gnmic_int}",
             "nodes": [{"id": link["a_host"]}, {"id": link["z_host"]}],
@@ -371,12 +354,12 @@ def build_weathermap(devices, links, interface_speeds, positions, prometheus_url
             # independent, opposite-direction measurements instead.
             "sides": {
                 "A": {
-                    "bandwidth": a_bw,
+                    "bandwidth": LINK_BANDWIDTH_BPS,
                     "query": f"{link['a_host']} {a_gnmic_int} tx",
                     "labelOffset": 55, "anchor": ANCHOR["Right"], "dashboardLink": "",
                 },
                 "Z": {
-                    "bandwidth": z_bw,
+                    "bandwidth": LINK_BANDWIDTH_BPS,
                     "query": f"{link['z_host']} {z_gnmic_int} tx",
                     "labelOffset": 55, "anchor": ANCHOR["Left"], "dashboardLink": "",
                 },
@@ -560,6 +543,22 @@ def fetch_live_node_positions(grafana_url, api_token, dashboard_uid):
     return {}
 
 
+def load_file_node_positions(path):
+    """Node positions from a previously generated dashboard file (the committed
+    configs/grafana/dashboards/fabric.json), keyed by node id. Used when no live
+    Grafana is queried, so positions tuned once and committed survive a rerun.
+    Accepts both the plain dashboard and the older {"dashboard": ...} API payload."""
+    if not os.path.exists(path):
+        return {}
+    with open(path) as f:
+        data = json.load(f)
+    for panel in data.get("dashboard", data).get("panels", []):
+        if panel.get("title") == WEATHERMAP_PANEL_TITLE:
+            nodes = panel.get("options", {}).get("weathermap", {}).get("nodes", [])
+            return {n["id"]: n["position"] for n in nodes if "position" in n}
+    return {}
+
+
 def provision_to_grafana(grafana_url, api_token, dashboard_payload):
     req = urllib.request.Request(
         f"{grafana_url.rstrip('/')}/api/dashboards/db",
@@ -578,35 +577,27 @@ def provision_to_grafana(grafana_url, api_token, dashboard_payload):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--topology", default="clab-arista-evpn-fabric/topology-data.json",
+                         help="containerlab topology-data.json (written by containerlab deploy)")
     parser.add_argument("--base", default="configs/grafana/dashboard-base.json",
                          help="manually-authored dashboard base JSON (everything but the weathermap panel)")
-    parser.add_argument("--output", default="configs/grafana/weathermap-dashboard.json",
-                         help="where to write the merged dashboard-as-code JSON (build artifact)")
+    parser.add_argument("--output", default="configs/grafana/dashboards/fabric.json",
+                         help="where to write the merged dashboard JSON (provisioned from file by the in-lab Grafana)")
     parser.add_argument("--provision", action="store_true",
                          help="also POST the merged dashboard to the Grafana API (requires GRAFANA_* env vars)")
     args = parser.parse_args()
 
-    ipfabric_url = env("IPFABRIC_URL", required=True)
-    ipfabric_token = env("IPFABRIC_TOKEN", required=True)
-    snapshot = env("IPFABRIC_SNAPSHOT", "$last")
     prometheus_url = env("PROMETHEUS_URL", "http://172.16.0.71:9090")
     dashboard_uid = env("GRAFANA_DASHBOARD_UID", "evpn-vxlan-fabric-weathermap")
-    datasource_uid = env("GRAFANA_DATASOURCE_UID", "PROMETHEUS_DATASOURCE_UID_PLACEHOLDER")
+    datasource_uid = env("GRAFANA_DATASOURCE_UID", "prometheus")
     plugin_id = env("GRAFANA_WEATHERMAP_PLUGIN_ID", "tamirsuliman-weathermap-panel")
     grafana_url = env("GRAFANA_URL")
     grafana_token = env("GRAFANA_TOKEN")
 
-    print(f"Fetching devices from IPFabric ({ipfabric_url}, snapshot={snapshot})...")
-    devices = fetch_devices(ipfabric_url, ipfabric_token, snapshot)
-    print(f"  {len(devices)} devices")
-
-    print("Fetching connectivity-matrix...")
-    matrix = fetch_connectivity_matrix(ipfabric_url, ipfabric_token, snapshot)
+    print(f"Reading containerlab topology ({args.topology})...")
+    devices, matrix = load_clab_topology(args.topology)
     links = dedupe_links(matrix)
-    print(f"  {len(links)} fabric links after Management-plane filter + dedup ({len(matrix)} raw rows)")
-
-    print("Fetching interface speeds...")
-    interface_speeds = fetch_interface_speeds(ipfabric_url, ipfabric_token, snapshot)
+    print(f"  {len(devices)} cEOS nodes, {len(links)} fabric links")
 
     mismatches = []
     default_positions = build_layout(devices, mismatches)
@@ -622,12 +613,13 @@ def main():
         live_positions = fetch_live_node_positions(grafana_url, grafana_token, dashboard_uid)
         print(f"  {len(live_positions)} node(s) with an existing live position")
     else:
-        print("GRAFANA_URL/GRAFANA_TOKEN not set -- skipping live position fetch, using layered default for all nodes", file=sys.stderr)
-        live_positions = {}
+        print(f"GRAFANA_URL/GRAFANA_TOKEN not set -- reusing node positions from {args.output} if present", file=sys.stderr)
+        live_positions = load_file_node_positions(args.output)
+        print(f"  {len(live_positions)} node(s) with an existing position in the file")
     positions = {host: live_positions.get(host, default) for host, default in default_positions.items()}
 
     print(f"Cross-checking interface names against live exporter ({prometheus_url})...")
-    weathermap, targets = build_weathermap(devices, links, interface_speeds, positions, prometheus_url, mismatches)
+    weathermap, targets = build_weathermap(devices, links, positions, prometheus_url, mismatches)
 
     if mismatches:
         print(f"\n{len(mismatches)} mismatch(es) found (link/position kept, not dropped):", file=sys.stderr)
@@ -641,11 +633,11 @@ def main():
     base_dashboard = load_base_dashboard(args.base)
     base_dashboard = substitute_placeholders(base_dashboard, {"__DATASOURCE_UID__": datasource_uid})
     dashboard = merge_weathermap_into_base(base_dashboard, weathermap_panel, dashboard_uid)
-    dashboard_payload = {"dashboard": dashboard, "overwrite": True}
 
+    # Plain dashboard JSON: what Grafana file provisioning expects
     os.makedirs(os.path.dirname(args.output) or ".", exist_ok=True)
     with open(args.output, "w") as f:
-        json.dump(dashboard_payload, f, indent=2)
+        json.dump(dashboard, f, indent=2)
         f.write("\n")
     print(f"Wrote {args.output} ({len(weathermap['nodes'])} nodes, {len(weathermap['links'])} links, "
           f"{len(dashboard['panels'])} panels total)")
@@ -653,10 +645,8 @@ def main():
     if args.provision:
         if not (grafana_url and grafana_token):
             sys.exit("Refusing to provision: GRAFANA_URL and GRAFANA_TOKEN must both be set")
-        if datasource_uid == "PROMETHEUS_DATASOURCE_UID_PLACEHOLDER":
-            sys.exit("Refusing to provision: set GRAFANA_DATASOURCE_UID to the real Prometheus datasource UID first")
         print(f"Provisioning dashboard '{dashboard_uid}' to {grafana_url}...")
-        result = provision_to_grafana(grafana_url, grafana_token, dashboard_payload)
+        result = provision_to_grafana(grafana_url, grafana_token, {"dashboard": dashboard, "overwrite": True})
         print(f"  {result.get('status')}: {result.get('url')}")
 
 

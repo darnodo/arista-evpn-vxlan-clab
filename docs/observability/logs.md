@@ -70,9 +70,16 @@ event=acct_Start user=aa:c1:ab:60:02:01 nas=172.16.0.62 port=Ethernet3 mac=AA-C1
 ## Grafana
 
 `http://172.16.0.74:3000` (through the Tailscale subnet route), `admin` / `evpnlab-grafana`.
-Datasources are provisioned from `configs/grafana/provisioning/datasources/lab.yml` with
-fixed UIDs: `prometheus`, `loki`. Logs: Explore, datasource `Loki`.
+Everything is provisioned from files at start, nothing to import:
 
-The weathermap dashboard ([Weathermap](weathermap.md)) can be pushed to this Grafana
-with `GRAFANA_URL=http://172.16.0.74:3000` and `GRAFANA_DATASOURCE_UID=prometheus`
-(the weathermap panel plugin must be installed first).
+| Item | File | Content |
+| ---- | ---- | ------- |
+| Datasources | `configs/grafana/provisioning/datasources/lab.yml` | `Prometheus` (UID `prometheus`), `Loki` (UID `loki`) |
+| Dashboard provider | `configs/grafana/provisioning/dashboards/lab.yml` | loads `configs/grafana/dashboards/*.json` |
+| EVPN/VXLAN Fabric Weathermap | `configs/grafana/dashboards/fabric.json` | weathermap (link load, node status), BGP sessions, ports, throughput per site. Generated, see [Weathermap](weathermap.md) |
+| EVPN Lab: Logs | `configs/grafana/dashboards/logs.json` | syslog volume per site and per node, errors/warnings, all logs (`site`/`host` filters), TACACS+ events, failures and typed commands, 802.1X/MAB results |
+| Weathermap plugin | `evpn-lab.clab.yml` (`GF_PLUGINS_PREINSTALL_SYNC`) | `tamirsuliman-weathermap-panel`, pinned, downloaded at start (needs internet) |
+
+Dashboards can be edited and saved in the UI, but Grafana has no persistent volume:
+export the JSON into `configs/grafana/dashboards/` and commit it to keep a change.
+Traffic for the throughput panels and the weathermap: `./scripts/generate_traffic.sh 120`.
