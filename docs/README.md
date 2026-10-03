@@ -19,3 +19,5 @@
 - [Prometheus](observability/prometheus.md) — scrape config, label relabeling
 - [Weathermap](observability/weathermap.md) — dashboard-as-code panel generation
 - [SNMP](observability/snmp.md) — SNMPv3 read-only access, shared lab credentials
+- [Management plane](observability/management-plane.md): TACACS+, RADIUS/802.1X, DNS, NTP, syslog, management APIs, lab secrets
+- [Logs](observability/logs.md): Alloy to Loki pipeline, labels, LogQL examples, Grafana

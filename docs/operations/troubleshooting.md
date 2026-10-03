@@ -226,6 +226,22 @@ curl -s 'http://172.16.0.71:9090/api/v1/targets' | jq '.data.activeTargets[] | {
 | A target is missing from Prometheus | Not listed in `configs/gnmic/gnmic-config.yml` `targets:` | Add it, matching the naming in `evpn-lab.clab.yml` |
 | Scrape errors in Prometheus | gnmic exporter (`:9273`) not reachable from the `prometheus` container | Check both containers are on the `evpn-mgmt` network and gnmic is running |
 | `oper-status`/`session-state` missing from metrics | `state-to-int` event-processor not applied | Verify `event-processors: [state-to-int]` under the `prom-output` in `gnmic-config.yml` |
+| gnmic reconnects slowly after a node restart | gNMI logins go through TACACS+; with `tacacs` down each login waits for both server timeouts | Check `docker ps` for `clab-arista-evpn-fabric-tacacs` |
+
+**Management plane** ([Management plane](../observability/management-plane.md), [Logs](../observability/logs.md)):
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| SSH login takes ~13 s | `tacacs` container down: timeout on `172.16.0.75` then `172.16.0.99`, then local fallback | `docker start clab-arista-evpn-fabric-tacacs` |
+| `Authentication failed` for a user that exists locally | TACACS+ answered and rejected: EOS falls back to `local` only when no server answers | Add the user to `configs/tacacs/tac_plus-ng.cfg`, restart `tacacs` |
+| `Authorization denied` on a command | `netops` profile allows `show` only | Expected; check `AUTHZ-FAIL` lines in Loki (`{app="tacplus"}`) |
+| `show dot1x hosts` empty, host traffic forwarded without auth | `dot1x pae authenticator` missing on the interface | Add it under `interface Ethernet3` |
+| `dot1x port-control` rejected | Interface is a `Port-Channel` (not supported) | 802.1X only on single-attached access ports |
+| MAB `FAILED`, FreeRADIUS sends Access-Reject | MAC format in `configs/freeradius/authorize` differs from what EOS sends | Use `"aa:bb:cc:dd:ee:ff"` (lowercase, colons) as user and password |
+| `campus-host1` stays unauthorized | `wpa_supplicant` not running (image not rebuilt or exec failed) | `docker exec clab-arista-evpn-fabric-campus-host1 pgrep -a wpa_supplicant`, `./scripts/build_images.sh` |
+| `AUTH-SERVER-TIMEOUT` in `show dot1x hosts` | `radius` container down (fail-closed) | `docker start clab-arista-evpn-fabric-radius` |
+| No FreeRADIUS logs in Loki | busybox `syslogd` relay not started in the `radius` container | `docker exec clab-arista-evpn-fabric-radius pgrep -a syslogd` |
+| No cEOS logs in Loki | `logging host` / `logging format rfc5424` missing, or Alloy down | `show logging` on the node, `docker logs clab-arista-evpn-fabric-alloy` |
 
 ## End-to-End Traffic Flow
 

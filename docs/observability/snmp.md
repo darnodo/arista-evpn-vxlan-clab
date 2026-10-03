@@ -43,7 +43,8 @@ snmp-server user snmp-ro lab-ro v3 auth sha256 evpnlab-auth priv aes evpnlab-pri
   `snmp-server user` at startup-config load (engineID not yet available) → agent disabled,
   `ICMP port unreachable` on UDP 161 (`connection refused` client-side)
 - Example: `172.16.0.61` → `8000757101ac10003d`
-- No write access, no traps, no v1/v2c community
+- No traps. SNMPv2c communities (`ro` + `rw`) and a second v3 user (`snmp-auth`, authNoPriv)
+  are part of the [Management plane](management-plane.md) block
 
 ## Validation
 

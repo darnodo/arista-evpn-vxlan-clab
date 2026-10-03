@@ -43,6 +43,8 @@ Key design choices:
 | Campus | Border Leaf (MLAG) | `campus-border-leaf1`, `campus-border-leaf2` | 66005 |
 | Campus | Access (L2-only)   | `campus-access1`, `campus-access2`           | —     |
 | Campus | Host               | `campus-host1`, `campus-host2`               | —     |
+| Mgmt   | Telemetry          | `gnmic`, `prometheus`                        | -     |
+| Mgmt   | Management services | `loki`, `alloy`, `grafana`, `tacacs`, `radius`, `dns` ([Management plane](../observability/management-plane.md)) | -     |
 
 ### AS Numbering
 
@@ -68,8 +70,8 @@ Key design choices:
 | dc-access2     | dc-leaf3/4 (VTEP2)     | 34    | dc-server2   | LACP Po1 (dual-homed)     |
 | dc-access3     | dc-leaf5/6 (VTEP3)     | 40    | dc-server3   | LACP Po1 (dual-homed)     |
 | dc-access4     | dc-leaf7/8 (VTEP4)     | 78    | dc-server4   | LACP Po1 (dual-homed)     |
-| campus-access1 | campus-leaf1/2 (VTEP1) | 60    | campus-host1 | access port (single link) |
-| campus-access2 | campus-leaf3/4 (VTEP2) | 70    | campus-host2 | access port (single link) |
+| campus-access1 | campus-leaf1/2 (VTEP1) | 60    | campus-host1 | access port (single link), 802.1X |
+| campus-access2 | campus-leaf3/4 (VTEP2) | 70    | campus-host2 | access port (single link), MAB    |
 
 All access switches are L2-only, LACP-bonded to their leaf MLAG pair via `Port-Channel10`. MSTP + edge-port BPDU guard.
 

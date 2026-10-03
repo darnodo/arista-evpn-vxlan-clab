@@ -16,8 +16,17 @@
 | dc-access1-4    | 172.16.0.41-44 | campus-host2        | 172.16.0.106     |
 |                 |                | gnmic               | 172.16.0.70      |
 |                 |                | prometheus          | 172.16.0.71      |
+|                 |                | loki                | 172.16.0.72      |
+|                 |                | alloy               | 172.16.0.73      |
+|                 |                | grafana             | 172.16.0.74      |
+|                 |                | tacacs              | 172.16.0.75      |
+|                 |                | radius              | 172.16.0.76      |
+|                 |                | dns                 | 172.16.0.77      |
+|                 |                | (dead IP, unused)   | 172.16.0.99      |
 
-Gateway: `172.16.0.254`.
+Gateway: `172.16.0.254`. `172.16.0.99` is kept free on purpose: second server for TACACS+,
+RADIUS, DNS and syslog, see [Management plane](../observability/management-plane.md).
+DNS names: `<node>.evpnlab.local` (`configs/coredns/lab.hosts`).
 
 ## Router-ID Loopback0 (`Lo0`)
 
