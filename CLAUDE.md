@@ -19,8 +19,8 @@ Source of truth repo: `https://github.com/darnodo/arista-evpn-vxlan-clab`
 
 - Hostname format: `<area>-<role><n>` where `area` ∈ `{dc, campus, core}`
 - Examples: `dc-leaf1`, `campus-border-leaf2`, `core1`
-- This convention is used as-is for IPFabric site separation
-  (regex: `^(dc|campus|core)-?.*$`)
+- This convention is used as-is for site separation: `site` label in Prometheus and
+  Loki, weathermap layout (regex: `^(dc|campus|core)-?.*$`)
 
 ## Repository structure
 
@@ -36,7 +36,7 @@ Source of truth repo: `https://github.com/darnodo/arista-evpn-vxlan-clab`
 
 - **Containerlab** for topology orchestration
 - **cEOS** (containerized Arista EOS) as the network OS
-- **IPFabric** for network assurance and site separation
+- **gnmic + Prometheus** (metrics), **Alloy + Loki** (logs), **Grafana** (dashboards)
 - **GitHub** as the source of truth
 
 ## GitOps workflow — mandatory rule
