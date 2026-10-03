@@ -26,8 +26,6 @@ Prometheus `metric_relabel_configs` rule deriving it from `device` via the
 `label_replace()` in every dashboard query.
 
 - Config: `configs/prometheus/prometheus.yml`
-- This is separate from, and does not replace, the existing external Prometheus
-  instance — no cutover yet, both run in parallel pending validation
 
 ```bash
 # Query the in-topology Prometheus instance
