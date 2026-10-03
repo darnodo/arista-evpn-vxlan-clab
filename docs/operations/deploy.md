@@ -45,7 +45,7 @@ docker exec -it clab-arista-evpn-fabric-dc-border-leaf1 Cli
 
 | Service    | URL                         | Login                       |
 | ---------- | --------------------------- | --------------------------- |
-| Grafana    | `http://172.16.0.74:3000`   | `admin` / `evpnlab-grafana` |
+| Grafana    | `http://172.16.0.74:3000`   | `admin` / `evpnlab-grafana`, dashboards: [Logs](../observability/logs.md#grafana) |
 | Prometheus | `http://172.16.0.71:9090`   | none                        |
 
 Reachable from the lab host, or remotely through the Tailscale subnet route to

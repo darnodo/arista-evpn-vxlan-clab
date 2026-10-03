@@ -339,8 +339,11 @@ topology:
             image: grafana/grafana-oss:13.0.2
             env:
                 GF_SECURITY_ADMIN_PASSWORD: evpnlab-grafana
+                # weathermap panel used by configs/grafana/dashboards/fabric.json (needs internet at start)
+                GF_PLUGINS_PREINSTALL_SYNC: tamirsuliman-weathermap-panel@1.6.16
             binds:
                 - configs/grafana/provisioning:/etc/grafana/provisioning:ro
+                - configs/grafana/dashboards:/var/lib/grafana/dashboards:ro
 
         tacacs:
             kind: linux

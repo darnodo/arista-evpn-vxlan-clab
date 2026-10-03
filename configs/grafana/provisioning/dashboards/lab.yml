@@ -1,0 +1,9 @@
+# Dashboards loaded from files at Grafana start (configs/grafana/dashboards/).
+# UI edits can be saved but are lost on redeploy: commit changes to the JSON files.
+apiVersion: 1
+providers:
+  - name: evpn-lab
+    type: file
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards

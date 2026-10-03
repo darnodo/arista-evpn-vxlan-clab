@@ -1,8 +1,6 @@
+# In-lab Grafana: http://172.16.0.74:3000, datasource UID "prometheus" (default)
 export GRAFANA_URL=""
 export GRAFANA_TOKEN=""
-export GRAFANA_DATASOURCE_UID=""
-export IPFABRIC_URL=""
-export IPFABRIC_TOKEN=""
 export GITHUB_HOST=""
 export GITHUB_PERSONAL_ACCESS_TOKEN=""
 
@@ -14,7 +12,7 @@ export SNMP_PRIV_PROTO="AES"
 export SNMP_PRIV_PASS="evpnlab-priv"
 
 # Optional -- see scripts/README.md for defaults and when to override
-# export IPFABRIC_SNAPSHOT="$last"
+# export GRAFANA_DATASOURCE_UID="prometheus"
 # export PROMETHEUS_URL="http://172.16.0.71:9090"
 # export GRAFANA_DASHBOARD_UID="evpn-vxlan-fabric-weathermap"
 # export GRAFANA_WEATHERMAP_PLUGIN_ID="tamirsuliman-weathermap-panel"
