@@ -1,0 +1,58 @@
+# Trimmed "default" virtual server: only what the lab uses.
+#   - PAP for MAB (EOS sends the MAC as User-Password)
+#   - EAP (MD5, PEAP-MSCHAPv2 via the stock inner-tunnel server) for 802.1X
+#   - lab_log for every accept/reject/accounting record
+server default {
+	listen {
+		type = auth
+		ipaddr = *
+		port = 0
+	}
+	listen {
+		type = acct
+		ipaddr = *
+		port = 0
+	}
+
+	authorize {
+		filter_username
+		preprocess
+		eap {
+			ok = return
+		}
+		files
+		pap
+	}
+
+	authenticate {
+		Auth-Type PAP {
+			pap
+		}
+		eap
+	}
+
+	preacct {
+		preprocess
+		acct_unique
+	}
+
+	accounting {
+		lab_log
+		attr_filter.accounting_response
+	}
+
+	post-auth {
+		update {
+			&reply: += &session-state:
+		}
+		lab_log
+		remove_reply_message_if_eap
+
+		Post-Auth-Type REJECT {
+			lab_log
+			attr_filter.access_reject
+			eap
+			remove_reply_message_if_eap
+		}
+	}
+}

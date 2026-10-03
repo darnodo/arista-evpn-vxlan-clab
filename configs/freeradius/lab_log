@@ -1,0 +1,16 @@
+# One logfmt line per auth result / accounting record, sent to syslog(3).
+# linelog in FreeRADIUS 3.2 cannot send syslog over the network: busybox syslogd
+# in the container relays it to Alloy (UDP 1515), see evpn-lab.clab.yml.
+linelog lab_log {
+	filename = syslog
+	syslog_facility = local5
+	syslog_severity = info
+	format = ""
+	reference = "messages.%{%{reply:Packet-Type}:-%{Packet-Type}}"
+	messages {
+		Access-Accept = "event=login_ok user=%{User-Name} nas=%{NAS-IP-Address} port=%{NAS-Port-Id} mac=%{Calling-Station-Id} eap=%{%{EAP-Type}:-none}"
+		Access-Reject = "event=login_fail user=%{User-Name} nas=%{NAS-IP-Address} port=%{NAS-Port-Id} mac=%{Calling-Station-Id} eap=%{%{EAP-Type}:-none}"
+		Accounting-Request = "event=acct_%{Acct-Status-Type} user=%{User-Name} nas=%{NAS-IP-Address} port=%{NAS-Port-Id} mac=%{Calling-Station-Id} session=%{Acct-Session-Id}"
+		default = "event=%{Packet-Type} user=%{User-Name} nas=%{NAS-IP-Address}"
+	}
+}

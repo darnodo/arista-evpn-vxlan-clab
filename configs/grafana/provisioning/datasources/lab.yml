@@ -1,0 +1,14 @@
+# Datasources for the in-lab Grafana, fixed UIDs so dashboards can reference them.
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    uid: prometheus
+    type: prometheus
+    access: proxy
+    url: http://172.16.0.71:9090
+    isDefault: true
+  - name: Loki
+    uid: loki
+    type: loki
+    access: proxy
+    url: http://172.16.0.72:3100

@@ -1,0 +1,73 @@
+// Grafana Alloy: log collection for the lab, everything goes to Loki.
+//   UDP 514  : cEOS syslog (RFC5424, `logging format rfc5424`)
+//   UDP 1514 : tac_plus-ng (RFC3164, its default)
+//   UDP 1515 : FreeRADIUS lab_log, relayed by busybox syslogd inside the radius
+//              container (linelog cannot send syslog over the network), the relay
+//              sends no hostname/tag so labels are set here
+
+loki.source.syslog "lab" {
+  listener {
+    address       = "0.0.0.0:514"
+    protocol      = "udp"
+    syslog_format = "rfc5424"
+    labels        = { source = "network" }
+  }
+  listener {
+    address       = "0.0.0.0:1514"
+    protocol      = "udp"
+    syslog_format = "rfc3164"
+    labels        = { source = "aaa" }
+  }
+  relabel_rules = loki.relabel.syslog.rules
+  forward_to    = [loki.write.lab.receiver]
+}
+
+loki.relabel "syslog" {
+  forward_to = []
+
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "host"
+  }
+  // EOS puts a trailing ":" in APP-NAME (e.g. "Bgp:")
+  rule {
+    source_labels = ["__syslog_message_app_name"]
+    regex         = "(.+?):?"
+    target_label  = "app"
+  }
+  rule {
+    source_labels = ["__syslog_message_severity"]
+    target_label  = "severity"
+  }
+  // Same site derivation as configs/prometheus/prometheus.yml
+  rule {
+    source_labels = ["__syslog_message_hostname"]
+    regex         = "(campus|core|dc)-?.*"
+    target_label  = "site"
+  }
+}
+
+loki.source.syslog "radius" {
+  listener {
+    address       = "0.0.0.0:1515"
+    protocol      = "udp"
+    syslog_format = "rfc3164"
+    labels        = { source = "aaa", app = "freeradius", host = "radius" }
+  }
+  forward_to = [loki.process.radius.receiver]
+}
+
+// busybox relay leaves an empty tag: strip the leading ": "
+loki.process "radius" {
+  stage.replace {
+    expression = "^(: )"
+    replace    = ""
+  }
+  forward_to = [loki.write.lab.receiver]
+}
+
+loki.write "lab" {
+  endpoint {
+    url = "http://172.16.0.72:3100/loki/api/v1/push"
+  }
+}

@@ -1,0 +1,8 @@
+# Authoritative for the lab only (A + PTR from lab.hosts), no forwarding.
+evpnlab.local 0.16.172.in-addr.arpa {
+    hosts /etc/coredns/lab.hosts {
+        no_reverse_fallthrough
+    }
+    log
+    errors
+}
