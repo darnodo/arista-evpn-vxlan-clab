@@ -2,7 +2,7 @@
 
 End-to-end test procedures for the DC + Core + Campus fabric, ordered by widening
 scope: underlay, overlay, MLAG, intra-fabric L2/L3, then the Campus ↔ DC path
-through the Core, and finally telemetry.
+through the Core, telemetry, and finally the management plane.
 
 Node names, addressing and VNI/RT values referenced below are documented in
 [Architecture](../architecture/overview.md); this page does not repeat them except
@@ -233,6 +233,66 @@ SNMPv3 answers on every node (credentials and per-role LLDP neighbour counts:
 docker run --rm --network evpn-mgmt alpine:3 sh -c 'apk add -q net-snmp-tools && \
   snmpwalk -v3 -l authPriv -u snmp-ro -a SHA-256 -A evpnlab-auth -x AES -X evpnlab-priv \
   172.16.0.25 1.0.8802.1.1.2.1.4.1.1.9'
+```
+
+## Management plane
+
+Services and expected behaviour: [Management plane](../observability/management-plane.md),
+[Logs](../observability/logs.md).
+
+Services up and answering:
+
+```bash
+sudo containerlab inspect -t evpn-lab.clab.yml | grep -E "loki|alloy|grafana|tacacs|radius|dns"
+
+curl -s http://172.16.0.72:3100/ready                                   # Loki: ready
+curl -s -u admin:evpnlab-grafana http://172.16.0.74:3000/api/datasources/uid/loki/health
+docker exec clab-arista-evpn-fabric-campus-host1 nslookup dc-leaf1.evpnlab.local 172.16.0.77
+docker exec clab-arista-evpn-fabric-radius sh -c \
+  'PATH=/opt/bin:$PATH radtest campus-user1 evpnlab-user1 127.0.0.1 0 testing123'
+```
+
+TACACS+ (any node), expect `privilege level is 15` for `admin`, `show` only for `netops`:
+
+```bash
+ssh admin@clab-arista-evpn-fabric-dc-leaf1 "show privilege"
+ssh netops@clab-arista-evpn-fabric-dc-leaf1 "show privilege"     # password evpnlab-netops
+ssh admin@clab-arista-evpn-fabric-dc-leaf1 "show tacacs"          # counters on 172.16.0.75 only
+ssh admin@clab-arista-evpn-fabric-dc-leaf1 "show aaa methods all"
+```
+
+Local fallback: `docker stop clab-arista-evpn-fabric-tacacs`, SSH still works after
+~13 s, then `docker start clab-arista-evpn-fabric-tacacs`.
+
+802.1X / MAB on the Campus access switches, expect `SUCCESS` on `Et3`:
+
+```bash
+ssh admin@clab-arista-evpn-fabric-campus-access1 "show dot1x hosts"   # campus-user1, EAPOL
+ssh admin@clab-arista-evpn-fabric-campus-access2 "show dot1x hosts"   # aa:c1:ab:60:02:01, MBA
+ssh admin@clab-arista-evpn-fabric-campus-access1 "show radius"
+```
+
+Per item, on any node (all return at least one row; RADIUS only on `campus-access1-2`):
+
+| Item            | Command                                                                     |
+| --------------- | --------------------------------------------------------------------------- |
+| SNMPv2c         | `show running-config sanitized \| section snmp-server`                      |
+| SNMPv3          | `show snmp user`, `show snmp group`                                         |
+| RADIUS          | `show radius`                                                               |
+| TACACS+         | `show tacacs`                                                               |
+| Local users     | `show users accounts`                                                       |
+| Management APIs | `show management api gnmi`, `show management api http-commands`, `show management api netconf`, `show management ssh`, `show management telnet` |
+| AAA methods     | `show aaa methods all`                                                      |
+| NTP             | `show ntp associations`                                                     |
+| Syslog          | `show logging`                                                              |
+| DNS             | `show ip name-server`                                                       |
+
+Logs in Loki: every node, tac_plus-ng and FreeRADIUS:
+
+```bash
+curl -s -G http://172.16.0.72:3100/loki/api/v1/label/host/values
+curl -s -G http://172.16.0.72:3100/loki/api/v1/query_range \
+  --data-urlencode 'query={app="freeradius"} | logfmt' --data-urlencode limit=5
 ```
 
 ## VLAN 50 (Campus, infrastructure only)

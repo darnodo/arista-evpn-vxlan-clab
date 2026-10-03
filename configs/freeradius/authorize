@@ -1,0 +1,9 @@
+# FreeRADIUS users file (mods-config/files/authorize).
+# Shared lab values (evpnlab- prefix), see docs/observability/management-plane.md.
+
+# 802.1X users (EAP-MD5 or PEAP-MSCHAPv2), used by campus-host1 on campus-access1 Et3
+campus-user1	Cleartext-Password := "evpnlab-user1"
+
+# MAB: EOS sends the MAC as both User-Name and password, lowercase with colons.
+# campus-host2 on campus-access2 Et3
+"aa:c1:ab:60:02:01"	Cleartext-Password := "aa:c1:ab:60:02:01"

@@ -165,3 +165,18 @@ empty until someone manually generates traffic (see #55).
 
 `dc-server1`/`dc-server3` (VLAN 40, VRF default, no gateway) are out of
 scope — this script only exercises the routed gold VRF path.
+
+# scripts/build_images.sh
+
+Builds the local images referenced by `evpn-lab.clab.yml`; containerlab cannot build
+images itself. Run it before `containerlab deploy`.
+
+| Image                                   | Context                          | Why                                         |
+| --------------------------------------- | -------------------------------- | ------------------------------------------- |
+| `evpnlab/tac_plus-ng:latest`            | `images/tac_plus-ng/`            | TACACS+ server, no official image; pinned upstream commit (`TAC_PLUS_NG_REF`) |
+| `evpnlab/network-multitool-8021x:latest` | `images/network-multitool-8021x/` | `network-multitool` + `wpa_supplicant` for `campus-host1` |
+
+```bash
+./scripts/build_images.sh          # builds missing images, skips existing ones
+./scripts/build_images.sh --force  # rebuilds all (after a Dockerfile change)
+```

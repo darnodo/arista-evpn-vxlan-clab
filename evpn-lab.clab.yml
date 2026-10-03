@@ -271,13 +271,16 @@ topology:
         campus-host1:
             kind: linux
             mgmt-ipv4: 172.16.0.105
-            image: ghcr.io/hellt/network-multitool
+            # 802.1X supplicant (PEAP-MSCHAPv2) on campus-access1 Et3
+            image: evpnlab/network-multitool-8021x:latest
             cap-add:
                 - NET_ADMIN
             binds:
                 - hosts/campus-host1_interfaces:/etc/network/interfaces
+                - hosts/campus-host1_wpa_supplicant.conf:/etc/wpa_supplicant/wpa_supplicant.conf:ro
             exec:
                 - ifup eth1
+                - wpa_supplicant -B -D wired -i eth1 -c /etc/wpa_supplicant/wpa_supplicant.conf
 
         campus-host2:
             kind: linux
@@ -288,6 +291,8 @@ topology:
             binds:
                 - hosts/campus-host2_interfaces:/etc/network/interfaces
             exec:
+                # fixed MAC, authenticated by MAB on campus-access2 Et3 (configs/freeradius/authorize)
+                - ip link set eth1 address aa:c1:ab:60:02:01
                 - ifup eth1
 
         # =====================================================
@@ -308,6 +313,62 @@ topology:
             image: prom/prometheus:v2.55.1
             binds:
                 - configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+        # =====================================================
+        # MANAGEMENT-PLANE SERVICES (docs/observability/management-plane.md)
+        # evpnlab/* images are built locally: ./scripts/build_images.sh
+        # =====================================================
+
+        loki:
+            kind: linux
+            mgmt-ipv4: 172.16.0.72
+            image: grafana/loki:3.7.8
+            cmd: -config.file=/etc/loki/local-config.yaml
+
+        alloy:
+            kind: linux
+            mgmt-ipv4: 172.16.0.73
+            image: grafana/alloy:v1.20.1
+            binds:
+                - configs/alloy/config.alloy:/etc/alloy/config.alloy:ro
+            cmd: run /etc/alloy/config.alloy
+
+        grafana:
+            kind: linux
+            mgmt-ipv4: 172.16.0.74
+            image: grafana/grafana-oss:13.0.2
+            env:
+                GF_SECURITY_ADMIN_PASSWORD: evpnlab-grafana
+            binds:
+                - configs/grafana/provisioning:/etc/grafana/provisioning:ro
+
+        tacacs:
+            kind: linux
+            mgmt-ipv4: 172.16.0.75
+            image: evpnlab/tac_plus-ng:latest
+            binds:
+                - configs/tacacs/tac_plus-ng.cfg:/etc/tac_plus-ng.cfg:ro
+
+        radius:
+            kind: linux
+            mgmt-ipv4: 172.16.0.76
+            image: freeradius/freeradius-server:3.2.10-alpine
+            binds:
+                - configs/freeradius/clients.conf:/opt/etc/raddb/clients.conf:ro
+                - configs/freeradius/authorize:/opt/etc/raddb/mods-config/files/authorize:ro
+                - configs/freeradius/default:/opt/etc/raddb/sites-enabled/default:ro
+                - configs/freeradius/lab_log:/opt/etc/raddb/mods-enabled/lab_log:ro
+            # busybox syslogd relays lab_log (syslog(3)) to Alloy, then radiusd starts
+            entrypoint: sh
+            cmd: -c "syslogd -R 172.16.0.73:1515 && exec /docker-entrypoint.sh radiusd"
+
+        dns:
+            kind: linux
+            mgmt-ipv4: 172.16.0.77
+            image: coredns/coredns:1.14.7
+            binds:
+                - configs/coredns:/etc/coredns:ro
+            cmd: -conf /etc/coredns/Corefile
 
     links:
         # =====================================================

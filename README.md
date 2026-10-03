@@ -28,6 +28,9 @@ An extended Arista BGP EVPN-VXLAN multi-fabric lab using ContainerLab and cEOS. 
 git clone https://github.com/darnodo/arista-evpn-vxlan-clab.git
 cd arista-evpn-vxlan-clab
 
+# local images (tac_plus-ng, 802.1X host), containerlab cannot build them; skips existing ones
+./scripts/build_images.sh
+
 sudo containerlab deploy -t evpn-lab.clab.yml
 sudo containerlab inspect -t evpn-lab.clab.yml
 ```
@@ -35,7 +38,8 @@ sudo containerlab inspect -t evpn-lab.clab.yml
 ### Access Devices
 
 ```bash
-# SSH (password: admin) — works for every cEOS node
+# SSH (password: admin), authenticated by TACACS+ on every cEOS node
+# other users and fallback behaviour: docs/observability/management-plane.md
 ssh admin@clab-arista-evpn-fabric-leaf1
 ssh admin@clab-arista-evpn-fabric-core1
 ssh admin@clab-arista-evpn-fabric-campus-leaf1
