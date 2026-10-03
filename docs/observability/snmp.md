@@ -2,7 +2,7 @@
 
 SNMPv3 read-only agent enabled on every Arista `cEOS` node (DC, Core, Campus — 28 nodes),
 reachable on the management network (`Management0`, VRF `default`, UDP `161`).
-Main consumer: Zabbix LLDP neighbour discovery (`LLDP-MIB`).
+Main consumer: NetMapper (device inventory, LLDP neighbours via `LLDP-MIB`).
 
 > **Shared lab credentials.** The values below are **not secret**: they are committed in
 > `configs/*.cfg` on purpose so anyone deploying the lab can poll it. Never reuse them
@@ -83,15 +83,3 @@ On the switch:
 docker exec -it clab-arista-evpn-fabric-dc-leaf1 Cli -p 15 -c "show snmp user"
 docker exec -it clab-arista-evpn-fabric-dc-leaf1 Cli -p 15 -c "show snmp"   # packet counters
 ```
-
-## Zabbix host settings
-
-| Field                          | Value                         |
-| ------------------------------ | ----------------------------- |
-| Interface                      | SNMP, `mgmt-ipv4`, port `161` |
-| SNMP version                   | `SNMPv3`                      |
-| Security name                  | `snmp-ro`                     |
-| Security level                 | `authPriv`                    |
-| Authentication protocol / pass | `SHA256` / `evpnlab-auth`     |
-| Privacy protocol / pass        | `AES128` / `evpnlab-priv`     |
-| Context name                   | empty                         |
