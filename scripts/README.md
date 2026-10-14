@@ -90,34 +90,22 @@ are lost on redeploy.
 
 # scripts/generate_traffic.sh
 
-Generates real DC↔Campus traffic over VRF `gold` using `iperf3` (bundled
-in the `network-multitool` image every host container runs), with a live
-bandwidth dashboard. Without this, host containers sit idle and ARP/MAC
-tables, Grafana throughput graphs, and the weathermap panel stay
-empty until someone manually generates traffic (see #55).
-
-## Quickstart
+Generates L2 and L3 traffic in parallel with `iperf3` (bundled in the `network-multitool`
+image every host container runs) and shows live bandwidth bars. Without it, host containers
+sit idle and ARP/MAC tables, Grafana throughput graphs and the weathermap stay empty
+(see #55, #18).
 
 ```bash
 ./scripts/generate_traffic.sh <duration_seconds>
 ```
 
-## How it works
+| Section | Flow | Mode |
+|---|---|---|
+| L2 VNI 110040 (VLAN 40) | `dc-server1` ↔ `dc-server3` (10.40.40.0/24) | `--bidir`, both directions at once |
+| L3 VRF gold | `dc-server2` → `campus-host1`, `dc-server4` → `campus-host2` | `-R`, DC server pushes to the campus consumer (stitched EVPN Type-5 path DC → Core → Campus) |
 
-- Starts `iperf3 -s` on the DC gold-VRF servers: `dc-server2`
-  (10.34.34.102), `dc-server4` (10.78.78.104).
-- Runs `iperf3 -c -R` from the paired campus gold-VRF hosts, reversing the
-  stream so the DC server pushes to the campus consumer: `dc-server2` →
-  `campus-host1`, `dc-server4` → `campus-host2` — exercising the full
-  DC→Core→Campus stitched EVPN Type-5 path end to end.
-- Redraws a terminal dashboard every second for the run duration: server
-  list, and live Mbits/sec per client session parsed from `iperf3 -i 1`
-  output.
-- On exit (duration end or Ctrl-C), kills the client processes and stops
-  the `iperf3 -s` processes on the DC servers — no leftover state.
-
-`dc-server1`/`dc-server3` (VLAN 40, VRF default, no gateway) are out of
-scope — this script only exercises the routed gold VRF path.
+Bars are scaled on the highest rate seen so far. On exit (end of duration or Ctrl-C), the
+client processes are killed and the `iperf3 -s` processes are stopped.
 
 # scripts/build_images.sh
 
