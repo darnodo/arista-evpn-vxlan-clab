@@ -119,6 +119,22 @@ empty until someone manually generates traffic (see #55).
 `dc-server1`/`dc-server3` (VLAN 40, VRF default, no gateway) are out of
 scope — this script only exercises the routed gold VRF path.
 
+# scripts/generate_traffic_l2l3.sh
+
+Same `iperf3` approach as `generate_traffic.sh`, with L2 and L3 flows running in
+parallel and a bar-based live display (Refs #18).
+
+```bash
+./scripts/generate_traffic_l2l3.sh <duration_seconds>
+```
+
+| Section | Flow | Mode |
+|---|---|---|
+| L2 VNI 110040 (VLAN 40) | `dc-server1` ↔ `dc-server3` (10.40.40.0/24) | `--bidir`, both directions at once |
+| L3 VRF gold | `dc-server2` → `campus-host1`, `dc-server4` → `campus-host2` | `-R`, same as `generate_traffic.sh` |
+
+Bars are scaled on the highest rate seen so far. Cleanup on exit is the same as the L3 script.
+
 # scripts/build_images.sh
 
 Builds the local images referenced by `evpn-lab.clab.yml`; containerlab cannot build
