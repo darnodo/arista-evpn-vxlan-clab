@@ -437,6 +437,55 @@
         "x": 60,
         "y": 0
       }
+    },
+    {
+      "id": "dns",
+      "position": {
+        "x": 120,
+        "y": 0
+      }
+    },
+    {
+      "id": "radius",
+      "position": {
+        "x": 180,
+        "y": 0
+      }
+    },
+    {
+      "id": "tacacs",
+      "position": {
+        "x": -60,
+        "y": 0
+      }
+    },
+    {
+      "id": "grafana",
+      "position": {
+        "x": -120,
+        "y": 0
+      }
+    },
+    {
+      "id": "alloy",
+      "position": {
+        "x": 240,
+        "y": 0
+      }
+    },
+    {
+      "id": "loki",
+      "position": {
+        "x": 300,
+        "y": 0
+      }
+    },
+    {
+      "id": "gnmic",
+      "position": {
+        "x": 0,
+        "y": 0
+      }
     }
   ],
   "edgeAnnotations": [],
