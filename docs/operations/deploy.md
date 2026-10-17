@@ -26,6 +26,9 @@ cd arista-evpn-vxlan-clab
 
 sudo containerlab deploy -t evpn-lab.clab.yml
 sudo containerlab inspect -t evpn-lab.clab.yml
+
+# NetMapper: bucket, DB logins, API token, first crawl (docs/observability/netmapper.md)
+./scripts/netmapper_setup.sh
 ```
 
 ## Access Devices
@@ -47,6 +50,7 @@ docker exec -it clab-arista-evpn-fabric-dc-border-leaf1 Cli
 | ---------- | --------------------------- | --------------------------- |
 | Grafana    | `http://172.16.0.74:3000`   | `admin` / `evpnlab-grafana`, dashboards: [Logs](../observability/logs.md#grafana) |
 | Prometheus | `http://172.16.0.71:9090`   | none                        |
+| NetMapper API | `http://172.16.0.82:8080/v1/` | bearer token, `clab-arista-evpn-fabric/netmapper/token` |
 
 Reachable from the lab host, or remotely through the Tailscale subnet route to
 `172.16.0.0/24`.

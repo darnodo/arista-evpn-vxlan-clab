@@ -33,6 +33,9 @@ cd arista-evpn-vxlan-clab
 
 sudo containerlab deploy -t evpn-lab.clab.yml
 sudo containerlab inspect -t evpn-lab.clab.yml
+
+# NetMapper: bucket, DB logins, API token, first crawl
+./scripts/netmapper_setup.sh
 ```
 
 ### Access Devices

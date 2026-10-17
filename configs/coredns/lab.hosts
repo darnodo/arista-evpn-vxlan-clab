@@ -36,6 +36,11 @@
 172.16.0.75    tacacs.evpnlab.local
 172.16.0.76    radius.evpnlab.local
 172.16.0.77    dns.evpnlab.local
+172.16.0.78    netmapper-db.evpnlab.local
+172.16.0.79    netmapper-s3.evpnlab.local
+172.16.0.80    netmapper-engine.evpnlab.local
+172.16.0.81    netmapper-collector.evpnlab.local
+172.16.0.82    netmapper-api.evpnlab.local
 172.16.0.101   dc-server1.evpnlab.local
 172.16.0.102   dc-server2.evpnlab.local
 172.16.0.103   dc-server3.evpnlab.local

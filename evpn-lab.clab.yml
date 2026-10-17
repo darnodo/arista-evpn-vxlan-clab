@@ -373,6 +373,69 @@ topology:
                 - configs/coredns:/etc/coredns:ro
             cmd: -conf /etc/coredns/Corefile
 
+        # =====================================================
+        # TOPOLOGY DISCOVERY: NetMapper (docs/observability/netmapper.md)
+        # One image, one role per node. Database roles, bucket, keys, API token
+        # and the first crawl: ./scripts/netmapper_setup.sh after deploy.
+        # =====================================================
+
+        netmapper-db:
+            kind: linux
+            mgmt-ipv4: 172.16.0.78
+            image: postgres:17
+            env:
+                POSTGRES_USER: netmapper
+                POSTGRES_PASSWORD: evpnlab-netmapper-db
+                POSTGRES_DB: netmapper
+
+        netmapper-s3:
+            kind: linux
+            mgmt-ipv4: 172.16.0.79
+            image: dxflrs/garage:v2.1.0
+            binds:
+                - configs/netmapper/garage.toml:/etc/garage.toml:ro
+
+        netmapper-engine:
+            kind: linux
+            mgmt-ipv4: 172.16.0.80
+            image: ghcr.io/darnodo/netmapper:v0.6.1
+            env:
+                NETMAPPER_DSN: postgres://nm_engine:evpnlab-nm-engine@172.16.0.78:5432/netmapper?sslmode=disable
+            binds:
+                # crawl document, read by `netmapper run` (docker exec, see the setup script)
+                - configs/netmapper/netmapper.yaml:/etc/netmapper/netmapper.yaml:ro
+            cmd: engine
+
+        # The only node holding device credentials and reaching devices
+        netmapper-collector:
+            kind: linux
+            mgmt-ipv4: 172.16.0.81
+            image: ghcr.io/darnodo/netmapper:v0.6.1
+            env:
+                NETMAPPER_DSN: postgres://nm_collector:evpnlab-nm-collector@172.16.0.78:5432/netmapper?sslmode=disable
+                NETMAPPER_S3_ENDPOINT: 172.16.0.79:3900
+                NETMAPPER_S3_BUCKET: netmapper
+                NETMAPPER_S3_INSECURE: "1"
+                NETMAPPER_S3_ACCESS_KEY: GK6e6d636f6c6c6563746f7231
+                NETMAPPER_S3_SECRET_KEY: 89a0abb4b39673dfb937a0340e4771d4ce5be92dcd1feaa18a0a655d8428becb
+                NM_SNMP_V3: '{"auth": "evpnlab-auth", "priv": "evpnlab-priv"}'
+                NM_SSH_PASSWORD: evpnlab-netmapper
+            cmd: collector --workers 16
+
+        # Read API on :8080, bearer token (clab-arista-evpn-fabric/netmapper/token)
+        netmapper-api:
+            kind: linux
+            mgmt-ipv4: 172.16.0.82
+            image: ghcr.io/darnodo/netmapper:v0.6.1
+            env:
+                NETMAPPER_DSN: postgres://nm_api:evpnlab-nm-api@172.16.0.78:5432/netmapper?sslmode=disable
+                NETMAPPER_S3_ENDPOINT: 172.16.0.79:3900
+                NETMAPPER_S3_BUCKET: netmapper
+                NETMAPPER_S3_INSECURE: "1"
+                NETMAPPER_S3_ACCESS_KEY: GK6e6d61706972656164657231
+                NETMAPPER_S3_SECRET_KEY: cbd64fbdf8cb63d2e3a01fa2f648d5f6ee19e2f71892f0ab1a8b3c43bcae49a4
+            cmd: api --listen :8080
+
     links:
         # =====================================================
         # DATACENTER FABRIC LINKS

@@ -1,0 +1,19 @@
+# Garage: single-node S3 store for NetMapper raw command output.
+# Shared lab values (evpnlab- prefix), not secrets. Bucket and keys are created
+# by scripts/netmapper_setup.sh through the admin API.
+metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+db_engine = "sqlite"
+replication_factor = 1
+
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "127.0.0.1:3901"
+rpc_secret = "45f3da932e77decc438078624b6058a38b6f1e132be1a8905a70966b0aa2b0b7"
+
+[s3_api]
+s3_region = "garage"
+api_bind_addr = "[::]:3900"
+
+[admin]
+api_bind_addr = "[::]:3903"
+admin_token = "evpnlab-garage-admin"

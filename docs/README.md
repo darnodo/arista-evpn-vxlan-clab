@@ -21,3 +21,4 @@
 - [SNMP](observability/snmp.md) — SNMPv3 read-only access, shared lab credentials
 - [Management plane](observability/management-plane.md): TACACS+, RADIUS/802.1X, DNS, NTP, syslog, management APIs, lab secrets
 - [Logs](observability/logs.md): Alloy to Loki pipeline, labels, LogQL examples, Grafana
+- [NetMapper](observability/netmapper.md): in-lab topology discovery (crawl, read API), weathermap topology source
