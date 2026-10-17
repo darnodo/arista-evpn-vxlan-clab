@@ -18,6 +18,15 @@ same way it would be on a network that is not a containerlab lab.
 Postgres and Garage keep no volume: `containerlab destroy` or a redeploy starts from an
 empty graph, rerun the setup script.
 
+### Restart loop until the setup script runs
+
+After every `containerlab deploy`, `netmapper-engine`, `netmapper-collector` and
+`netmapper-api` show `Restarting` in `docker ps`: their Postgres login (`nm_engine`, ...)
+does not exist yet, the process exits 1 and Docker restarts it (`restart: always`, set by
+containerlab). Expected and harmless: nothing is crawled or served meanwhile, only error
+lines in `docker logs`. The setup script creates the logins and restarts the three
+nodes, which then stay `Up`.
+
 ## Setup and crawl
 
 ```bash
