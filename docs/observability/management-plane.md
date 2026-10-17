@@ -18,6 +18,7 @@ config block on every Arista `cEOS` node (28 nodes). Main consumers: the lab its
 | `tacacs`  | `172.16.0.75` | `evpnlab/tac_plus-ng` (local build)          | TACACS+ for device administration, all nodes            |
 | `radius`  | `172.16.0.76` | `freeradius/freeradius-server:3.2.10-alpine` | RADIUS for 802.1X/MAB, `campus-access1-2` only          |
 | `dns`     | `172.16.0.77` | `coredns/coredns:1.14.7`                     | `evpnlab.local` zone, A + PTR for every node            |
+| `netmapper-*` | `172.16.0.78-82` | `ghcr.io/darnodo/netmapper:v0.6.1`, Postgres, Garage | topology discovery, see [NetMapper](netmapper.md) |
 | (none)    | `172.16.0.99` | -                                            | dead IP, second server for TACACS+, RADIUS, DNS, syslog |
 
 - Local images: `./scripts/build_images.sh` before `containerlab deploy` (containerlab
@@ -52,6 +53,7 @@ config block on every Arista `cEOS` node (28 nodes). Main consumers: the lab its
 | User `admin`             | TACACS+ and local                         | `admin` (pre-existing, not prefixed)     |
 | User `netops` (read-only) | TACACS+ and local                        | `evpnlab-netops`                         |
 | User `automation`        | TACACS+ and local, local SSH key          | `evpnlab-automation`, key `configs/ssh/automation_ed25519` |
+| User `netmapper` (crawler) | TACACS+ profile `collector` and local   | `evpnlab-netmapper`, see [NetMapper](netmapper.md) |
 | 802.1X user `campus-user1` | FreeRADIUS, `campus-host1` supplicant   | `evpnlab-user1`                          |
 | MAB `campus-host2`       | FreeRADIUS                                | MAC `aa:c1:ab:60:02:01` (user = password) |
 | Grafana `admin`          | `evpn-lab.clab.yml`                       | `evpnlab-grafana`                        |
@@ -72,7 +74,7 @@ One block on every node, after the SNMP block in `configs/<node>.cfg`:
 | --------------- | -------------------------------------------------------------------------------------------- |
 | SNMPv2c         | `snmp-server community evpnlab-ro ro SNMP-RO`, `... evpnlab-rw rw SNMP-RW`, standard ACLs     |
 | SNMPv3          | second user `snmp-auth`, group `lab-auth v3 auth`                                            |
-| Local users     | `netops` (`network-operator`, priv 1), `automation` (`network-admin`, priv 15, SSH key)      |
+| Local users     | `netops` (`network-operator`, priv 1), `automation` (`network-admin`, priv 15, SSH key), `netmapper` (`network-operator`, priv 15) |
 | TACACS+         | `tacacs-server host 172.16.0.75`, `.99`, group `LAB-TACACS`, timeout 2 s, source `Management0` |
 | AAA login       | `default`: `group LAB-TACACS local`; `console`: `local`                                      |
 | AAA enable      | `default`: `group LAB-TACACS local`                                                          |

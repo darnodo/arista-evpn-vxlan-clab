@@ -1,0 +1,33 @@
+# NetMapper crawl document, posted by scripts/netmapper_setup.sh (netmapper run).
+# Secret references resolve in the collector's environment (evpn-lab.clab.yml);
+# in production they point at OpenBao instead (vault:<kv path>).
+perimeters:
+  - name: evpn-lab
+    include: [172.16.0.0/24]
+    exclude: [172.16.0.254/32]      # containerlab mgmt gateway
+
+credential_sets:                    # tried in this order
+  - name: ro-snmp-v3
+    kind: snmp_v3
+    username: snmp-ro
+    auth_protocol: sha256
+    priv_protocol: aes
+    secret_ref: env:NM_SNMP_V3      # JSON {"auth": ..., "priv": ...}
+    max_attempts_per_device: 1
+    perimeters: [evpn-lab]
+  - name: ro-ssh
+    kind: ssh
+    username: netmapper
+    secret_ref: env:NM_SSH_PASSWORD
+    max_attempts_per_device: 2
+    perimeters: [evpn-lab]
+
+# One spine per fabric; everything else is found through LLDP.
+seed_sets:
+  - name: spines
+    targets: [172.16.0.1, 172.16.0.20]
+
+discovery:
+  lease: 1m
+  step_idle_timeout: 30s
+  step_deadline: 5m

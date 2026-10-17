@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a weathermap-ng PANEL (only) from the containerlab topology + gnmic/Prometheus
+"""Generate a weathermap-ng PANEL (only) from the NetMapper topology + gnmic/Prometheus
 metrics, merge it into a manually-authored dashboard base, and optionally
 provision the result into Grafana.
 
@@ -10,12 +10,13 @@ BGP sessions table, ports/interfaces table, or throughput panels -- those
 live in the manually-authored `configs/grafana/dashboard-base.json` and are
 not touched by this script.
 
-Data sources (see gitea issues #44, #47, #48, and #15):
-  - containerlab topology-data.json (written by `containerlab deploy`): cEOS
-    nodes and cEOS-to-cEOS links. Replaces IPFabric, no longer available.
+Data sources (see gitea issues #44, #47, #48, and #11):
+  - NetMapper read API (docs/observability/netmapper.md): devices, LLDP links
+    and port speeds from the latest crawl. Works the same against a production
+    NetMapper, no containerlab file involved.
   - Prometheus (gnmic exporter, configs/prometheus/prometheus.yml): live label
-    values, used both to validate the topology->gnmic interface-name mapping
-    and to resolve which VTEPs/VLANs actually have VXLAN data.
+    values, used both to validate the topology->gnmic interface names and to
+    resolve which VTEPs/VLANs actually have VXLAN data.
 
 Merge: the weathermap panel is generated fresh from live data on every run
 (no diffing), then spliced into the base dashboard's reserved slot (the panel
@@ -23,12 +24,14 @@ titled "__WEATHERMAP_SLOT__"), keeping that slot's gridPos so the manually
 authored layout is never repositioned by the generator. See #52.
 
 Usage:
-    python3 scripts/generate_weathermap.py [--topology PATH] [--base PATH] [--output PATH] [--provision]
+    uv run scripts/generate_weathermap.py [--base PATH] [--output PATH] [--allow-quarantined] [--provision]
 
 The output is a plain dashboard JSON, provisioned from file by the in-lab
 Grafana (configs/grafana/dashboards/). --provision also pushes it via the API.
 
 Environment:
+    NETMAPPER_URL        default http://172.16.0.82:8080 (in-topology instance)
+    NETMAPPER_TOKEN      required, read-scope API token
     PROMETHEUS_URL       default http://172.16.0.71:9090 (in-topology instance)
     GRAFANA_URL           required with --provision
     GRAFANA_TOKEN     required with --provision
@@ -49,15 +52,10 @@ import urllib.parse
 
 WEATHERMAP_SCHEMA_VERSION = 14
 
-# Abbreviated interface prefixes (topology "EtN") -> gnmic/OpenConfig full names.
-# Longest-prefix-first so e.g. "Ma" doesn't shadow a hypothetical multi-letter clash.
-INTERFACE_PREFIX_ALIASES = {
-    "Et": "Ethernet",
-    "Po": "Port-Channel",
-    "Lo": "Loopback",
-    "Vl": "Vlan",
-    "Ma": "Management",
-}
+# Weathermap links are physical data ports only: NetMapper also reports LLDP
+# between Management ports (in the lab, across the docker mgmt bridge) and
+# 802.1Q subinterfaces have no gnmic counters of their own.
+DATA_PORT = re.compile(r"^Ethernet[\d/]+$")
 
 SITE_ORDER = ["dc", "core", "campus"]
 GRID_COLUMNS = 6
@@ -91,9 +89,8 @@ ANCHOR = {"Center": 0, "Top": 1, "Bottom": 2, "Left": 3, "Right": 4}
 
 NODE_COLORS = {"font": "#ffffff", "background": "#22252b", "border": "#5794F2", "statusDown": "#F2495C"}
 STATUS_VALUE_MAPPINGS = [{"value": 0, "color": "#F2495C"}, {"value": 1, "color": "#73BF69"}]
-# Every cEOS port in the lab reports 1G (`show interfaces` BW 1000000 kbit),
-# containerlab has no per-link speed to read.
-LINK_BANDWIDTH_BPS = 1_000_000_000
+# Used only when NetMapper knows neither port's speed (logged as a mismatch).
+FALLBACK_LINK_BANDWIDTH_BPS = 1_000_000_000
 
 
 def env(name, default=None, required=False):
@@ -104,34 +101,100 @@ def env(name, default=None, required=False):
 
 
 # --------------------------------------------------------------------------
-# containerlab topology (see #15)
+# NetMapper topology (see #11)
 # --------------------------------------------------------------------------
 
-def load_clab_topology(path):
-    """cEOS nodes and cEOS-to-cEOS links from containerlab's topology-data.json.
-    Links are returned in the connectivity-matrix row shape dedupe_links()
-    expects, with containerlab "ethN" renamed to the cEOS short name "EtN".
-    Links to Linux nodes (hosts, services) are dropped: no gnmic counters there."""
-    if not os.path.exists(path):
-        sys.exit(f"{path} not found: deploy the lab first (containerlab deploy -t evpn-lab.clab.yml)")
-    with open(path) as f:
-        topo = json.load(f)
+def netmapper_get(base_url, token, path, params=None):
+    url = f"{base_url.rstrip('/')}/v1/{path}"
+    if params:
+        url += "?" + urllib.parse.urlencode(params)
+    req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.load(resp)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode()
+        if e.code == 401:
+            sys.exit("NetMapper API refused the token (HTTP 401): check NETMAPPER_TOKEN")
+        if e.code == 409 and "not_projected" in body:
+            sys.exit("NetMapper has no graph yet: run a crawl first (lab: ./scripts/netmapper_setup.sh)")
+        sys.exit(f"NetMapper API /v1/{path}: HTTP {e.code} {body}")
+    except urllib.error.URLError as e:
+        sys.exit(f"NetMapper API unreachable at {base_url}: {e.reason}")
 
-    ceos = {name for name, node in topo["nodes"].items() if node["kind"] == "arista_ceos"}
+
+def short_hostname(fqdn):
+    """NetMapper reports the device's FQDN (dc-leaf1.evpnlab.local); gnmic's
+    `device` label and the naming convention use the short name."""
+    return fqdn.split(".")[0]
+
+
+def parse_port_ref(ref, hosts):
+    """(hostname, port) for an edge end "if:<device_key>/<port>" on a crawled
+    device and a physical data port, else None (Management port, far end
+    NetMapper could not resolve, ...). The port may itself contain "/"
+    (Ethernet1/1), the device key never does."""
+    if not ref.startswith("if:"):
+        return None
+    key, port = ref[3:].split("/", 1)
+    if key not in hosts or not DATA_PORT.match(port):
+        return None
+    return hosts[key], port
+
+
+def load_netmapper_topology(base_url, token, allow_quarantined, mismatches):
+    """Devices and physical links of the latest NetMapper graph. Every call
+    after the first is pinned to the same snapshot, so a crawl finishing
+    mid-run cannot mix two graphs. NetMapper names a cable once whichever end
+    reports it, so links come out deduplicated, with the port speed read from
+    the device."""
+    listing = netmapper_get(base_url, token, "devices")
+    snapshot = listing["snapshot"]
+    print(f"  snapshot {snapshot['id']} closed {snapshot['closed_at']}, verdict {snapshot['verdict']}")
+    if snapshot["verdict"] == "quarantined" and not allow_quarantined:
+        sys.exit(f"Snapshot {snapshot['id']} is quarantined (the crawl reached much less than the previous one): "
+                 f"refusing to rebuild the map from it, pass --allow-quarantined to override")
+    pin = {"snapshot": snapshot["id"]}
+
+    hosts = {}  # device_key -> short hostname
+    for dev in listing["devices"]:
+        if not dev["hostname"]:
+            mismatches.append(f"device {dev['device_key']} has no hostname in NetMapper, left off the map")
+            continue
+        hosts[dev["device_key"]] = short_hostname(dev["hostname"])
     devices = []
-    for host in sorted(ceos):
+    for host in sorted(hosts.values()):
         site = re.match(r"(campus|core|dc)", host)
         devices.append({"hostname": host, "siteName": site.group(1) if site else "unknown"})
 
-    rows = []
-    for link in topo["links"]:
-        a, z = link["endpoints"]["a"], link["endpoints"]["z"]
-        if a["node"] in ceos and z["node"] in ceos:
-            rows.append({
-                "localHost": a["node"], "localInt": re.sub(r"^eth", "Et", a["interface"]),
-                "remoteHost": z["node"], "remoteInt": re.sub(r"^eth", "Et", z["interface"]),
-            })
-    return devices, rows
+    speeds = {}  # edge end ref -> speed_bps (None when the device did not report it)
+    edges = {}   # edge name -> edge; each cable is listed by the devices at both ends
+    for key in hosts:
+        detail = netmapper_get(base_url, token, f"devices/{urllib.parse.quote(key, safe='')}", pin)
+        for iface in detail["interfaces"]:
+            speeds[f"if:{key}/{iface['canonical_name']}"] = iface["speed_bps"]
+        for edge in detail["edges"]:
+            if edge["type"] == "l1_link":
+                edges[edge["name"]] = edge
+
+    links = []
+    for edge in edges.values():
+        a = parse_port_ref(edge["from_ref"], hosts)
+        z = parse_port_ref(edge["to_ref"], hosts)
+        if a is None or z is None:
+            continue
+        (a_host, a_int), (z_host, z_int) = sorted([a, z])
+        # Both ends of a cable run at the same speed; take whichever is known.
+        bandwidth = speeds.get(edge["from_ref"]) or speeds.get(edge["to_ref"])
+        if not bandwidth:
+            mismatches.append(f"{a_host} {a_int} <-> {z_host} {z_int}: no port speed in NetMapper, "
+                              f"assuming {FALLBACK_LINK_BANDWIDTH_BPS} bps")
+            bandwidth = FALLBACK_LINK_BANDWIDTH_BPS
+        links.append({"a_host": a_host, "a_int": a_int, "z_host": z_host, "z_int": z_int, "bandwidth": bandwidth})
+    # Sorted by name, not by edge name: that holds the device key (chassis MAC),
+    # which a cEOS redeploy changes, and the output file would churn in git.
+    links.sort(key=lambda link: (link["a_host"], link["a_int"], link["z_host"], link["z_int"]))
+    return devices, links
 
 
 # --------------------------------------------------------------------------
@@ -149,7 +212,7 @@ def prom_query(prometheus_url, promql):
 
 def known_interface_pairs(prometheus_url):
     """(device, interface) pairs that actually exist in the gnmic exporter,
-    used to validate the topology->gnmic interface alias before trusting it."""
+    used to check the NetMapper hostname/port names before trusting them."""
     results = prom_query(prometheus_url, "interfaces_interface_state_oper_status")
     return {(m["metric"]["device"], m["metric"]["interface"]) for m in results}
 
@@ -159,21 +222,6 @@ def known_vtep_vlan_pairs(prometheus_url):
     VTEP nodes eligible for a VXLAN MAC-count tooltip metric."""
     results = prom_query(prometheus_url, "interfaces_interface_arista_vxlan_vlan_to_vnis_vlan_to_vni_state_vni")
     return {(m["metric"]["device"], m["metric"]["vlan"]) for m in results}
-
-
-# --------------------------------------------------------------------------
-# Interface aliasing (topology abbreviated name -> gnmic full name)
-# --------------------------------------------------------------------------
-
-def alias_interface(short_name):
-    match = re.match(r"^([A-Za-z]+)(\d.*)$", short_name)
-    if not match:
-        return short_name
-    prefix, rest = match.groups()
-    full = INTERFACE_PREFIX_ALIASES.get(prefix)
-    if full is None:
-        return short_name
-    return f"{full}{rest}"
 
 
 def promql_escape(s):
@@ -235,34 +283,6 @@ def build_layout(devices, mismatches):
     return positions
 
 
-def dedupe_links(connectivity_matrix):
-    """connectivity-matrix reports each physical link twice (once from each
-    side), plus management-plane (Management0) neighbor entries, plus one row
-    per 802.1Q subinterface on trunked ports (e.g. Et13.100/Et13.200, used for
-    the gold VRF stitching on Core -- see README). Subinterfaces ride the same
-    physical port as their parent interface, so they'd otherwise show up as
-    bogus duplicate parallel links with permanently-unresolvable queries
-    (gnmic only subscribes to physical interface counters). Keep only
-    physical Ethernet-to-Ethernet links, one entry per unordered
-    (host,int)-(host,int) pair."""
-    seen = set()
-    links = []
-    for row in connectivity_matrix:
-        local_int, remote_int = row["localInt"], row["remoteInt"]
-        if "." in local_int or "." in remote_int:
-            continue
-        if not (local_int.startswith("Et") and remote_int.startswith("Et")):
-            continue
-        side_a = (row["localHost"], local_int)
-        side_z = (row["remoteHost"], remote_int)
-        key = tuple(sorted([side_a, side_z]))
-        if key in seen:
-            continue
-        seen.add(key)
-        links.append({"a_host": key[0][0], "a_int": key[0][1], "z_host": key[1][0], "z_int": key[1][1]})
-    return links
-
-
 # --------------------------------------------------------------------------
 # Weathermap assembly
 # --------------------------------------------------------------------------
@@ -275,16 +295,16 @@ def build_weathermap(devices, links, positions, prometheus_url, mismatches):
     vtep_vlan_pairs = known_vtep_vlan_pairs(prometheus_url)
     vtep_hosts = sorted({dev for dev, _ in vtep_vlan_pairs})
 
-    def resolve_and_check(host, topo_int, side_label):
-        gnmic_int = alias_interface(topo_int)
-        if (host, gnmic_int) not in known_pairs:
+    def check_interface(host, interface, side_label):
+        """NetMapper and gnmic both use the full EOS port name (Ethernet1), and
+        the hostname is shortened on load; anything still not matching is a
+        device gnmic doesn't subscribe to, or a naming gap to fix."""
+        if (host, interface) not in known_pairs:
             mismatches.append(
-                f"{host} {topo_int} -> {gnmic_int} ({side_label}): no matching series in "
+                f"{host} {interface} ({side_label}): no matching series in "
                 f"interfaces_interface_state_oper_status -- link will reference a query that "
-                f"resolves to no data until the gnmic/topology interface names are aligned "
-                f"(see #47/#48 interface aliasing fallback)"
+                f"resolves to no data until gnmic covers this device/port"
             )
-        return gnmic_int
 
     # -- nodes --
     # anchors{} tallies how many link-sides attach to each anchor position on
@@ -338,13 +358,14 @@ def build_weathermap(devices, links, positions, prometheus_url, mismatches):
     link_defs = []
     interface_regex_parts = set()
     for link in links:
-        a_gnmic_int = resolve_and_check(link["a_host"], link["a_int"], "side A")
-        z_gnmic_int = resolve_and_check(link["z_host"], link["z_int"], "side Z")
-        interface_regex_parts.add(promql_escape(a_gnmic_int))
-        interface_regex_parts.add(promql_escape(z_gnmic_int))
+        a_int, z_int = link["a_int"], link["z_int"]
+        check_interface(link["a_host"], a_int, "side A")
+        check_interface(link["z_host"], z_int, "side Z")
+        interface_regex_parts.add(promql_escape(a_int))
+        interface_regex_parts.add(promql_escape(z_int))
 
         link_defs.append({
-            "id": f"{link['a_host']}-{a_gnmic_int}--{link['z_host']}-{z_gnmic_int}",
+            "id": f"{link['a_host']}-{a_int}--{link['z_host']}-{z_int}",
             "nodes": [{"id": link["a_host"]}, {"id": link["z_host"]}],
             # Each side's query is that side's own tx (egress) counter, not the
             # far end's rx -- see #57. a_host tx and z_host rx both describe the
@@ -354,13 +375,13 @@ def build_weathermap(devices, links, positions, prometheus_url, mismatches):
             # independent, opposite-direction measurements instead.
             "sides": {
                 "A": {
-                    "bandwidth": LINK_BANDWIDTH_BPS,
-                    "query": f"{link['a_host']} {a_gnmic_int} tx",
+                    "bandwidth": link["bandwidth"],
+                    "query": f"{link['a_host']} {a_int} tx",
                     "labelOffset": 55, "anchor": ANCHOR["Right"], "dashboardLink": "",
                 },
                 "Z": {
-                    "bandwidth": LINK_BANDWIDTH_BPS,
-                    "query": f"{link['z_host']} {z_gnmic_int} tx",
+                    "bandwidth": link["bandwidth"],
+                    "query": f"{link['z_host']} {z_int} tx",
                     "labelOffset": 55, "anchor": ANCHOR["Left"], "dashboardLink": "",
                 },
             },
@@ -577,16 +598,18 @@ def provision_to_grafana(grafana_url, api_token, dashboard_payload):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--topology", default="clab-arista-evpn-fabric/topology-data.json",
-                         help="containerlab topology-data.json (written by containerlab deploy)")
     parser.add_argument("--base", default="configs/grafana/dashboard-base.json",
                          help="manually-authored dashboard base JSON (everything but the weathermap panel)")
     parser.add_argument("--output", default="configs/grafana/dashboards/fabric.json",
                          help="where to write the merged dashboard JSON (provisioned from file by the in-lab Grafana)")
+    parser.add_argument("--allow-quarantined", action="store_true",
+                         help="build the map even if NetMapper quarantined the latest crawl (reached much less than before)")
     parser.add_argument("--provision", action="store_true",
                          help="also POST the merged dashboard to the Grafana API (requires GRAFANA_* env vars)")
     args = parser.parse_args()
 
+    netmapper_url = env("NETMAPPER_URL", "http://172.16.0.82:8080")
+    netmapper_token = env("NETMAPPER_TOKEN", required=True)
     prometheus_url = env("PROMETHEUS_URL", "http://172.16.0.71:9090")
     dashboard_uid = env("GRAFANA_DASHBOARD_UID", "evpn-vxlan-fabric-weathermap")
     datasource_uid = env("GRAFANA_DATASOURCE_UID", "prometheus")
@@ -594,12 +617,11 @@ def main():
     grafana_url = env("GRAFANA_URL")
     grafana_token = env("GRAFANA_TOKEN")
 
-    print(f"Reading containerlab topology ({args.topology})...")
-    devices, matrix = load_clab_topology(args.topology)
-    links = dedupe_links(matrix)
-    print(f"  {len(devices)} cEOS nodes, {len(links)} fabric links")
-
     mismatches = []
+    print(f"Reading topology from NetMapper ({netmapper_url})...")
+    devices, links = load_netmapper_topology(netmapper_url, netmapper_token, args.allow_quarantined, mismatches)
+    print(f"  {len(devices)} devices, {len(links)} physical links")
+
     default_positions = build_layout(devices, mismatches)
 
     # Position specifically is edited live in the Grafana UI (drag-and-drop),
