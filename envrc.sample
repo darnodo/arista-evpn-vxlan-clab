@@ -4,6 +4,10 @@ export GRAFANA_TOKEN=""
 export GITHUB_HOST=""
 export GITHUB_PERSONAL_ACCESS_TOKEN=""
 
+# NetMapper read API (weathermap topology source): token written by scripts/netmapper_setup.sh
+export NETMAPPER_URL="http://172.16.0.82:8080"
+export NETMAPPER_TOKEN="$(cat clab-arista-evpn-fabric/netmapper/token 2>/dev/null)"
+
 # SNMPv3 read-only on all cEOS nodes -- shared lab values, not secret (docs/observability/snmp.md)
 export SNMP_USER="snmp-ro"
 export SNMP_AUTH_PROTO="SHA-256"

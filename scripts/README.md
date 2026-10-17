@@ -1,6 +1,6 @@
 # scripts/generate_weathermap.py
 
-Generates the **weathermap panel only** from the containerlab topology and live
+Generates the **weathermap panel only** from the NetMapper topology and live
 Prometheus data, merges it into a hand-authored dashboard base, and writes the
 dashboard that the in-lab Grafana loads at start.
 
@@ -8,7 +8,7 @@ dashboard that the in-lab Grafana loads at start.
 
 | File | What it is | Edit it? |
 | ---- | ---------- | -------- |
-| `clab-arista-evpn-fabric/topology-data.json` | Written by `containerlab deploy`: nodes and links | No, input |
+| NetMapper API (`NETMAPPER_URL`) | Latest crawl: devices, LLDP links, port speeds ([NetMapper](../docs/observability/netmapper.md)) | No, input |
 | `configs/grafana/dashboard-base.json` | Hand-authored: BGP table, ports table, throughput graphs, `site`/`device` variables, layout. One reserved slot panel (`title: "__WEATHERMAP_SLOT__"`) where the weathermap is spliced in | Yes, directly |
 | `configs/grafana/dashboards/fabric.json` | Generated: base + fresh weathermap panel. Provisioned from file by the in-lab Grafana | No, regenerate instead (node positions excepted, see below) |
 
@@ -18,12 +18,18 @@ of the dashboard is hand-tuned and never touched by a topology refresh. See #52.
 ## Quickstart
 
 ```bash
-# lab deployed, gnmic/Prometheus running
-python3 scripts/generate_weathermap.py   # rewrites configs/grafana/dashboards/fabric.json
+# lab deployed, gnmic/Prometheus running, ./scripts/netmapper_setup.sh run once
+export NETMAPPER_TOKEN=$(cat clab-arista-evpn-fabric/netmapper/token)
+uv run scripts/generate_weathermap.py   # rewrites configs/grafana/dashboards/fabric.json
 ```
 
 Grafana reads the file at start: redeploy the `grafana` node (or restart its container)
-to load a new version, then commit the file. Re-run after any topology change.
+to load a new version, then commit the file. Re-run after any topology change: crawl
+again first (`./scripts/netmapper_setup.sh`), the script reads the latest crawl.
+
+Production: point `NETMAPPER_URL`/`NETMAPPER_TOKEN` at the production NetMapper
+(read-scope token) and `PROMETHEUS_URL` at the Prometheus scraping its gnmic. Nothing in
+the script depends on containerlab.
 
 `--provision` also pushes the dashboard through the Grafana API (`GRAFANA_URL`,
 `GRAFANA_TOKEN`), e.g. to an external Grafana.
@@ -46,13 +52,15 @@ are lost on redeploy.
 
 | Variable | Required | Default |
 | -------- | -------- | ------- |
+| `NETMAPPER_URL` | no | `http://172.16.0.82:8080` |
+| `NETMAPPER_TOKEN` | yes | - (lab: `clab-arista-evpn-fabric/netmapper/token`) |
 | `PROMETHEUS_URL` | no | `http://172.16.0.71:9090` |
 | `GRAFANA_URL` | with `--provision`, or to read live positions | - |
 | `GRAFANA_TOKEN` | with `--provision`, or to read live positions | - |
 | `GRAFANA_DATASOURCE_UID` | no | `prometheus` (UID provisioned in the in-lab Grafana) |
 | `GRAFANA_DASHBOARD_UID` | no | `evpn-vxlan-fabric-weathermap` |
 | `GRAFANA_WEATHERMAP_PLUGIN_ID` | no | `tamirsuliman-weathermap-panel` |
-| `--topology` (CLI flag) | no | `clab-arista-evpn-fabric/topology-data.json` |
+| `--allow-quarantined` (CLI flag) | no | off: a quarantined crawl stops the script |
 | `--base` (CLI flag) | no | `configs/grafana/dashboard-base.json` |
 | `--output` (CLI flag) | no | `configs/grafana/dashboards/fabric.json` |
 
@@ -60,7 +68,10 @@ are lost on redeploy.
 
 | Symptom | Cause | Check |
 | ------- | ----- | ----- |
-| `topology-data.json not found` | Lab not deployed from this directory | `sudo containerlab inspect -t evpn-lab.clab.yml` |
+| `NetMapper has no graph yet` | No crawl finished since deploy | `./scripts/netmapper_setup.sh` |
+| `NetMapper API refused the token (HTTP 401)` | Token from a previous deploy (DB is not persistent) or revoked | `export NETMAPPER_TOKEN=$(cat clab-arista-evpn-fabric/netmapper/token)` |
+| `Snapshot N is quarantined` | Latest crawl reached much less than the previous one | Check the crawl (`/v1/snapshots/N`), crawl again, or `--allow-quarantined` |
+| Fewer nodes/links than expected | Device unreachable during the crawl, or LLDP off on a port | `curl -H "Authorization: Bearer $NETMAPPER_TOKEN" $NETMAPPER_URL/v1/findings` |
 | Panel renders with no data | Wrong datasource UID | Explore, run `up` against it, confirm gnmic series come back |
 | Weathermap panel shows "panel plugin not found" | Plugin not installed (needs internet at Grafana start) | `docker logs clab-arista-evpn-fabric-grafana \| grep -i plugin` |
 | `Base dashboard has no panel titled '__WEATHERMAP_SLOT__'` | Someone edited `dashboard-base.json` and renamed/removed that panel | Check panel `id: 1` still has that exact title |
@@ -68,15 +79,19 @@ are lost on redeploy.
 
 ## How it works
 
-1. Read cEOS nodes and cEOS-to-cEOS links from `topology-data.json` (`ethN` renamed to
-   `EtN`); links to Linux nodes are dropped, no gnmic counters there. Every link is 1G.
+1. Read devices and `l1_link` edges from NetMapper, every call pinned to the same
+   snapshot; a `quarantined` crawl stops the script. Hostnames are shortened
+   (`dc-leaf1.evpnlab.local` -> `dc-leaf1`, gnmic's `device` label). Only links between two
+   crawled devices on `Ethernet` ports are kept (no Management0 LLDP over the docker mgmt
+   bridge, no subinterfaces, no Linux hosts: no LLDP there). Bandwidth is the port's
+   `speed_bps`.
 2. Position each node (see above).
 3. Build the panel's PromQL `targets`: node status, per-side link tx (each side its own
    egress counter, so both directions are represented, #57), VXLAN MAC/VNI tooltip.
 4. Build `nodes[]`/`links[]`, including the plugin's `anchors` tally (link count per
    side), required by the installed plugin fork (#48).
-5. Cross-check every interface name against the live gnmic exporter (`Et` -> `Ethernet`);
-   mismatches are logged, not dropped.
+5. Cross-check every device/interface name against the live gnmic exporter; mismatches
+   are logged, not dropped.
 6. Load `dashboard-base.json`, substitute the datasource UID, splice the generated panel
    into `__WEATHERMAP_SLOT__` (keeping that slot's `gridPos`/`id`).
 7. Write `fabric.json`; push it if `--provision`.

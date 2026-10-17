@@ -1730,26 +1730,26 @@
           ],
           "links": [
             {
-              "id": "dc-leaf1-Ethernet11--dc-spine1-Ethernet1",
+              "id": "campus-access1-Ethernet1--campus-leaf1-Ethernet1",
               "nodes": [
                 {
-                  "id": "dc-leaf1"
+                  "id": "campus-access1"
                 },
                 {
-                  "id": "dc-spine1"
+                  "id": "campus-leaf1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-leaf1 Ethernet11 tx",
+                  "query": "campus-access1 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet1 tx",
+                  "query": "campus-leaf1 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -1765,26 +1765,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-leaf2-Ethernet11--dc-spine1-Ethernet2",
+              "id": "campus-access1-Ethernet2--campus-leaf2-Ethernet1",
               "nodes": [
                 {
-                  "id": "dc-leaf2"
+                  "id": "campus-access1"
                 },
                 {
-                  "id": "dc-spine1"
+                  "id": "campus-leaf2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-leaf2 Ethernet11 tx",
+                  "query": "campus-access1 Ethernet2 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet2 tx",
+                  "query": "campus-leaf2 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -1800,26 +1800,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-leaf3-Ethernet11--dc-spine1-Ethernet3",
+              "id": "campus-access2-Ethernet1--campus-leaf3-Ethernet1",
               "nodes": [
                 {
-                  "id": "dc-leaf3"
+                  "id": "campus-access2"
                 },
                 {
-                  "id": "dc-spine1"
+                  "id": "campus-leaf3"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-leaf3 Ethernet11 tx",
+                  "query": "campus-access2 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet3 tx",
+                  "query": "campus-leaf3 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -1835,26 +1835,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-leaf4-Ethernet11--dc-spine1-Ethernet4",
+              "id": "campus-access2-Ethernet2--campus-leaf4-Ethernet1",
               "nodes": [
                 {
-                  "id": "dc-leaf4"
+                  "id": "campus-access2"
                 },
                 {
-                  "id": "dc-spine1"
+                  "id": "campus-leaf4"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-leaf4 Ethernet11 tx",
+                  "query": "campus-access2 Ethernet2 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet4 tx",
+                  "query": "campus-leaf4 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -1870,26 +1870,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-leaf5-Ethernet11--dc-spine1-Ethernet5",
+              "id": "campus-border-leaf1-Ethernet10--campus-border-leaf2-Ethernet10",
               "nodes": [
                 {
-                  "id": "dc-leaf5"
+                  "id": "campus-border-leaf1"
                 },
                 {
-                  "id": "dc-spine1"
+                  "id": "campus-border-leaf2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-leaf5 Ethernet11 tx",
+                  "query": "campus-border-leaf1 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet5 tx",
+                  "query": "campus-border-leaf2 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -1905,26 +1905,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-leaf6-Ethernet11--dc-spine1-Ethernet6",
+              "id": "campus-border-leaf1-Ethernet11--campus-spine1-Ethernet5",
               "nodes": [
                 {
-                  "id": "dc-leaf6"
+                  "id": "campus-border-leaf1"
                 },
                 {
-                  "id": "dc-spine1"
+                  "id": "campus-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-leaf6 Ethernet11 tx",
+                  "query": "campus-border-leaf1 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet6 tx",
+                  "query": "campus-spine1 Ethernet5 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -1940,26 +1940,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-leaf7-Ethernet11--dc-spine1-Ethernet7",
+              "id": "campus-border-leaf1-Ethernet12--campus-spine2-Ethernet5",
               "nodes": [
                 {
-                  "id": "dc-leaf7"
+                  "id": "campus-border-leaf1"
                 },
                 {
-                  "id": "dc-spine1"
+                  "id": "campus-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-leaf7 Ethernet11 tx",
+                  "query": "campus-border-leaf1 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet7 tx",
+                  "query": "campus-spine2 Ethernet5 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -1975,26 +1975,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-leaf8-Ethernet11--dc-spine1-Ethernet8",
+              "id": "campus-border-leaf1-Ethernet13--core1-Ethernet3",
               "nodes": [
                 {
-                  "id": "dc-leaf8"
+                  "id": "campus-border-leaf1"
                 },
                 {
-                  "id": "dc-spine1"
+                  "id": "core1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-leaf8 Ethernet11 tx",
+                  "query": "campus-border-leaf1 Ethernet13 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet8 tx",
+                  "query": "core1 Ethernet3 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -2010,26 +2010,551 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-border-leaf1-Ethernet11--dc-spine1-Ethernet9",
+              "id": "campus-border-leaf1-Ethernet14--core2-Ethernet3",
               "nodes": [
+                {
+                  "id": "campus-border-leaf1"
+                },
+                {
+                  "id": "core2"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-border-leaf1 Ethernet14 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "core2 Ethernet3 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-border-leaf2-Ethernet11--campus-spine1-Ethernet6",
+              "nodes": [
+                {
+                  "id": "campus-border-leaf2"
+                },
+                {
+                  "id": "campus-spine1"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-border-leaf2 Ethernet11 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine1 Ethernet6 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-border-leaf2-Ethernet12--campus-spine2-Ethernet6",
+              "nodes": [
+                {
+                  "id": "campus-border-leaf2"
+                },
+                {
+                  "id": "campus-spine2"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-border-leaf2 Ethernet12 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine2 Ethernet6 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-border-leaf2-Ethernet13--core1-Ethernet4",
+              "nodes": [
+                {
+                  "id": "campus-border-leaf2"
+                },
+                {
+                  "id": "core1"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-border-leaf2 Ethernet13 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "core1 Ethernet4 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-border-leaf2-Ethernet14--core2-Ethernet4",
+              "nodes": [
+                {
+                  "id": "campus-border-leaf2"
+                },
+                {
+                  "id": "core2"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-border-leaf2 Ethernet14 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "core2 Ethernet4 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf1-Ethernet10--campus-leaf2-Ethernet10",
+              "nodes": [
+                {
+                  "id": "campus-leaf1"
+                },
+                {
+                  "id": "campus-leaf2"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf1 Ethernet10 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf2 Ethernet10 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf1-Ethernet11--campus-spine1-Ethernet1",
+              "nodes": [
+                {
+                  "id": "campus-leaf1"
+                },
+                {
+                  "id": "campus-spine1"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf1 Ethernet11 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine1 Ethernet1 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf1-Ethernet12--campus-spine2-Ethernet1",
+              "nodes": [
+                {
+                  "id": "campus-leaf1"
+                },
+                {
+                  "id": "campus-spine2"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf1 Ethernet12 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine2 Ethernet1 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf2-Ethernet11--campus-spine1-Ethernet2",
+              "nodes": [
+                {
+                  "id": "campus-leaf2"
+                },
+                {
+                  "id": "campus-spine1"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf2 Ethernet11 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine1 Ethernet2 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf2-Ethernet12--campus-spine2-Ethernet2",
+              "nodes": [
+                {
+                  "id": "campus-leaf2"
+                },
+                {
+                  "id": "campus-spine2"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf2 Ethernet12 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine2 Ethernet2 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf3-Ethernet10--campus-leaf4-Ethernet10",
+              "nodes": [
+                {
+                  "id": "campus-leaf3"
+                },
+                {
+                  "id": "campus-leaf4"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf3 Ethernet10 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf4 Ethernet10 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf3-Ethernet11--campus-spine1-Ethernet3",
+              "nodes": [
+                {
+                  "id": "campus-leaf3"
+                },
+                {
+                  "id": "campus-spine1"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf3 Ethernet11 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine1 Ethernet3 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf3-Ethernet12--campus-spine2-Ethernet3",
+              "nodes": [
+                {
+                  "id": "campus-leaf3"
+                },
+                {
+                  "id": "campus-spine2"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf3 Ethernet12 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine2 Ethernet3 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf4-Ethernet11--campus-spine1-Ethernet4",
+              "nodes": [
+                {
+                  "id": "campus-leaf4"
+                },
+                {
+                  "id": "campus-spine1"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf4 Ethernet11 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine1 Ethernet4 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "campus-leaf4-Ethernet12--campus-spine2-Ethernet4",
+              "nodes": [
+                {
+                  "id": "campus-leaf4"
+                },
+                {
+                  "id": "campus-spine2"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-leaf4 Ethernet12 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "campus-spine2 Ethernet4 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "core1-Ethernet1--dc-border-leaf1-Ethernet13",
+              "nodes": [
+                {
+                  "id": "core1"
+                },
                 {
                   "id": "dc-border-leaf1"
-                },
-                {
-                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-border-leaf1 Ethernet11 tx",
+                  "query": "core1 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet9 tx",
+                  "query": "dc-border-leaf1 Ethernet13 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -2045,26 +2570,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-border-leaf2-Ethernet11--dc-spine1-Ethernet10",
+              "id": "core1-Ethernet2--dc-border-leaf2-Ethernet13",
               "nodes": [
+                {
+                  "id": "core1"
+                },
                 {
                   "id": "dc-border-leaf2"
-                },
-                {
-                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-border-leaf2 Ethernet11 tx",
+                  "query": "core1 Ethernet2 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine1 Ethernet10 tx",
+                  "query": "dc-border-leaf2 Ethernet13 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -2080,26 +2605,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-leaf1-Ethernet12--dc-spine2-Ethernet1",
+              "id": "core1-Ethernet5--core2-Ethernet5",
               "nodes": [
                 {
-                  "id": "dc-leaf1"
+                  "id": "core1"
                 },
                 {
-                  "id": "dc-spine2"
+                  "id": "core2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-leaf1 Ethernet12 tx",
+                  "query": "core1 Ethernet5 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet1 tx",
+                  "query": "core2 Ethernet5 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -2115,271 +2640,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-leaf2-Ethernet12--dc-spine2-Ethernet2",
+              "id": "core2-Ethernet1--dc-border-leaf1-Ethernet14",
               "nodes": [
                 {
-                  "id": "dc-leaf2"
+                  "id": "core2"
                 },
-                {
-                  "id": "dc-spine2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf2 Ethernet12 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet2 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf3-Ethernet12--dc-spine2-Ethernet3",
-              "nodes": [
-                {
-                  "id": "dc-leaf3"
-                },
-                {
-                  "id": "dc-spine2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf3 Ethernet12 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet3 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf4-Ethernet12--dc-spine2-Ethernet4",
-              "nodes": [
-                {
-                  "id": "dc-leaf4"
-                },
-                {
-                  "id": "dc-spine2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf4 Ethernet12 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet4 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf5-Ethernet12--dc-spine2-Ethernet5",
-              "nodes": [
-                {
-                  "id": "dc-leaf5"
-                },
-                {
-                  "id": "dc-spine2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf5 Ethernet12 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet5 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf6-Ethernet12--dc-spine2-Ethernet6",
-              "nodes": [
-                {
-                  "id": "dc-leaf6"
-                },
-                {
-                  "id": "dc-spine2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf6 Ethernet12 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet6 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf7-Ethernet12--dc-spine2-Ethernet7",
-              "nodes": [
-                {
-                  "id": "dc-leaf7"
-                },
-                {
-                  "id": "dc-spine2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf7 Ethernet12 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet7 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf8-Ethernet12--dc-spine2-Ethernet8",
-              "nodes": [
-                {
-                  "id": "dc-leaf8"
-                },
-                {
-                  "id": "dc-spine2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf8 Ethernet12 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet8 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-border-leaf1-Ethernet12--dc-spine2-Ethernet9",
-              "nodes": [
                 {
                   "id": "dc-border-leaf1"
-                },
-                {
-                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-border-leaf1 Ethernet12 tx",
+                  "query": "core2 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet9 tx",
+                  "query": "dc-border-leaf1 Ethernet14 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -2395,185 +2675,10 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "dc-border-leaf2-Ethernet12--dc-spine2-Ethernet10",
+              "id": "core2-Ethernet2--dc-border-leaf2-Ethernet14",
               "nodes": [
                 {
-                  "id": "dc-border-leaf2"
-                },
-                {
-                  "id": "dc-spine2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-border-leaf2 Ethernet12 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-spine2 Ethernet10 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf1-Ethernet10--dc-leaf2-Ethernet10",
-              "nodes": [
-                {
-                  "id": "dc-leaf1"
-                },
-                {
-                  "id": "dc-leaf2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf1 Ethernet10 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf2 Ethernet10 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf3-Ethernet10--dc-leaf4-Ethernet10",
-              "nodes": [
-                {
-                  "id": "dc-leaf3"
-                },
-                {
-                  "id": "dc-leaf4"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf3 Ethernet10 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf4 Ethernet10 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf5-Ethernet10--dc-leaf6-Ethernet10",
-              "nodes": [
-                {
-                  "id": "dc-leaf5"
-                },
-                {
-                  "id": "dc-leaf6"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf5 Ethernet10 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf6 Ethernet10 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-leaf7-Ethernet10--dc-leaf8-Ethernet10",
-              "nodes": [
-                {
-                  "id": "dc-leaf7"
-                },
-                {
-                  "id": "dc-leaf8"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf7 Ethernet10 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-leaf8 Ethernet10 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "dc-border-leaf1-Ethernet10--dc-border-leaf2-Ethernet10",
-              "nodes": [
-                {
-                  "id": "dc-border-leaf1"
+                  "id": "core2"
                 },
                 {
                   "id": "dc-border-leaf2"
@@ -2582,14 +2687,14 @@
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "dc-border-leaf1 Ethernet10 tx",
+                  "query": "core2 Ethernet2 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-border-leaf2 Ethernet10 tx",
+                  "query": "dc-border-leaf2 Ethernet14 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -2885,80 +2990,10 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "core1-Ethernet1--dc-border-leaf1-Ethernet13",
+              "id": "dc-border-leaf1-Ethernet10--dc-border-leaf2-Ethernet10",
               "nodes": [
-                {
-                  "id": "core1"
-                },
                 {
                   "id": "dc-border-leaf1"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "core1 Ethernet1 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-border-leaf1 Ethernet13 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "core2-Ethernet1--dc-border-leaf1-Ethernet14",
-              "nodes": [
-                {
-                  "id": "core2"
-                },
-                {
-                  "id": "dc-border-leaf1"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "core2 Ethernet1 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "dc-border-leaf1 Ethernet14 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "core1-Ethernet2--dc-border-leaf2-Ethernet13",
-              "nodes": [
-                {
-                  "id": "core1"
                 },
                 {
                   "id": "dc-border-leaf2"
@@ -2967,14 +3002,14 @@
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "core1 Ethernet2 tx",
+                  "query": "dc-border-leaf1 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-border-leaf2 Ethernet13 tx",
+                  "query": "dc-border-leaf2 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -2990,26 +3025,96 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "core2-Ethernet2--dc-border-leaf2-Ethernet14",
+              "id": "dc-border-leaf1-Ethernet11--dc-spine1-Ethernet9",
               "nodes": [
                 {
-                  "id": "core2"
+                  "id": "dc-border-leaf1"
                 },
+                {
+                  "id": "dc-spine1"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "dc-border-leaf1 Ethernet11 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "dc-spine1 Ethernet9 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "dc-border-leaf1-Ethernet12--dc-spine2-Ethernet9",
+              "nodes": [
+                {
+                  "id": "dc-border-leaf1"
+                },
+                {
+                  "id": "dc-spine2"
+                }
+              ],
+              "sides": {
+                "A": {
+                  "bandwidth": 1000000000,
+                  "query": "dc-border-leaf1 Ethernet12 tx",
+                  "labelOffset": 55,
+                  "anchor": 4,
+                  "dashboardLink": ""
+                },
+                "Z": {
+                  "bandwidth": 1000000000,
+                  "query": "dc-spine2 Ethernet9 tx",
+                  "labelOffset": 55,
+                  "anchor": 3,
+                  "dashboardLink": ""
+                }
+              },
+              "units": "bps",
+              "arrows": {
+                "width": 8,
+                "height": 10,
+                "offset": 2
+              },
+              "stroke": 5,
+              "showThroughputPercentage": false
+            },
+            {
+              "id": "dc-border-leaf2-Ethernet11--dc-spine1-Ethernet10",
+              "nodes": [
                 {
                   "id": "dc-border-leaf2"
+                },
+                {
+                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "core2 Ethernet2 tx",
+                  "query": "dc-border-leaf2 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "dc-border-leaf2 Ethernet14 tx",
+                  "query": "dc-spine1 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3025,26 +3130,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-border-leaf1-Ethernet13--core1-Ethernet3",
+              "id": "dc-border-leaf2-Ethernet12--dc-spine2-Ethernet10",
               "nodes": [
                 {
-                  "id": "campus-border-leaf1"
+                  "id": "dc-border-leaf2"
                 },
                 {
-                  "id": "core1"
+                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf1 Ethernet13 tx",
+                  "query": "dc-border-leaf2 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "core1 Ethernet3 tx",
+                  "query": "dc-spine2 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3060,26 +3165,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-border-leaf1-Ethernet14--core2-Ethernet3",
+              "id": "dc-leaf1-Ethernet10--dc-leaf2-Ethernet10",
               "nodes": [
                 {
-                  "id": "campus-border-leaf1"
+                  "id": "dc-leaf1"
                 },
                 {
-                  "id": "core2"
+                  "id": "dc-leaf2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf1 Ethernet14 tx",
+                  "query": "dc-leaf1 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "core2 Ethernet3 tx",
+                  "query": "dc-leaf2 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3095,26 +3200,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-border-leaf2-Ethernet13--core1-Ethernet4",
+              "id": "dc-leaf1-Ethernet11--dc-spine1-Ethernet1",
               "nodes": [
                 {
-                  "id": "campus-border-leaf2"
+                  "id": "dc-leaf1"
                 },
                 {
-                  "id": "core1"
+                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf2 Ethernet13 tx",
+                  "query": "dc-leaf1 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "core1 Ethernet4 tx",
+                  "query": "dc-spine1 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3130,26 +3235,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-border-leaf2-Ethernet14--core2-Ethernet4",
+              "id": "dc-leaf1-Ethernet12--dc-spine2-Ethernet1",
               "nodes": [
                 {
-                  "id": "campus-border-leaf2"
+                  "id": "dc-leaf1"
                 },
                 {
-                  "id": "core2"
+                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf2 Ethernet14 tx",
+                  "query": "dc-leaf1 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "core2 Ethernet4 tx",
+                  "query": "dc-spine2 Ethernet1 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3165,26 +3270,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "core1-Ethernet5--core2-Ethernet5",
+              "id": "dc-leaf2-Ethernet11--dc-spine1-Ethernet2",
               "nodes": [
                 {
-                  "id": "core1"
+                  "id": "dc-leaf2"
                 },
                 {
-                  "id": "core2"
+                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "core1 Ethernet5 tx",
+                  "query": "dc-leaf2 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "core2 Ethernet5 tx",
+                  "query": "dc-spine1 Ethernet2 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3200,26 +3305,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf1-Ethernet11--campus-spine1-Ethernet1",
+              "id": "dc-leaf2-Ethernet12--dc-spine2-Ethernet2",
               "nodes": [
                 {
-                  "id": "campus-leaf1"
+                  "id": "dc-leaf2"
                 },
                 {
-                  "id": "campus-spine1"
+                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf1 Ethernet11 tx",
+                  "query": "dc-leaf2 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine1 Ethernet1 tx",
+                  "query": "dc-spine2 Ethernet2 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3235,26 +3340,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf2-Ethernet11--campus-spine1-Ethernet2",
+              "id": "dc-leaf3-Ethernet10--dc-leaf4-Ethernet10",
               "nodes": [
                 {
-                  "id": "campus-leaf2"
+                  "id": "dc-leaf3"
                 },
                 {
-                  "id": "campus-spine1"
+                  "id": "dc-leaf4"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf2 Ethernet11 tx",
+                  "query": "dc-leaf3 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine1 Ethernet2 tx",
+                  "query": "dc-leaf4 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3270,26 +3375,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf3-Ethernet11--campus-spine1-Ethernet3",
+              "id": "dc-leaf3-Ethernet11--dc-spine1-Ethernet3",
               "nodes": [
                 {
-                  "id": "campus-leaf3"
+                  "id": "dc-leaf3"
                 },
                 {
-                  "id": "campus-spine1"
+                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf3 Ethernet11 tx",
+                  "query": "dc-leaf3 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine1 Ethernet3 tx",
+                  "query": "dc-spine1 Ethernet3 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3305,26 +3410,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf4-Ethernet11--campus-spine1-Ethernet4",
+              "id": "dc-leaf3-Ethernet12--dc-spine2-Ethernet3",
               "nodes": [
                 {
-                  "id": "campus-leaf4"
+                  "id": "dc-leaf3"
                 },
                 {
-                  "id": "campus-spine1"
+                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf4 Ethernet11 tx",
+                  "query": "dc-leaf3 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine1 Ethernet4 tx",
+                  "query": "dc-spine2 Ethernet3 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3340,26 +3445,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-border-leaf1-Ethernet11--campus-spine1-Ethernet5",
+              "id": "dc-leaf4-Ethernet11--dc-spine1-Ethernet4",
               "nodes": [
                 {
-                  "id": "campus-border-leaf1"
+                  "id": "dc-leaf4"
                 },
                 {
-                  "id": "campus-spine1"
+                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf1 Ethernet11 tx",
+                  "query": "dc-leaf4 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine1 Ethernet5 tx",
+                  "query": "dc-spine1 Ethernet4 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3375,26 +3480,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-border-leaf2-Ethernet11--campus-spine1-Ethernet6",
+              "id": "dc-leaf4-Ethernet12--dc-spine2-Ethernet4",
               "nodes": [
                 {
-                  "id": "campus-border-leaf2"
+                  "id": "dc-leaf4"
                 },
                 {
-                  "id": "campus-spine1"
+                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf2 Ethernet11 tx",
+                  "query": "dc-leaf4 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine1 Ethernet6 tx",
+                  "query": "dc-spine2 Ethernet4 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3410,26 +3515,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf1-Ethernet12--campus-spine2-Ethernet1",
+              "id": "dc-leaf5-Ethernet10--dc-leaf6-Ethernet10",
               "nodes": [
                 {
-                  "id": "campus-leaf1"
+                  "id": "dc-leaf5"
                 },
                 {
-                  "id": "campus-spine2"
+                  "id": "dc-leaf6"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf1 Ethernet12 tx",
+                  "query": "dc-leaf5 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine2 Ethernet1 tx",
+                  "query": "dc-leaf6 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3445,26 +3550,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf2-Ethernet12--campus-spine2-Ethernet2",
+              "id": "dc-leaf5-Ethernet11--dc-spine1-Ethernet5",
               "nodes": [
                 {
-                  "id": "campus-leaf2"
+                  "id": "dc-leaf5"
                 },
                 {
-                  "id": "campus-spine2"
+                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf2 Ethernet12 tx",
+                  "query": "dc-leaf5 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine2 Ethernet2 tx",
+                  "query": "dc-spine1 Ethernet5 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3480,26 +3585,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf3-Ethernet12--campus-spine2-Ethernet3",
+              "id": "dc-leaf5-Ethernet12--dc-spine2-Ethernet5",
               "nodes": [
                 {
-                  "id": "campus-leaf3"
+                  "id": "dc-leaf5"
                 },
                 {
-                  "id": "campus-spine2"
+                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf3 Ethernet12 tx",
+                  "query": "dc-leaf5 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine2 Ethernet3 tx",
+                  "query": "dc-spine2 Ethernet5 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3515,26 +3620,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf4-Ethernet12--campus-spine2-Ethernet4",
+              "id": "dc-leaf6-Ethernet11--dc-spine1-Ethernet6",
               "nodes": [
                 {
-                  "id": "campus-leaf4"
+                  "id": "dc-leaf6"
                 },
                 {
-                  "id": "campus-spine2"
+                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf4 Ethernet12 tx",
+                  "query": "dc-leaf6 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine2 Ethernet4 tx",
+                  "query": "dc-spine1 Ethernet6 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3550,26 +3655,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-border-leaf1-Ethernet12--campus-spine2-Ethernet5",
+              "id": "dc-leaf6-Ethernet12--dc-spine2-Ethernet6",
               "nodes": [
                 {
-                  "id": "campus-border-leaf1"
+                  "id": "dc-leaf6"
                 },
                 {
-                  "id": "campus-spine2"
+                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf1 Ethernet12 tx",
+                  "query": "dc-leaf6 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine2 Ethernet5 tx",
+                  "query": "dc-spine2 Ethernet6 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3585,26 +3690,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-border-leaf2-Ethernet12--campus-spine2-Ethernet6",
+              "id": "dc-leaf7-Ethernet10--dc-leaf8-Ethernet10",
               "nodes": [
                 {
-                  "id": "campus-border-leaf2"
+                  "id": "dc-leaf7"
                 },
                 {
-                  "id": "campus-spine2"
+                  "id": "dc-leaf8"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf2 Ethernet12 tx",
+                  "query": "dc-leaf7 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-spine2 Ethernet6 tx",
+                  "query": "dc-leaf8 Ethernet10 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3620,26 +3725,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf1-Ethernet10--campus-leaf2-Ethernet10",
+              "id": "dc-leaf7-Ethernet11--dc-spine1-Ethernet7",
               "nodes": [
                 {
-                  "id": "campus-leaf1"
+                  "id": "dc-leaf7"
                 },
                 {
-                  "id": "campus-leaf2"
+                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf1 Ethernet10 tx",
+                  "query": "dc-leaf7 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf2 Ethernet10 tx",
+                  "query": "dc-spine1 Ethernet7 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3655,26 +3760,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-leaf3-Ethernet10--campus-leaf4-Ethernet10",
+              "id": "dc-leaf7-Ethernet12--dc-spine2-Ethernet7",
               "nodes": [
                 {
-                  "id": "campus-leaf3"
+                  "id": "dc-leaf7"
                 },
                 {
-                  "id": "campus-leaf4"
+                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf3 Ethernet10 tx",
+                  "query": "dc-leaf7 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf4 Ethernet10 tx",
+                  "query": "dc-spine2 Ethernet7 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3690,26 +3795,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-border-leaf1-Ethernet10--campus-border-leaf2-Ethernet10",
+              "id": "dc-leaf8-Ethernet11--dc-spine1-Ethernet8",
               "nodes": [
                 {
-                  "id": "campus-border-leaf1"
+                  "id": "dc-leaf8"
                 },
                 {
-                  "id": "campus-border-leaf2"
+                  "id": "dc-spine1"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf1 Ethernet10 tx",
+                  "query": "dc-leaf8 Ethernet11 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-border-leaf2 Ethernet10 tx",
+                  "query": "dc-spine1 Ethernet8 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
@@ -3725,131 +3830,26 @@
               "showThroughputPercentage": false
             },
             {
-              "id": "campus-access1-Ethernet1--campus-leaf1-Ethernet1",
+              "id": "dc-leaf8-Ethernet12--dc-spine2-Ethernet8",
               "nodes": [
                 {
-                  "id": "campus-access1"
+                  "id": "dc-leaf8"
                 },
                 {
-                  "id": "campus-leaf1"
+                  "id": "dc-spine2"
                 }
               ],
               "sides": {
                 "A": {
                   "bandwidth": 1000000000,
-                  "query": "campus-access1 Ethernet1 tx",
+                  "query": "dc-leaf8 Ethernet12 tx",
                   "labelOffset": 55,
                   "anchor": 4,
                   "dashboardLink": ""
                 },
                 "Z": {
                   "bandwidth": 1000000000,
-                  "query": "campus-leaf1 Ethernet1 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "campus-access1-Ethernet2--campus-leaf2-Ethernet1",
-              "nodes": [
-                {
-                  "id": "campus-access1"
-                },
-                {
-                  "id": "campus-leaf2"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "campus-access1 Ethernet2 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "campus-leaf2 Ethernet1 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "campus-access2-Ethernet1--campus-leaf3-Ethernet1",
-              "nodes": [
-                {
-                  "id": "campus-access2"
-                },
-                {
-                  "id": "campus-leaf3"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "campus-access2 Ethernet1 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "campus-leaf3 Ethernet1 tx",
-                  "labelOffset": 55,
-                  "anchor": 3,
-                  "dashboardLink": ""
-                }
-              },
-              "units": "bps",
-              "arrows": {
-                "width": 8,
-                "height": 10,
-                "offset": 2
-              },
-              "stroke": 5,
-              "showThroughputPercentage": false
-            },
-            {
-              "id": "campus-access2-Ethernet2--campus-leaf4-Ethernet1",
-              "nodes": [
-                {
-                  "id": "campus-access2"
-                },
-                {
-                  "id": "campus-leaf4"
-                }
-              ],
-              "sides": {
-                "A": {
-                  "bandwidth": 1000000000,
-                  "query": "campus-access2 Ethernet2 tx",
-                  "labelOffset": 55,
-                  "anchor": 4,
-                  "dashboardLink": ""
-                },
-                "Z": {
-                  "bandwidth": 1000000000,
-                  "query": "campus-leaf4 Ethernet1 tx",
+                  "query": "dc-spine2 Ethernet8 tx",
                   "labelOffset": 55,
                   "anchor": 3,
                   "dashboardLink": ""
